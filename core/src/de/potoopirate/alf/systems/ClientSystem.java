@@ -63,7 +63,7 @@ public class ClientSystem extends EntitySystem {
 		} else if (Gdx.input.isKeyPressed(Keys.UP)) {
 			System.out.println("Upper Path");
 			client.sendTCP(new NetworkMessage(1, 2));
-		} else if (Gdx.input.isKeyPressed(Keys.UP)) {
+		} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			System.out.println("Right Path");
 			client.sendTCP(new NetworkMessage(1, 3));
 		}

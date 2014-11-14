@@ -24,7 +24,7 @@ public class ServerSystem extends EntitySystem {
 
 		try {
 			// Start Server
-			Server server = new Server();
+			server = new Server();
 			server.start();
 			server.bind(54555);
 			Network.register(server);

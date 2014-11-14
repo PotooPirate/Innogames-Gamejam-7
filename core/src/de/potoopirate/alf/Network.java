@@ -17,6 +17,9 @@ public class Network {
 		public String animalType;
 		public String pathType;
 		
+		public NetworkMessage(){
+			
+		}
 		public NetworkMessage(int animalType, int pathType ){
 			
 			this.animalType = ""+animalType;
