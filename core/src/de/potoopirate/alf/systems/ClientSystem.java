@@ -29,7 +29,7 @@ public class ClientSystem extends EntitySystem {
 			client.start();
 			Network.register(client);
 
-			client.connect(5000, "172.18.11.85", 54555);
+			client.connect(5000, "localhost", 54555);
 
 			// Adding the main Listener to the Client
 			client.addListener(new ClientListener());
@@ -42,15 +42,8 @@ public class ClientSystem extends EntitySystem {
 
 		@Override
 		public void received(Connection connection, Object object) {
-			if (object instanceof NetworkMessage) {
-				NetworkMessage request = (NetworkMessage) object;
-				System.out.println(NetworkMessage.class + " requesting");
-				System.out.println(request.animalType);
-
-				//connection.sendTCP(sendResponse());
-			} else if (object instanceof NetworkReady) {
+			if (object instanceof NetworkReady) {
 				System.out.println("Starte das Spiel!");
-
 			}
 		}
 
@@ -65,7 +58,8 @@ public class ClientSystem extends EntitySystem {
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 			
 			System.out.println("Left Path");
-			client.sendTCP(new NetworkMessage(1, 1));
+			NetworkMessage message = new NetworkMessage(1,1);
+			client.sendTCP(message);
 		} else if (Gdx.input.isKeyPressed(Keys.UP)) {
 			System.out.println("Upper Path");
 			client.sendTCP(new NetworkMessage(1, 2));

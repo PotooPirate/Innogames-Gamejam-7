@@ -10,6 +10,7 @@ import com.esotericsoftware.kryonet.Server;
 
 import de.potoopirate.alf.Network;
 import de.potoopirate.alf.Network.NetworkMessage;
+import de.potoopirate.alf.Network.NetworkReady;
 
 public class ServerSystem extends EntitySystem {
 
@@ -45,8 +46,9 @@ public class ServerSystem extends EntitySystem {
 
 		@Override
 		public void connected(Connection connection) {
-
-			
+			if(server.getConnections().length == MAX_PLAYERS) {
+				server.sendToAllTCP(new NetworkReady());
+			}
 			super.connected(connection);
 		}
 		
