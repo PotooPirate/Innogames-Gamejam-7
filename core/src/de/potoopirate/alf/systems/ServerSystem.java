@@ -12,6 +12,10 @@ import de.potoopirate.alf.Network;
 import de.potoopirate.alf.Network.NetworkMessage;
 
 public class ServerSystem extends EntitySystem {
+
+	public static final int MAX_PLAYERS = 2;
+	
+	private Server server;
 	
 	@Override
 	public void addedToEngine(Engine engine) {
@@ -35,11 +39,7 @@ public class ServerSystem extends EntitySystem {
 		@Override
 		public void received(Connection connection, Object object) {
 			if (object instanceof NetworkMessage) {
-				NetworkMessage request = (NetworkMessage) object;
-				System.out.println(NetworkMessage.class + " requesting");
-				System.out.println(request.animalType);
-
-				//connection.sendTCP(sendResponse());
+				handleNetworkMessages(connection, (NetworkMessage) object);
 			}
 		}
 
@@ -50,7 +50,13 @@ public class ServerSystem extends EntitySystem {
 			super.connected(connection);
 		}
 		
-		
+		private void handleNetworkMessages(Connection connection, NetworkMessage networkMessage) {
+			System.out.println("===============================================================");
+			System.out.println("== get NetworkMessage from PlayerId: " + connection.getID());
+			System.out.println("== get PathType: " + networkMessage.pathType);
+			System.out.println("== get AnimalType: " + networkMessage.animalType);
+			System.out.println("===============================================================");
+		}
 		
 	}
 }
