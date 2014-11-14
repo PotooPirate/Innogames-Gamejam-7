@@ -47,12 +47,10 @@ public class ClientSystem extends EntitySystem {
 				System.out.println(NetworkMessage.class + " requesting");
 				System.out.println(request.animalType);
 
-<<<<<<< HEAD
-=======
 				//connection.sendTCP(sendResponse());
 			} else if (object instanceof NetworkReady) {
 				System.out.println("Starte das Spiel!");
->>>>>>> server can now get the networkMessage correct
+
 			}
 		}
 
