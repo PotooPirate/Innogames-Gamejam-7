@@ -13,15 +13,13 @@ import de.potoopirate.alf.Network.NetworkMessage;
 
 public class ServerSystem extends EntitySystem {
 	
-	private Server server;
-	
 	@Override
 	public void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
 
 		try {
 			// Start Server
-			server = new Server();
+			Server server = new Server();
 			server.start();
 			server.bind(54555);
 			Network.register(server);
@@ -47,9 +45,8 @@ public class ServerSystem extends EntitySystem {
 
 		@Override
 		public void connected(Connection connection) {
-			if(server.getConnections().length == 2) {
-				server.sendToAllTCP(new Network.NetworkReady());
-			}
+
+			
 			super.connected(connection);
 		}
 		
