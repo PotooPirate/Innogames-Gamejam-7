@@ -21,7 +21,7 @@ public class ServerSystem extends EntitySystem {
 			// Start Server
 			Server server = new Server();
 			server.start();
-			server.bind(54555, 54777);
+			server.bind(54555);
 			Network.register(server);
 	
 			// Adding the main Listener to the Server
