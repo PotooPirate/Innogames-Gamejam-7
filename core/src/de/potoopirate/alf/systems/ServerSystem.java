@@ -32,7 +32,6 @@ public class ServerSystem extends EntitySystem {
 	}
 
 	class ServerListener extends Listener {
-
 		@Override
 		public void received(Connection connection, Object object) {
 			if (object instanceof NetworkMessage) {
@@ -43,6 +42,14 @@ public class ServerSystem extends EntitySystem {
 				//connection.sendTCP(sendResponse());
 			}
 		}
+
+		@Override
+		public void connected(Connection connection) {
+			System.out.println(":D :D :D :D :D");
+			super.connected(connection);
+		}
+		
+		
 		
 	}
 }
