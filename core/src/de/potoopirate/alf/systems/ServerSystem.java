@@ -9,6 +9,8 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
+import de.potoopirate.alf.Network.NetworkMessage;
+
 public class ServerSystem extends EntitySystem {
 
 	private Server startServer() {
@@ -34,25 +36,25 @@ public class ServerSystem extends EntitySystem {
 		Listener listener = new Listener() {
 			public void received(Connection connection, Object object) {
 
-				if (object instanceof SomeRequest) {
-					SomeRequest request = (SomeRequest) object;
-					System.out.println(SomeRequest.class + " requesting");
-					System.out.println(request.text);
+				if (object instanceof NetworkMessage) {
+					NetworkMessage request = (NetworkMessage) object;
+					System.out.println(NetworkMessage.class + " requesting");
+					System.out.println(request.animalType);
 
-					connection.sendTCP(sendResponse());
+					//connection.sendTCP(sendResponse());
 				}
 			}
 		};
 		return listener;
 	}
 
-	private Object sendResponse() {
+	/*private Object sendResponse() {
 
-		SomeResponse response = new SomeResponse();
+		NetworkMessage response = new NetworkMessage();
 		response.text = "Thanks";
 
 		return response;
-	}
+	}*/
 
 	@Override
 	public void addedToEngine(Engine engine) {
