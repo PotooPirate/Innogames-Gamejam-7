@@ -4,26 +4,66 @@ import java.io.IOException;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
 public class ServerSystem extends EntitySystem {
 
-	private void startServer(){
-		 Server server = new Server();
-		    server.start();
-		    try {
-				server.bind(54555, 54777);
-			
-		    } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	private Server startServer() {
+		Server server = new Server();
+		server.start();
+		try {
+			server.bind(54555, 54777);
+
+		} catch (IOException e) {
+			System.err.println("cannot bind Server!! Check Ports");
+		}
+
+		// Register Classes
+		Kryo kryo = server.getKryo();
+		kryo.register(NetworkMessage.class);
+		// TODO register all Classes
+
+		return server;
 	}
-	
+
+	// Main Listener
+	private Listener actionListener() {
+		Listener listener = new Listener() {
+			public void received(Connection connection, Object object) {
+
+				if (object instanceof SomeRequest) {
+					SomeRequest request = (SomeRequest) object;
+					System.out.println(SomeRequest.class + " requesting");
+					System.out.println(request.text);
+
+					connection.sendTCP(sendResponse());
+				}
+			}
+		};
+		return listener;
+	}
+
+	private Object sendResponse() {
+
+		SomeResponse response = new SomeResponse();
+		response.text = "Thanks";
+
+		return response;
+	}
+
 	@Override
 	public void addedToEngine(Engine engine) {
 		// TODO Auto-generated method stub
 		super.addedToEngine(engine);
+
+		// Start Server
+		Server server = startServer();
+
+		// Adding the main Listener to the Server
+		server.addListener(actionListener());
 	}
 
 	@Override
@@ -32,5 +72,4 @@ public class ServerSystem extends EntitySystem {
 		super.update(deltaTime);
 	}
 
-	
 }
