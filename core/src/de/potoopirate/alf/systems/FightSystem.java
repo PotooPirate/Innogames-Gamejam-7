@@ -157,7 +157,7 @@ public class FightSystem extends EntitySystem {
 							deadAnimals.add(AnimalP2);
 							--e2;
 						}
-						if(NaturalSelection.getStatusofRace(animalP2Race.race)+1 % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
+						if((NaturalSelection.getStatusofRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 						{
 							CollisionMapper.get(AnimalP1).dead=true;
 							allAnimalsP1.removeIndex(e1);
