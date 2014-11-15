@@ -231,6 +231,7 @@ public class FightSystem extends EntitySystem  {
 						   TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().y , 
 						   baseP1Transform.getPosition().x, 
 						   baseP1Transform.getPosition().y);
+				System.out.println(distance);
 				if(distance < 10) {
 					System.out.print("LifeLost");
 					LifeMapper.get(baseP1).looseLife();

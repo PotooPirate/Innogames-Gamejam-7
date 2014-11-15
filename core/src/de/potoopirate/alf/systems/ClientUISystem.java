@@ -32,9 +32,9 @@ public class ClientUISystem extends EntitySystem {
 	private static final Texture SELECTED_RIGHT_ICON = new Texture(Gdx.files.internal("icons/selectedright.png"));
 
 	
-	private static final Texture GRAY_BACKGROUND = new Texture(Gdx.files.internal("icons/gray_background.png"));
+	public static final Texture GRAY_BACKGROUND = new Texture(Gdx.files.internal("icons/gray_background.png"));
 	
-	private static final BitmapFont FONT = new BitmapFont(Gdx.files.internal("CandyFont.fnt"));
+	static final BitmapFont FONT = new BitmapFont(Gdx.files.internal("CandyFont.fnt"));
 
 	private static final int SECTION = Gdx.graphics.getWidth() / 3;
 	private static final int ICON_X = (SECTION - SECTION / 2) - TORTSEN_ICON.getWidth() / 2;

@@ -11,9 +11,12 @@ import java.util.TreeMap;
 
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 
 import de.potoopirate.alf.components.AnimationRendererComponent;
 import de.potoopirate.alf.components.IRenderer;
@@ -27,6 +30,8 @@ public class RendererSystem extends EntitySystem {
 	
 	private SortedMap<Float, IRenderer> rendererList;
 	private SortedMap<Float, IRenderer> rendererListTemp;
+	
+	static final BitmapFont PLAYERFONT = new BitmapFont(Gdx.files.internal("CandyFont.fnt"));
 
 	private static RendererSystem instance;
 	
@@ -91,6 +96,7 @@ public class RendererSystem extends EntitySystem {
 		batch.getProjectionMatrix().set(camera.combined);
 		debugRenderer.getShapeRenderer().setProjectionMatrix(camera.combined);
 		batch.begin();
+		
 		try {
 			for (Map.Entry<Float,IRenderer> entry : rendererList.entrySet()) {
 				IRenderer value = entry.getValue();
@@ -102,7 +108,11 @@ public class RendererSystem extends EntitySystem {
 				}
 		    }
 		} catch(Exception e) { }
+		PLAYERFONT.setScale(0.25f);
+		TextBounds bounds = PLAYERFONT.getBounds("0");
+
+		PLAYERFONT.draw(batch, "Player 1: " + PlayerManagerSystem.playerOneLife, 10,Gdx.graphics.getHeight() - 10);
+		PLAYERFONT.draw(batch, "Player 2: " + PlayerManagerSystem.playerTwoLife,Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/3),Gdx.graphics.getHeight() - 10);
 		batch.end();
-	   //debugRenderer.draw(skeleton); // Draw debug lines.
 	}
 }
