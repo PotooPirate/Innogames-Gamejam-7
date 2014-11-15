@@ -16,7 +16,7 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	
 	private SkeletonData skeletonData;
 	private Skeleton skeleton;
-	private AnimationState state;	
+	public AnimationState state;	
 	private AnimationStateData stateData;
 	private TransformComponent transform;
 	private float depth;
@@ -41,14 +41,20 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 		this.depth = 1;
 		this.state.setTimeScale(0.5f); 
 		
+		CreateAnimationMix("walking", "dying" , 0.5f);
+		CreateAnimationMix("walking", "attacking", 0.5f);
+		CreateAnimationMix("attacking", "walking", 0.5f);
+		
+		skeleton.getRootBone().setScaleX(this.transform.getSize().x);
+		skeleton.getRootBone().setScaleY(this.transform.getSize().y);
 		
 		RendererSystem.getInstance().RegisterRenderer(this);
 	}
 	
 	public TrackEntry SetAnimationState(String ani, boolean loop, float delay , int id) {
 		this.skeleton.updateWorldTransform();
-		return this.state.addAnimation(id,ani,loop,delay);
-
+		state.addAnimation(0, ani, loop, 0);
+		return state.setAnimation(id, ani, loop);
 	}
 	
 	public void CreateAnimationMix(String firstAni, String SecondAni, float speed) {
@@ -61,8 +67,7 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	
 	@Override
 	public void Render(float deltaTime, SpriteBatch batch) {
-		skeleton.getRootBone().setScaleX(this.transform.getSize().x);
-		skeleton.getRootBone().setScaleY(this.transform.getSize().y);
+		
 		this.skeleton.setPosition(this.transform.getPosition().x, this.transform.getPosition().y);
 		this.state.update(deltaTime);
 		this.state.apply(skeleton); 
@@ -85,7 +90,7 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 
 	@Override
 	public void complete(int trackIndex, int loopCount) {
-	
+		trackIndex = 0;
 		
 	}
 
@@ -97,12 +102,12 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 
 	@Override
 	public void end(int trackIndex) {
-		if(trackIndex == 1) {
-			this.SetAnimationState("walking", true, 0, 2);
+		if(this.state.getCurrent(trackIndex).getAnimation().toString().equals("dying")) {
+			this.Destroy();
 		}
 		else {
-			this.Destroy();
-		}		
+			this.state.setAnimation(0, "walking", true);
+		}
 	}
 
 	@Override

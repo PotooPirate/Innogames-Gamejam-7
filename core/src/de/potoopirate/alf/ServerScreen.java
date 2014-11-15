@@ -29,15 +29,8 @@ public class ServerScreen extends ScreenAdapter{
 		
 		LevelEntity level = new LevelEntity();
 		engine.addEntity(level);
-		engine.addEntity(AnimalEntity.createHippo(1,2));
-		engine.addEntity(AnimalEntity.createHippo(0,2));
 		
 		MusicPlayer.playBackgroundMusic();
-		
-		//RendererSystem.getInstance();
-		//TestEntity t = new TestEntity();
-		//engine.addEntity(t);
-		//t.Init();
 	}
 
 	@Override
@@ -48,7 +41,7 @@ public class ServerScreen extends ScreenAdapter{
 		PathSystem.getInstance().Update(Gdx.graphics.getDeltaTime());
 		
 		if(Gdx.input.isKeyPressed(Keys.S)) {
-			AnimalEntity.createOcto(1, 1);
+			AnimalEntity.createHippo(1, 1);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.C)) {
 			AnimalEntity.createSnail(0,3);

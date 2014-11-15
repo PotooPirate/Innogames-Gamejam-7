@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
 import de.potoopirate.alf.Network;
 import de.potoopirate.alf.entities.AnimalEntity;
+import de.potoopirate.alf.entities.MainBaseEntity;
 import de.potoopirate.alf.interfaces.SpawnListener;
 
 public class SpawnSystem extends EntitySystem implements SpawnListener {
@@ -19,6 +20,8 @@ public class SpawnSystem extends EntitySystem implements SpawnListener {
 		super.addedToEngine(engine);
 		this.engine = engine;
 		animalQueue = new Array<Entity>();
+		engine.addEntity(new MainBaseEntity(0));
+		engine.addEntity(new MainBaseEntity(1));
 	}
 
 	@Override

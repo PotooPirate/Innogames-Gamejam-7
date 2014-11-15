@@ -39,7 +39,7 @@ public class TransformComponent extends Component {
 	
 	public void Init(Vector2 position) {
 		this.position = position;
-		this.size = new Vector2(0.18f,0.18f);
+		this.size = new Vector2(0.23f,0.23f);
 		this.rotation = new Vector2(0,0);
 	}
 }

@@ -30,9 +30,7 @@ public class PathSystem extends EntitySystem {
 	private static PathSystem instance;
 	
 	public static final float speedFactor = 0.5f;
-	
-	private Engine engine;
-	
+		
 	private float getWidth(float value) {
 		return (value/6.4f) * (((float)Gdx.graphics.getWidth())/100.0f);
 	}
@@ -91,7 +89,6 @@ public class PathSystem extends EntitySystem {
 	
 	@Override
 	public void addedToEngine(Engine engine) {
-		this.engine = engine;
 	}
 	
 	public void Update(float deltaTime) {

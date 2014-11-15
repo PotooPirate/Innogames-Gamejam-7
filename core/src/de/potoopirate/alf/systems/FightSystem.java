@@ -1,20 +1,14 @@
 package de.potoopirate.alf.systems;
 
-import java.util.*;
-
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.esotericsoftware.spine.AnimationState;
-import com.esotericsoftware.spine.AnimationState.AnimationStateListener;
-import com.esotericsoftware.spine.Event;
-import com.esotericsoftware.spine.EventData;
 
-import de.potoopirate.alf.MyAnimationStateListener;
 import de.potoopirate.alf.NaturalSelection;
 import de.potoopirate.alf.components.AnimationRendererComponent;
 import de.potoopirate.alf.components.CollisionComponent;
@@ -112,12 +106,12 @@ public class FightSystem extends EntitySystem  {
 			if(player.id == FIRST_PLAYER)
 			{
 				baseP1 = (MainBaseEntity) bases.get(hq);
-				baseP1Transform = TransformerMapper.get(baseP1);
+				baseP1Transform = baseP1.getComponent(TransformComponent.class);
 			}
 			else if(player.id == SECOND_PLAYER)
 			{
 				baseP2 = (MainBaseEntity) bases.get(hq);
-				baseP2Transform = TransformerMapper.get(baseP2);
+				baseP2Transform = baseP2.getComponent(TransformComponent.class);
 			}
 		}
 	}
@@ -133,19 +127,15 @@ public class FightSystem extends EntitySystem  {
 //		deadAnimals = new Array<AnimalEntity>();
 		
 		//separate animals per player. This omits of a lot of collisions between befriended animals
-		for(int e=0;e<animals.size();++e)
-		{
+		for(int e=0;e<animals.size();++e) {
 			player = PlayerMapper.get(animals.get(e));
 			
-			switch(player.id)
-			{
-				case FIRST_PLAYER: 
-				{
+			switch(player.id) {
+				case FIRST_PLAYER:  {
 					allAnimalsP1.add((AnimalEntity) animals.get(e));
 					break;
 				}
-				case SECOND_PLAYER: 
-				{
+				case SECOND_PLAYER: {
 					allAnimalsP2.add((AnimalEntity) animals.get(e)); 
 					break;
 				}
@@ -182,48 +172,19 @@ public class FightSystem extends EntitySystem  {
 						
 							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
-								System.out.println("Player 1 animal wins");
 								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
 								kill(AnimalP1);
-//								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
-//								CollisionMapper.get(AnimalP2).dead=true;
-//								allAnimalsP2.removeIndex(e2);
-//								deadAnimals.add(AnimalP2);
-//								PathSystem.getInstance().RemoveAnimal(AnimalP2);
-
-								//playSound of loosing animal
-//								--e2;
 							}
 							if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 							{
-								System.out.println("Player 2 animal wins");
 								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
 								kill(AnimalP1);
-//								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0,0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
-//								CollisionMapper.get(AnimalP1).dead=true;
-//								allAnimalsP1.removeIndex(e1);
-//								deadAnimals.add(AnimalP1);
-//								PathSystem.getInstance().RemoveAnimal(AnimalP1);
-								
-								//playSound of loosing animal
-//								--e1;
-//								break;
 							}
 						
 							if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
-								System.out.println("two animals of same type kills");
 								kill(AnimalP1);
 								kill(AnimalP2);
-								System.out.println("finished killing");
-//								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
-//								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
-//								allAnimalsP1.removeIndex(e1);
-//								allAnimalsP2.removeIndex(e2);
-//								deadAnimals.add(AnimalP2);
-//								deadAnimals.add(AnimalP1);
-//								PathSystem.getInstance().RemoveAnimal(AnimalP1);
-//								PathSystem.getInstance().RemoveAnimal(AnimalP2);
 							}
 						
 						}
@@ -236,7 +197,6 @@ public class FightSystem extends EntitySystem  {
 		{
 			if(CollisionMapper.get(e).dead)
 			{
-				System.out.println("animal of Player 1 is dead, removing now");
 				PathSystem.getInstance().RemoveAnimal(e);
 				engine.removeEntity(e);
 			}
@@ -245,42 +205,44 @@ public class FightSystem extends EntitySystem  {
 		{
 			if(CollisionMapper.get(e).dead)
 			{
-				System.out.println("animal of Player 2 is dead, removing now");
 				PathSystem.getInstance().RemoveAnimal(e);
 				engine.removeEntity(e);
 			}
 		}
 		
-		/*
-		for(int e1 = 0; e1<allAnimalsP1.size;++e1)
-		{
-			float xDiff = TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().x - baseP2Transform.getPosition().x;
-			float yDiff = TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().y - baseP2Transform.getPosition().y;
-			if(xDiff*xDiff + yDiff*yDiff < SQUARED_INVADE_HQ_RANGE)
-			{
-				LifeMapper.get(baseP2).looseLife();
-				kill(allAnimalsP1.get(e1));
+		if(allAnimalsP1.size > 0) {
+			for(int e1 = 0; e1<allAnimalsP1.size;++e1) {
+				float distance = Vector2.dst(TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().x ,
+						   TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().y , 
+						   baseP2Transform.getPosition().x, 
+						   baseP2Transform.getPosition().y) ;
+				if(distance< 10) {
+					System.out.print("LifeLost");
+					LifeMapper.get(baseP2).looseLife();
+					PlayerManagerSystem.playerTwoLife++;
+					kill(allAnimalsP1.get(e1));
+				}
 			}
-		}
+		}	
 		
-		for(int e2 = 0; e2<allAnimalsP2.size;++e2)
-		{
-			float xDiff = TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().x - baseP1Transform.getPosition().x;
-			float yDiff = TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().y - baseP1Transform.getPosition().y;
-			if(xDiff*xDiff + yDiff*yDiff < SQUARED_INVADE_HQ_RANGE)
-			{
-				LifeMapper.get(baseP1).looseLife();
-				kill(allAnimalsP2.get(e2));
+		if(allAnimalsP2.size > 0 ) {
+			for(int e2 = 0; e2<allAnimalsP2.size;++e2) {
+				float distance = Vector2.dst(TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().x ,
+						   TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().y , 
+						   baseP1Transform.getPosition().x, 
+						   baseP1Transform.getPosition().y);
+				if(distance < 10) {
+					System.out.print("LifeLost");
+					LifeMapper.get(baseP1).looseLife();
+					PlayerManagerSystem.playerOneLife++;
+					kill(allAnimalsP2.get(e2));
+				}
 			}
 		}
-		*/
-	
 	}
 	
-	private void kill(AnimalEntity animal)
-	{
-		System.out.println("killing an animal");
-		animal.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
+	private void kill(AnimalEntity animal) {
+		animal.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(animal.getComponent(AnimationRendererComponent.class));
 		CollisionMapper.get(animal).dead=true;		
 	}
 }
