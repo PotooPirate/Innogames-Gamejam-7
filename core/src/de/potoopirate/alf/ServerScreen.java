@@ -7,6 +7,7 @@ import com.badlogic.gdx.ScreenAdapter;
 
 import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.LevelEntity;
+import de.potoopirate.alf.systems.FightSystem;
 import de.potoopirate.alf.systems.PathSystem;
 import de.potoopirate.alf.systems.RendererSystem;
 import de.potoopirate.alf.systems.ServerSystem;
@@ -24,7 +25,7 @@ public class ServerScreen extends ScreenAdapter{
 		engine.addSystem(new ServerSystem(spawnSystem));
 		
 		engine.addSystem(RendererSystem.getInstance());
-		//engine.addSystem(new FightSystem());
+		engine.addSystem(new FightSystem());
 		
 		LevelEntity level = new LevelEntity();
 		engine.addEntity(level);

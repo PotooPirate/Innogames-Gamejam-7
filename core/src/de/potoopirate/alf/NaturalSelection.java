@@ -24,7 +24,7 @@ public class NaturalSelection {
 		int randomStatus;
 		
 		for (Race race : Race.values()) {
-			randomStatus = availableStatus.get(rand.nextInt(availableStatus.size - 1));
+			randomStatus = availableStatus.get(rand.nextInt(availableStatus.size));
 			assignedStatus.put(race, randomStatus);
 			availableStatus.removeValue(randomStatus, true);
 		}

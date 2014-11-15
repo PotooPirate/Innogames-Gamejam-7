@@ -21,6 +21,7 @@ public class ALFMain extends Game {
 	public void create () {	
 		engine = new Engine();	
 		setScreen(new StartScreen(engine, this));
+ 
 	}
 
 	@Override

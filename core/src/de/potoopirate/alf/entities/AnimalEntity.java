@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.spine.SkeletonData;
 import com.esotericsoftware.spine.SkeletonJson;
 
+import de.potoopirate.alf.components.CollisionComponent;
 import de.potoopirate.alf.components.PathComponent;
 import de.potoopirate.alf.components.PlayerComponent;
 import de.potoopirate.alf.components.RaceComponent;
@@ -22,6 +23,7 @@ public class AnimalEntity extends Entity {
 		add(new PathComponent());
 		add(new PlayerComponent(playerId));
 		add(new TransformComponent());
+		add(new CollisionComponent());
 	//	add(new SoundComponent(sound));
 		add(new AnimationRendererComponent());
 		this.getComponent(TransformComponent.class).Init(playerId == 0 ? new Vector2(30,30): new Vector2(610,440));

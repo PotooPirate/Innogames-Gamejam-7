@@ -11,6 +11,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.utils.Array;
 
 import de.potoopirate.alf.NaturalSelection;
+import de.potoopirate.alf.components.AnimationRendererComponent;
 import de.potoopirate.alf.components.CollisionComponent;
 import de.potoopirate.alf.components.LifeComponent;
 import de.potoopirate.alf.components.PathComponent;
@@ -96,7 +97,7 @@ public class FightSystem extends EntitySystem {
 		
 		NaturalSelection.assignNewStatus();
 		
-		animals = engine.getEntitiesFor(Family.getFor(RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
+		animals = engine.getEntitiesFor(Family.getFor(RaceComponent.class, PathComponent.class, PlayerComponent.class, TransformComponent.class, CollisionComponent.class, AnimationRendererComponent.class));
 		bases = engine.getEntitiesFor(Family.getFor(LifeComponent.class, PlayerComponent.class, TransformComponent.class));
 		for(int hq = 0;hq<bases.size();++hq)
 		{
@@ -117,14 +118,31 @@ public class FightSystem extends EntitySystem {
 	@Override
 	public void update(float deltaTime)
 	{
+		super.update(deltaTime);
+		
+		animals = engine.getEntitiesFor(Family.getFor(RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
+		
+		allAnimalsP1 = new Array<AnimalEntity>();
+		allAnimalsP2 = new Array<AnimalEntity>();
+		deadAnimals = new Array<AnimalEntity>();
+		
 		//separate animals per player. This omits of a lot of collisions between befriended animals
 		for(int e=0;e<animals.size();++e)
 		{
 			player = PlayerMapper.get(animals.get(e));
+			
 			switch(player.id)
 			{
-				case 1: {allAnimalsP1.add((AnimalEntity) animals.get(e)); break;}
-				case 2: {allAnimalsP2.add((AnimalEntity) animals.get(e)); break;}
+				case FIRST_PLAYER: 
+				{
+					allAnimalsP1.add((AnimalEntity) animals.get(e));
+					break;
+				}
+				case SECOND_PLAYER: 
+				{
+					allAnimalsP2.add((AnimalEntity) animals.get(e)); 
+					break;
+				}
 			}
 		}
 		
@@ -138,14 +156,15 @@ public class FightSystem extends EntitySystem {
 			for(int e2 = 0;e2<allAnimalsP2.size;e2++)
 			{
 				AnimalP2 = allAnimalsP2.get(e2);
-				if(animal1Path == PathMapper.get(AnimalP2))
+				if(animal1Path.getPathNumber() == PathMapper.get(AnimalP2).getPathNumber())
 				{
-					
 					animalP2Position = TransformerMapper.get(AnimalP2);
 					
 					float xDiff = animalP1Position.getPosition().x - animalP2Position.getPosition().x;
 					float yDiff = animalP1Position.getPosition().y - animalP2Position.getPosition().y;
 					
+					System.out.println(xDiff);
+					System.out.println(yDiff);
 					
 					if(xDiff*xDiff + yDiff*yDiff < MAXIMUM_COLLISION_RANGE)
 					{
@@ -184,6 +203,7 @@ public class FightSystem extends EntitySystem {
 			}
 		}		
 		
+		/*
 		for(int e1 = 0; e1<allAnimalsP1.size;++e1)
 		{
 			float xDiff = TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().x - baseP2Transform.getPosition().x;
@@ -203,7 +223,7 @@ public class FightSystem extends EntitySystem {
 				LifeMapper.get(baseP1).looseLife();
 			}
 		}
-		
+		*/
 		
 		for(AnimalEntity e : deadAnimals)
 		{
