@@ -24,10 +24,11 @@ public class NaturalSelection {
 		assignedStatus = new HashMap<Race, Integer>();
 		
 		// assign status to race
-		assignStatus();
+		assignNewStatus();
 	}
 	
-	private void assignStatus () {
+	// assign new statuses -> has to be called before each round begins
+	public void assignNewStatus () {
 		Random rand = new Random();
 		int randomStatus;
 		
@@ -38,6 +39,7 @@ public class NaturalSelection {
 		}
 	}
 	
+	// get the status of a race
 	public int getStatusOfRace (Race race) {
 		return assignedStatus.get (race);
 	}
