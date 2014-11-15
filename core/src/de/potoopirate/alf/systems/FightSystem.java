@@ -25,6 +25,8 @@ public class FightSystem extends EntitySystem {
 	
 	public static final float MAXIMUM_COLLISION_RANGE = 100f;
 	public static final float INVADE_HQ_RANGE = 50f;
+	public static final int FIRST_PLAYER = 0;
+	public static final int SECOND_PLAYER = 1;
 	
 	//Mapper for Animals and MainBases
 	private ComponentMapper<PlayerComponent> 		PlayerMapper;
@@ -97,12 +99,12 @@ public class FightSystem extends EntitySystem {
 		for(int hq = 0;hq<bases.size();++hq)
 		{
 			player = PlayerMapper.get(bases.get(hq));
-			if(player.id == 1)
+			if(player.id == FIRST_PLAYER)
 			{
 				baseP1 = (MainBaseEntity) bases.get(hq);
 				baseP1Transform = TransformerMapper.get(baseP1);
 			}
-			else if(player.id == 2)
+			else if(player.id == SECOND_PLAYER)
 			{
 				baseP2 = (MainBaseEntity) bases.get(hq);
 				baseP2Transform = TransformerMapper.get(baseP2);
@@ -158,6 +160,7 @@ public class FightSystem extends EntitySystem {
 							CollisionMapper.get(AnimalP2).dead=true;
 							allAnimalsP2.removeIndex(e2);
 							deadAnimals.add(AnimalP2);
+							//playSound of loosing animal
 							--e2;
 						}
 						if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
@@ -168,6 +171,10 @@ public class FightSystem extends EntitySystem {
 							//playSound of loosing animal
 							--e1;
 							break;
+						}
+						if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
+						{
+							System.out.println("Two Aniamls of same type are close to each other");
 						}
 					}
 					
