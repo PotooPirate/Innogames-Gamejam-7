@@ -37,14 +37,11 @@ public class StartScreen extends ScreenAdapter {
 		batch.draw(CLIENT, Gdx.graphics.getWidth()-100f, 0f, 0f, 0f, 100f, 100f, 1.0f, 1.0f, 0f);
 		batch.end();
 		
-		if (Gdx.input.isTouched() && Gdx.input.getX() < Gdx.graphics.getWidth()/2 
-				&& engine.getSystem(ServerSystem.class) == null) {
+		if (Gdx.input.isTouched() && Gdx.input.getX() < Gdx.graphics.getWidth()/2 && engine.getSystem(ServerSystem.class) == null) {
 			System.out.println("Added a Server:");
 			game.setScreen(new ServerScreen(engine));
-		} else if (Gdx.input.isTouched() && Gdx.input.getX() > Gdx.graphics.getWidth()/2
-				&& engine.getSystem(ClientSystem.class) == null) {
+		} else if (Gdx.input.isTouched() && Gdx.input.getX() > Gdx.graphics.getWidth()/2 && engine.getSystem(ClientSystem.class) == null) {
 			System.out.println("Added a Client:");
-
 			game.setScreen(new ClientScreen(engine));
 		}
 	}
