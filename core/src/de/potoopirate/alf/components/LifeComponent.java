@@ -4,4 +4,9 @@ import com.badlogic.ashley.core.Component;
 
 public class LifeComponent extends Component {
 	public int life;
+	
+	public void looseLife()
+	{
+		this.life--;
+	}
 }

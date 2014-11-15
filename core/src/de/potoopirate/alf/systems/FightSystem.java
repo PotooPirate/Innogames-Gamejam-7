@@ -20,8 +20,8 @@ import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.MainBaseEntity;
 
 public class FightSystem extends EntitySystem {
+	/*
 	
-	 /*
 	//Mapper for Animals and MainBases
 	private ComponentMapper<PlayerComponent> 		PlayerMapper;
 	private ComponentMapper<TransformComponent> 	TransformerMapper;
@@ -35,14 +35,20 @@ public class FightSystem extends EntitySystem {
 	private ComponentMapper<LifeComponent>		LifeMapper;	
 	
 	//Array of all Animals that are currenty alive
-	private ImmutableArray<Entity> 		animals;
+	private ImmutableArray<Entity> 				animals;
 	//Array of all MainBases
-	private ImmutableArray<Entity>		bases;
-	//Arrays to sort Animals by players 
-	private Array<AnimalEntity>				allAnimalsP1;
-	private Array<AnimalEntity>				allAnimalsP2;
+	private ImmutableArray<Entity>				bases;
 	
-	private PlayerComponent					player;
+	private MainBaseEntity 						baseP1;
+	private MainBaseEntity						baseP2;
+	private TransformComponent 					baseP1Transform;
+	private TransformComponent					baseP2Transform; 
+	
+	//Arrays to sort Animals by players 
+	private Array<AnimalEntity>					allAnimalsP1;
+	private Array<AnimalEntity>					allAnimalsP2;
+	
+	private PlayerComponent						player;
 	
 	//The Animal-Entities, that are currently checked
 	private AnimalEntity						AnimalP1;
@@ -60,19 +66,22 @@ public class FightSystem extends EntitySystem {
 	private TransformComponent					animalP2Position;
 	
 	//Array of animals, that has died in this iteration
-	private Array<AnimalEntity>				deadAnimals;
+	private Array<AnimalEntity>					deadAnimals;
 	
 	//Engine on everything is build
 	private Engine engine;
 	
 	public FightSystem()
 	{
-		RaceMapper = ComponentMapper.getFor(RaceComponent.class);
 		PlayerMapper = ComponentMapper.getFor(PlayerComponent.class);
 		TransformerMapper = ComponentMapper.getFor(TransformComponent.class);
-		LifeMapper = ComponentMapper.getFor(LifeComponent.class);
+		
+		RaceMapper = ComponentMapper.getFor(RaceComponent.class);
 		PathMapper = ComponentMapper.getFor(PathComponent.class);
 		CollisionMapper = ComponentMapper.getFor(CollisionComponent.class);
+		StatusMapper = ComponentMapper.getFor(StatusComponent.class);
+
+		LifeMapper = ComponentMapper.getFor(LifeComponent.class);
 	}
 	
 	@Override
@@ -82,6 +91,20 @@ public class FightSystem extends EntitySystem {
 		
 		animals = engine.getEntitiesFor(Family.getFor(RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
 		bases = engine.getEntitiesFor(Family.getFor(LifeComponent.class, PlayerComponent.class, TransformComponent.class));
+		for(int hq = 0;hq<bases.size();++hq)
+		{
+			player = PlayerMapper.get(bases.get(hq));
+			if(player.id == 1)
+			{
+				baseP1 = (MainBaseEntity) bases.get(hq);
+				baseP1Transform = TransformerMapper.get(baseP1);
+			}
+			else if(player.id == 2)
+			{
+				baseP2 = (MainBaseEntity) bases.get(hq);
+				baseP2Transform = TransformerMapper.get(baseP2);
+			}
+		}
 	}
 	
 	@Override
@@ -116,21 +139,25 @@ public class FightSystem extends EntitySystem {
 					float xDiff = animalP1Position.getPosition().x - animalP2Position.getPosition().x;
 					float yDiff = animalP1Position.getPosition().y - animalP2Position.getPosition().y;
 					
-					float squareNorm = xDiff*xDiff + yDiff*yDiff;
 					
-					if(squareNorm < MAXIMUM_COLLISION_RANGE)
+					if(xDiff*xDiff + yDiff*yDiff < MAXIMUM_COLLISION_RANGE)
 					{
-						animalP1Race = RaceMapper.get(AnimalP1);
+						animalP1Race= RaceMapper.get(AnimalP1);
 						animalP2Race = RaceMapper.get(AnimalP2);
 						
-						if(animalP1Race > animalP2Race)
+						//Check which animal wins the fight
+						//0 wins over 1
+						//1 wins over 2
+						//2 wins over 0
+						
+						if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 						{
 							CollisionMapper.get(AnimalP2).dead=true;
 							allAnimalsP2.removeIndex(e2);
 							deadAnimals.add(AnimalP2);
 							--e2;
 						}
-						if(animalP2Race > animalP1Race)
+						if(NaturalSelection.getStatusofRace(animalP2Race.race)+1 % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 						{
 							CollisionMapper.get(AnimalP1).dead=true;
 							allAnimalsP1.removeIndex(e1);
@@ -142,16 +169,26 @@ public class FightSystem extends EntitySystem {
 					
 				}
 			}
-		}
+		}		
 		
 		for(int e1 = 0; e1<allAnimalsP1.size;++e1)
 		{
-			//TODO: check collision with headquarter of P2
+			float xDiff = TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().x - baseP2Transform.getPosition().x;
+			float yDiff = TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().y - baseP2Transform.getPosition().y;
+			if(xDiff*xDiff + yDiff*yDiff < INVADE_HQ_RANGE)
+			{
+				LifeMapper.get(baseP2).looseLife();
+			}
 		}
 		
 		for(int e2 = 0; e2<allAnimalsP2.size;++e2)
 		{
-			//TODO: check collision with headquarter of P1
+			float xDiff = TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().x - baseP1Transform.getPosition().x;
+			float yDiff = TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().y - baseP1Transform.getPosition().y;
+			if(xDiff*xDiff + yDiff*yDiff < INVADE_HQ_RANGE)
+			{
+				LifeMapper.get(baseP1).looseLife();
+			}
 		}
 		
 		
@@ -163,7 +200,3 @@ public class FightSystem extends EntitySystem {
 	}
 	*/
 }
-
-
-//TODO: Klarstellen, wie die Race gespeichert ist und wo gespeichert wird, welche Rasse welche besiegen kann
-//TODO: Klären, wie eine Kollision mit dem HQ aussieht
