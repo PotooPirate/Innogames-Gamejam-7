@@ -163,8 +163,7 @@ public class FightSystem extends EntitySystem {
 					float xDiff = animalP1Position.getPosition().x - animalP2Position.getPosition().x;
 					float yDiff = animalP1Position.getPosition().y - animalP2Position.getPosition().y;
 					
-					System.out.println(xDiff);
-					System.out.println(yDiff);
+//					System.out.println(xDiff*xDiff + yDiff*yDiff);
 					
 					if(xDiff*xDiff + yDiff*yDiff < MAXIMUM_COLLISION_RANGE)
 					{
