@@ -4,4 +4,8 @@ import com.badlogic.ashley.core.Component;
 
 public class PlayerComponent extends Component {
 	public int id;
+	
+	public PlayerComponent(int playerId) {
+		id = playerId;
+	}
 }
