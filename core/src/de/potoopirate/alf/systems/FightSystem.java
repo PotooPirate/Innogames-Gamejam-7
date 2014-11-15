@@ -10,6 +10,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.utils.Array;
 
+import de.potoopirate.alf.NaturalSelection;
 import de.potoopirate.alf.components.CollisionComponent;
 import de.potoopirate.alf.components.LifeComponent;
 import de.potoopirate.alf.components.PathComponent;
@@ -20,7 +21,10 @@ import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.MainBaseEntity;
 
 public class FightSystem extends EntitySystem {
-	/*
+	
+	
+	public static final float MAXIMUM_COLLISION_RANGE = 100f;
+	public static final float INVADE_HQ_RANGE = 50f;
 	
 	//Mapper for Animals and MainBases
 	private ComponentMapper<PlayerComponent> 		PlayerMapper;
@@ -79,7 +83,6 @@ public class FightSystem extends EntitySystem {
 		RaceMapper = ComponentMapper.getFor(RaceComponent.class);
 		PathMapper = ComponentMapper.getFor(PathComponent.class);
 		CollisionMapper = ComponentMapper.getFor(CollisionComponent.class);
-		StatusMapper = ComponentMapper.getFor(StatusComponent.class);
 
 		LifeMapper = ComponentMapper.getFor(LifeComponent.class);
 	}
@@ -199,5 +202,5 @@ public class FightSystem extends EntitySystem {
 		}
 		
 	}
-	*/
+	
 }
