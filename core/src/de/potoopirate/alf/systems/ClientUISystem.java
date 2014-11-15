@@ -10,7 +10,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import de.potoopirate.alf.interfaces.ClientListener;
 
@@ -42,6 +46,10 @@ public class ClientUISystem extends EntitySystem {
 	private boolean started; // Holding the client in a block state
 	private float blockCounter;
 	private SpriteBatch batch;
+	
+	private Image slot1;
+	private Image slot2;
+	private Image slot3;
 
 	private ShapeRenderer debugRenderer;
 
@@ -50,12 +58,23 @@ public class ClientUISystem extends EntitySystem {
 		debugRenderer = new ShapeRenderer();
 		activePath = 2;
 		batch = new SpriteBatch();
+		
+		slot1 = new Image(TORTSEN_ICON);
+		slot1.setPosition(ICON_X, Gdx.graphics.getHeight());
+		slot2 = new Image(TORTSEN_ICON);
+		slot2.setPosition(ICON_X+SECTION, Gdx.graphics.getHeight());
+		slot3 = new Image(TORTSEN_ICON);
+		slot3.setPosition(ICON_X+SECTION*2, Gdx.graphics.getHeight());
 	}
 
 	@Override
 	public void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
 
+		slot1.addAction(Actions.moveTo(ICON_X, ICON_Y, 2, Interpolation.bounceOut));
+		slot2.addAction(Actions.sequence(Actions.delay(0.5f), Actions.moveTo(ICON_X+SECTION, ICON_Y, 2, Interpolation.bounceOut)));
+		slot3.addAction(Actions.sequence(Actions.delay(1f), Actions.moveTo(ICON_X+SECTION*2, ICON_Y, 2, Interpolation.bounceOut)));
+		
 		blockCounter = 0;
 		started = false;
 		stage = new Stage();
@@ -117,6 +136,7 @@ public class ClientUISystem extends EntitySystem {
 		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
 		debugRenderer.end();
 
+		
 		batch.begin(); 
 		// Draw Path Icons
 		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
@@ -125,16 +145,26 @@ public class ClientUISystem extends EntitySystem {
 
 		// Draw Animal Icons
 		
-		if (start_y < ICON_Y ){
+		/*if (start_y < ICON_Y ){
 			batch.draw(TORTSEN_ICON, ICON_X, start_y);
 			start_y++;
 		}else if (start_y == ICON_Y){
 			batch.draw(TORTSEN_ICON, ICON_X, ICON_Y);
 		}
 		batch.draw(TORTSEN_ICON, ICON_X + SECTION, ICON_Y);
-		batch.draw(TORTSEN_ICON, ICON_X + (SECTION * 2), ICON_Y);
+		batch.draw(TORTSEN_ICON, ICON_X + (SECTION * 2), ICON_Y);*/
+
+		slot1.act(deltaTime);
+		slot2.act(deltaTime);
+		slot3.act(deltaTime);
+		
+		slot1.draw(batch, 1f);
+		slot2.draw(batch, 1f);
+		slot3.draw(batch, 1f);
+		
 		batch.end();
 
+		
 		// if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
 		throwSlot();
 		changePath();
