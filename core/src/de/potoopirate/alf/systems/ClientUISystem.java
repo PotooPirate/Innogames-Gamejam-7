@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
@@ -19,7 +20,7 @@ import de.potoopirate.alf.interfaces.ClientListener;
 
 public class ClientUISystem extends EntitySystem {
 
-	private static final int BLOCK_COUNTER_RELEASE = 1;
+	private static final int BLOCK_COUNTER_RELEASE = 3;
 	private static final Texture TORTSEN_ICON = new Texture(Gdx.files.internal("icons/tortsenicon.png"));
 	private static final Texture EMMA_ICON = new Texture(Gdx.files.internal("icons/emmaicon.png"));
 	private static final Texture GUNTER_ICON = new Texture(Gdx.files.internal("icons/guntericon.png"));
@@ -32,6 +33,8 @@ public class ClientUISystem extends EntitySystem {
 
 	
 	private static final Texture GRAY_BACKGROUND = new Texture(Gdx.files.internal("icons/gray_background.png"));
+	
+	private static final BitmapFont FONT = new BitmapFont(Gdx.files.internal("CandyFont.fnt"));
 
 	private static final int SECTION = Gdx.graphics.getWidth() / 3;
 	private static final int ICON_X = (SECTION - SECTION / 2) - TORTSEN_ICON.getWidth() / 2;
@@ -69,7 +72,6 @@ public class ClientUISystem extends EntitySystem {
 		blockImage.setPosition(0, 155);
 		blockImage.setWidth(Gdx.graphics.getWidth());
 		blockImage.setHeight(Gdx.graphics.getHeight() - 155);
-		blockImage.setVisible(false);
 		
 		slot1 = new Image(TORTSEN_ICON);
 		slot1.setPosition(ICON_X, Gdx.graphics.getHeight());
@@ -166,15 +168,6 @@ public class ClientUISystem extends EntitySystem {
 		batch.begin();
 		//font.draw(batch, "This is some text", 10, 10);
 		// if (blockCounter <= BLOCK_COUNTER_RELEASE && started) {
-		if (blockCounter >= BLOCK_COUNTER_RELEASE) {
-			throwSlot();
-			changePath();
-			blockImage.setVisible(false);
-		} else if (blockCounter < BLOCK_COUNTER_RELEASE) {
-			blockImage.setVisible(true);
-		} else if (!started) {
-			started = clientSystem.isStarted();
-		}
 
 		if (activePath == 1) 
 			batch.draw(SELECTED_LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
@@ -201,9 +194,20 @@ public class ClientUISystem extends EntitySystem {
 		slot1.draw(batch, 1f);
 		slot2.draw(batch, 1f);
 		slot3.draw(batch, 1f);
-
+		
+		
 		blockImage.act(deltaTime);
-		blockImage.draw(batch, 1f);
+		if (blockCounter >= BLOCK_COUNTER_RELEASE) {
+			throwSlot();
+			changePath();
+		} else if (blockCounter < BLOCK_COUNTER_RELEASE) {
+			blockImage.draw(batch, 1f);
+			FONT.setScale(3f);
+			TextBounds bounds = FONT.getBounds("0");
+			FONT.draw(batch, ""+(int)(3-blockCounter), Gdx.graphics.getWidth()/2 - bounds.width/2 , Gdx.graphics.getHeight()/2 + bounds.height/2);
+		} else if (!started) {
+			started = clientSystem.isStarted();
+		}
 		
 		batch.end();
 	}
