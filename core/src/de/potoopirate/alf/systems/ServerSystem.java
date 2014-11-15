@@ -58,15 +58,14 @@ public class ServerSystem extends EntitySystem {
 			super.connected(connection);
 		}
 		
+		private int path;
 		private void handleNetworkMessages(Connection connection, NetworkMessage networkMessage) {
-			
-			if (connection.getID() == 1){
-				if (networkMessage.pathType == 1)
-					networkMessage.pathType = 3;
-				else if (networkMessage.pathType == 3)
-					networkMessage.pathType = 1;
+			path = networkMessage.pathType;
+			if (connection.getID()-1 == 1) {
+				if(networkMessage.pathType == 1) path = 3;
+				else if (networkMessage.pathType == 3) path = 1;
 			}
-			spawnListener.spawnAnimal(connection.getID()-1, networkMessage.pathType, networkMessage.animalType);
+			spawnListener.spawnAnimal(connection.getID()-1, path, networkMessage.animalType);
 			System.out.println("===============================================================");
 			System.out.println("== get NetworkMessage from PlayerId: " + connection.getID());
 			System.out.println("== get PathType: " + networkMessage.pathType);
