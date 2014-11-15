@@ -3,7 +3,7 @@ package de.potoopirate.alf.components;
 import com.badlogic.ashley.core.Component;
 
 public class RaceComponent extends Component {
-	enum Race {
+	public enum Race {
 		SNAIL, 
 		OCTO, 
 		HIPPO
