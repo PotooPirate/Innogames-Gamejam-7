@@ -10,16 +10,17 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.utils.Array;
 
+import de.potoopirate.alf.components.CollisionComponent;
 import de.potoopirate.alf.components.LifeComponent;
 import de.potoopirate.alf.components.PathComponent;
 import de.potoopirate.alf.components.PlayerComponent;
 import de.potoopirate.alf.components.RaceComponent;
 
 public class FightSystem extends EntitySystem {
-/*	
-	 
+	
+	 /*
 	//Mapper for Animals and MainBases
-	private ComponentMapper<PlayerComponent> 	PlayerMapper;
+	private ComponentMapper<PlayerComponent> 		PlayerMapper;
 	private ComponentMapper<TransformComponent> 	TransformerMapper;
 	
 	//Animal-specific Mappers
@@ -38,17 +39,19 @@ public class FightSystem extends EntitySystem {
 	private Array<AnimalEntity>				allAnimalsP1;
 	private Array<AnimalEntity>				allAnimalsP2;
 	
+	private PlayerComponent					player;
+	
 	//The Animal-Entities, that are currently checked
 	private AnimalEntity						AnimalP1;
 	private AnimalEntity						AnimalP2;
 	
 	//Path of the two animals, that are currently checked
-	private PathComponent						Animal1Path;
-	private PathComponent						Animal2Path;
+	private PathComponent						animal1Path;
+	private PathComponent						animal2Path;
 	
 	//Race of the two animals, that are currently checked
-	private RaceComponent						AnimalP1Race;
-	private RaceComponent						AnimalP2Race;
+	private RaceComponent						animalP1Race;
+	private RaceComponent						animalP2Race;
 	
 	//Transform (Position) of the two animals, that are currently checked
 	private TransformComponent					animalP1Position;
@@ -82,11 +85,11 @@ public class FightSystem extends EntitySystem {
 	@Override
 	public void update(float deltaTime)
 	{
-		//seperate animals per player. This omits of a lot of collisions between friended animals
+		//separate animals per player. This omits of a lot of collisions between befriended animals
 		for(int e=0;e<animals.size();++e)
 		{
-			EntityPlayer = PlayerMapper.get(animals.get(e));
-			switch(EntityPlayer.getPlayerNumber())
+			player = PlayerMapper.get(animals.get(e));
+			switch(player.id)
 			{
 				case 1: {allAnimalsP1.add(animals.get(e));}
 				case 2: {allAnimalsP2.add(animals.get(e));}
@@ -97,13 +100,13 @@ public class FightSystem extends EntitySystem {
 		for(int e1 = 0;e1<allAnimalsP1.size;++e1)
 		{
 			AnimalP1 = allAnimalsP1.get(e1);
-			Animal1Path = PathMapper.get(AnimalP1);
+			animal1Path = PathMapper.get(AnimalP1);
 			animalP1Position = TranformerMapper.get(AnimalP1);
 			
 			for(int e2 = 0;e2<allAnimalsP2.size;e2++)
 			{
 				AnimalP2 = allAnimalsP2.get(e2);
-				if(Animal1Path == PathMapper.get(AnimalP2))
+				if(animal1Path == PathMapper.get(AnimalP2))
 				{
 					
 					animalP2Position = TranformerMapper.get(AnimalP2);
@@ -113,16 +116,26 @@ public class FightSystem extends EntitySystem {
 					
 					float squareNorm = xDiff*xDiff + yDiff*yDiff;
 					
-					if(sqareNorm < MAXIMUM_COLLISION_RANGE)
+					if(squareNorm < MAXIMUM_COLLISION_RANGE)
 					{
 						animalP1Race = RaceMapper.get(AnimalP1);
 						animalP2Race = RaceMapper.get(AnimalP2);
 						
-						
-						//TODO: check for winner
-						//TODO: kill Looser by setting collisionFlag
-						
-						//TODO: remove Looser from allAnimalsPx-Array
+						if(animalP1Race > animalP2Race)
+						{
+							CollisionMapper.get(AnimalP2).dead=true;
+							allAnimalsP2.remove(AnimalP2);
+							deadAnimals.add(AnimalP2);
+							--e2;
+						}
+						if(animalP2Race > animalP1Race)
+						{
+							CollisionMapper.get(AnimalP1).dead=true;
+							allAnimalsP1.remove(AnimalP1);
+							deadAnimals.add(AnimalP2);
+							--e1;
+							break;
+						}
 						
 						//TODO: Add Looser to deadAnimals-Array
 					}
@@ -153,5 +166,4 @@ public class FightSystem extends EntitySystem {
 
 
 //TODO: Klarstellen, wie die Race gespeichert ist und wo gespeichert wird, welche Rasse welche besiegen kann
-//TODO: Klären, was passiert, wenn zwei EInheiten gleichen Typs aufeinander treffen (Beide überleben? Beide Sterben?)
 //TODO: Klären, wie eine Kollision mit dem HQ aussieht
