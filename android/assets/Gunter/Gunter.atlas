@@ -1,0 +1,104 @@
+
+Gunter.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Body
+  rotate: false
+  xy: 2, 11
+  size: 173, 59
+  orig: 173, 59
+  offset: 0, 0
+  index: -1
+Head
+  rotate: false
+  xy: 179, 44
+  size: 121, 91
+  orig: 121, 91
+  offset: 0, 0
+  index: -1
+House
+  rotate: false
+  xy: 2, 72
+  size: 175, 182
+  orig: 175, 182
+  offset: 0, 0
+  index: -1
+LeftEye
+  rotate: false
+  xy: 455, 206
+  size: 43, 48
+  orig: 43, 48
+  offset: 0, 0
+  index: -1
+LeftPupil
+  rotate: false
+  xy: 425, 171
+  size: 11, 13
+  orig: 11, 13
+  offset: 0, 0
+  index: -1
+LeftStil
+  rotate: true
+  xy: 302, 44
+  size: 35, 56
+  orig: 35, 56
+  offset: 0, 0
+  index: -1
+LowerNeck
+  rotate: true
+  xy: 302, 81
+  size: 73, 117
+  orig: 73, 117
+  offset: 0, 0
+  index: -1
+Mouth
+  rotate: false
+  xy: 210, 21
+  size: 30, 21
+  orig: 30, 21
+  offset: 0, 0
+  index: -1
+Neck
+  rotate: true
+  xy: 302, 156
+  size: 98, 121
+  orig: 98, 121
+  offset: 0, 0
+  index: -1
+RightEye
+  rotate: false
+  xy: 360, 44
+  size: 46, 35
+  orig: 46, 35
+  offset: 0, 0
+  index: -1
+RightPupil
+  rotate: true
+  xy: 210, 2
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: -1
+RightStil
+  rotate: false
+  xy: 425, 186
+  size: 28, 68
+  orig: 28, 68
+  offset: 0, 0
+  index: -1
+Spinner
+  rotate: false
+  xy: 179, 137
+  size: 121, 117
+  orig: 121, 117
+  offset: 0, 0
+  index: -1
+Toughn
+  rotate: false
+  xy: 177, 14
+  size: 31, 28
+  orig: 31, 28
+  offset: 0, 0
+  index: -1

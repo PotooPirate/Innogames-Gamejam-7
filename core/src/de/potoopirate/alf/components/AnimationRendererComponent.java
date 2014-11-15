@@ -98,7 +98,7 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	@Override
 	public void end(int trackIndex) {
 		if(trackIndex == 1) {
-			this.SetAnimationState("flying", true, 0, 2);
+			this.SetAnimationState("walking", true, 0, 2);
 		}
 		else {
 			this.Destroy();

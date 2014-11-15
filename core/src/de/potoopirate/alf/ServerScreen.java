@@ -46,10 +46,10 @@ public class ServerScreen extends ScreenAdapter{
 		PathSystem.getInstance().Update(Gdx.graphics.getDeltaTime());
 		
 		if(Gdx.input.isKeyPressed(Keys.S)) {
-			AnimalEntity.createHippo(1,2);
+			AnimalEntity.createOcto(1, 1);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.C)) {
-			AnimalEntity.createHippo(0,2);
+			AnimalEntity.createSnail(0,3);
 		}
 	}
 

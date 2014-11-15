@@ -34,11 +34,11 @@ public class PathSystem extends EntitySystem {
 	private Engine engine;
 	
 	private float getWidth(float value) {
-		return (value/6.4f) * (Gdx.graphics.getWidth()/100);
+		return (value/6.4f) * (((float)Gdx.graphics.getWidth())/100.0f);
 	}
 	
 	private float getHeight(float value) {
-		return (value/4.8f) * (Gdx.graphics.getHeight()/100);
+		return (value/4.8f) * (((float)Gdx.graphics.getHeight())/100.0f);
 	}
 	
 	private PathSystem() {
