@@ -14,21 +14,20 @@ public class NaturalSelection {
 	
 	public NaturalSelection () {
 		availableStatus = new Array<Integer>();
-		
-		// create status number (0, 1, 2...) for each Race
-		for (int i = 0; i < Race.values().length; i++)
-		{
-			availableStatus.add(i);
-		}
-		
 		assignedStatus = new HashMap<Race, Integer>();
 		
 		// assign status to race
 		assignNewStatus();
 	}
 	
-	// assign new statuses -> has to be called before each round begins
+	// assign new status to all races -> has to be called before each round begins
 	public void assignNewStatus () {
+		// create status number (0, 1, 2...) for each Race
+		for (int i = 0; i < Race.values().length; i++)
+		{
+			availableStatus.add(i);
+		}
+		
 		Random rand = new Random();
 		int randomStatus;
 		
