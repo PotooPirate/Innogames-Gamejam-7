@@ -6,6 +6,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,8 +18,10 @@ public class ClientUISystem extends EntitySystem {
 	
 	private static final int BUTTON_WIDTH = Gdx.graphics.getWidth()/5;
 	private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight()/4;
-	private static final int BLOCK_COUNTER_RELEASE = 10;
+	private static final int SECTION = Gdx.graphics.getWidth()/3;
 	
+	private static final int BLOCK_COUNTER_RELEASE = 10;
+	private static final Texture TORTSEN_ICON = new Texture(Gdx.files.internal("icons/tortsenicon.png"));
 	private Stage stage;
 	private ClientListener clientSystem;
 	private int activePath;
@@ -25,6 +29,7 @@ public class ClientUISystem extends EntitySystem {
 	private boolean touched;		
 	private boolean started;		//Holding the client in a block state
 	private float blockCounter;
+	private SpriteBatch batch;
 	
 	private ShapeRenderer debugRenderer;
 	
@@ -32,6 +37,7 @@ public class ClientUISystem extends EntitySystem {
 		this.clientSystem = clientSystem;
 		debugRenderer = new ShapeRenderer();
 		activePath = 2;
+		batch  = new SpriteBatch();
 	}
 	
 	@Override
@@ -42,6 +48,7 @@ public class ClientUISystem extends EntitySystem {
 		started = false;
 		stage = new Stage();
 	    Gdx.input.setInputProcessor(stage);
+	    
 	}
 
 	
@@ -90,6 +97,7 @@ public class ClientUISystem extends EntitySystem {
 		stage.act(deltaTime);
 	    stage.draw();
 	    
+	    
 	    debugRenderer.begin(ShapeType.Line);
 	    debugRenderer.setColor(1f, 0, 0, 1);
 	    debugRenderer.line(Gdx.graphics.getWidth()/3, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
@@ -104,6 +112,13 @@ public class ClientUISystem extends EntitySystem {
 	    debugRenderer.setColor(activePath == 3 ? Color.GREEN : Color.GRAY);
 	    debugRenderer.rect(BUTTON_WIDTH*3, BUTTON_HEIGHT*3, BUTTON_WIDTH, BUTTON_HEIGHT);
 	    debugRenderer.end();
+	    
+	    int trotsenIconXLocation = (SECTION - SECTION/2) - TORTSEN_ICON.getWidth()/2 ;
+	    int trotsenIconYLocation = BUTTON_HEIGHT;
+	    batch.begin();
+	    batch.draw(TORTSEN_ICON,trotsenIconXLocation, trotsenIconYLocation );
+	    batch.end();
+	    
 	    
 	    if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
 		    throwSlot();
