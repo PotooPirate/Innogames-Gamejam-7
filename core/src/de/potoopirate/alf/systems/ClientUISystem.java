@@ -88,6 +88,7 @@ public class ClientUISystem extends EntitySystem {
 			touched = true;
 		} else if (Gdx.input.isTouched() && touched) {
 			y += Gdx.input.getDeltaY();
+			
 		} else if (!Gdx.input.isTouched() && touched) {
 			touched = false;
 			if (y <= -200) {
@@ -130,29 +131,10 @@ public class ClientUISystem extends EntitySystem {
 		stage.act(deltaTime);
 		stage.draw();
 
-		debugRenderer.begin(ShapeType.Line);
-		debugRenderer.setColor(1f, 0, 0, 1);
-		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
-		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
-		debugRenderer.end();
-
-		
-		batch.begin(); 
 		// Draw Path Icons
-		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
-		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
-		batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
+		drawPathIcons();
 
-		// Draw Animal Icons
-		
-		/*if (start_y < ICON_Y ){
-			batch.draw(TORTSEN_ICON, ICON_X, start_y);
-			start_y++;
-		}else if (start_y == ICON_Y){
-			batch.draw(TORTSEN_ICON, ICON_X, ICON_Y);
-		}
-		batch.draw(TORTSEN_ICON, ICON_X + SECTION, ICON_Y);
-		batch.draw(TORTSEN_ICON, ICON_X + (SECTION * 2), ICON_Y);*/
+		batch.begin();
 
 		slot1.act(deltaTime);
 		slot2.act(deltaTime);
@@ -163,7 +145,6 @@ public class ClientUISystem extends EntitySystem {
 		slot3.draw(batch, 1f);
 		
 		batch.end();
-
 		
 		// if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
 		throwSlot();
@@ -171,5 +152,21 @@ public class ClientUISystem extends EntitySystem {
 		// } else if (!started) {
 		// started = clientSystem.isStarted();
 		// }
+	}
+
+	// Draw Path Icons
+	private void drawPathIcons() {
+		debugRenderer.begin(ShapeType.Line);
+		debugRenderer.setColor(1f, 0, 0, 1);
+		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
+		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
+		debugRenderer.end();
+
+		// Draw Path Icons
+		batch.begin(); 
+		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
+		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
+		batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
+		batch.end();
 	}
 }
