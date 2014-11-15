@@ -131,10 +131,17 @@ public class ClientUISystem extends EntitySystem {
 		stage.act(deltaTime);
 		stage.draw();
 
-		// Draw Path Icons
-		drawPathIcons();
-
-		batch.begin();
+		debugRenderer.begin(ShapeType.Line);
+		debugRenderer.setColor(1f, 0, 0, 1);
+		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
+		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
+		debugRenderer.end();
+		
+		batch.begin(); 
+		
+		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
+		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
+		batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
 
 		slot1.act(deltaTime);
 		slot2.act(deltaTime);
@@ -152,21 +159,5 @@ public class ClientUISystem extends EntitySystem {
 		// } else if (!started) {
 		// started = clientSystem.isStarted();
 		// }
-	}
-
-	// Draw Path Icons
-	private void drawPathIcons() {
-		debugRenderer.begin(ShapeType.Line);
-		debugRenderer.setColor(1f, 0, 0, 1);
-		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
-		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
-		debugRenderer.end();
-
-		// Draw Path Icons
-		batch.begin(); 
-		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
-		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
-		batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
-		batch.end();
 	}
 }
