@@ -3,6 +3,7 @@ package de.potoopirate.alf.systems;
 import com.esotericsoftware.spine.SkeletonRenderer;
 import com.esotericsoftware.spine.SkeletonRendererDebug;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.SortedMap;
@@ -25,10 +26,14 @@ public class RendererSystem extends EntitySystem {
 	private SkeletonRendererDebug debugRenderer;
 	
 	private SortedMap<Float, IRenderer> rendererList;
+	private SortedMap<Float, IRenderer> rendererListTemp;
+
 	private static RendererSystem instance;
 	
 	private RendererSystem() {
 		rendererList = new TreeMap<Float, IRenderer>();
+		rendererListTemp = new TreeMap<Float, IRenderer>();
+		
 		camera = new OrthographicCamera();
 		
 		batch = new SpriteBatch();
@@ -54,15 +59,32 @@ public class RendererSystem extends EntitySystem {
 	public void RegisterRenderer(IRenderer renderer) {
 		Random rand = new Random();
 		rendererList.put(renderer.getDepth() + rand.nextFloat(),renderer);
+		rendererListTemp.put(renderer.getDepth() + rand.nextFloat(),renderer);
 	}
 	
-	public void DeregisterRenderer(IRenderer renderer) {
-		rendererList.remove(renderer);
+	public void DeregisterRenderer(IRenderer renderer) {		
+		for(Iterator<Map.Entry<Float, IRenderer>> it = rendererListTemp.entrySet().iterator();it.hasNext();)
+		{
+			Map.Entry<Float, IRenderer> entry = it.next();
+		    if(entry.getValue().equals(renderer)) {   
+		    	it.remove();
+		    	return;
+		    }
+		}
+	}
+	
+	private void UpdateList() {
+		this.rendererList.clear();
+		
+		for (Map.Entry<Float,IRenderer> entry : rendererListTemp.entrySet()) {
+			rendererList.put(entry.getKey(), entry.getValue());
+		}
 	}
 	
 	public void Render(float deltaTime) {
 		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		UpdateList();
 
 		camera.update();
 		batch.getProjectionMatrix().set(camera.combined);
@@ -80,7 +102,6 @@ public class RendererSystem extends EntitySystem {
 		    }
 		} catch(Exception e) { }
 		batch.end();
-
 	   //debugRenderer.draw(skeleton); // Draw debug lines.
 	}
 }

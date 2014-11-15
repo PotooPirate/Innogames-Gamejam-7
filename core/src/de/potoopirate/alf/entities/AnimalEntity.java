@@ -40,7 +40,7 @@ public class AnimalEntity extends Entity {
 		SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(pathJson));
 
 		this.getComponent(AnimationRendererComponent.class).Init(skeletonData, this.getComponent(TransformComponent.class));
-		this.getComponent(AnimationRendererComponent.class).SetAnimationState("flying", true, 0);
+		this.getComponent(AnimationRendererComponent.class).SetAnimationState("flying", true, 0,2);
 		if(playerId != 0) 
 		{
 			this.getComponent(AnimationRendererComponent.class).getSkeleton().setFlipX(true);

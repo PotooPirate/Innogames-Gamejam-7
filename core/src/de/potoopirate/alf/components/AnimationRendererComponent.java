@@ -3,13 +3,16 @@ package de.potoopirate.alf.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.spine.AnimationState;
+import com.esotericsoftware.spine.AnimationState.AnimationStateListener;
+import com.esotericsoftware.spine.AnimationState.TrackEntry;
 import com.esotericsoftware.spine.AnimationStateData;
+import com.esotericsoftware.spine.Event;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonData;
 
 import de.potoopirate.alf.systems.RendererSystem;
 
-public class AnimationRendererComponent extends Component implements IRenderer {
+public class AnimationRendererComponent extends Component implements IRenderer, AnimationStateListener {
 	
 	private SkeletonData skeletonData;
 	private Skeleton skeleton;
@@ -38,12 +41,14 @@ public class AnimationRendererComponent extends Component implements IRenderer {
 		this.depth = 1;
 		this.state.setTimeScale(0.5f); 
 		
+		
 		RendererSystem.getInstance().RegisterRenderer(this);
 	}
 	
-	public void SetAnimationState(String ani, boolean loop, float delay ) {
-		this.state.addAnimation(0,ani,loop,delay);
-		this.state.setAnimation(0, ani, loop);
+	public TrackEntry SetAnimationState(String ani, boolean loop, float delay , int id) {
+		this.skeleton.updateWorldTransform();
+		return this.state.addAnimation(id,ani,loop,delay);
+
 	}
 	
 	public void CreateAnimationMix(String firstAni, String SecondAni, float speed) {
@@ -62,7 +67,6 @@ public class AnimationRendererComponent extends Component implements IRenderer {
 		this.state.update(deltaTime);
 		this.state.apply(skeleton); 
 		this.skeleton.updateWorldTransform();
-
 	}
 
 	public float getDepth() {
@@ -71,6 +75,40 @@ public class AnimationRendererComponent extends Component implements IRenderer {
 
 	public void setDepth(float depth) {
 		this.depth = depth;
+	}
+
+	@Override
+	public void event(int trackIndex, Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void complete(int trackIndex, int loopCount) {
+	
+		
+	}
+
+	@Override
+	public void start(int trackIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void end(int trackIndex) {
+		if(trackIndex == 1) {
+			this.SetAnimationState("flying", true, 0, 2);
+		}
+		else {
+			this.Destroy();
+		}		
+	}
+
+	@Override
+	public void OnDyAnimationEnd(AnimationState animationState) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
