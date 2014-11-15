@@ -53,7 +53,8 @@ public class PathSystem extends EntitySystem {
 		pathListOne.add(new Vector2(getWidth(95f),getHeight(405f)));
 		pathListOne.add(new Vector2(getWidth(120f),getHeight(425f)));
 		pathListOne.add(new Vector2(getWidth(600f),getHeight(430f)));
-		
+		pathListOne.add(new Vector2(getWidth(610f),getHeight(440f)));
+
 		pathListTwo.add(new Vector2(getWidth(90f),getHeight(75f)));
 		pathListTwo.add(new Vector2(getWidth(140f),getHeight(95f)));
 		pathListTwo.add(new Vector2(getWidth(190f),getHeight(125f)));
@@ -61,11 +62,13 @@ public class PathSystem extends EntitySystem {
 		pathListTwo.add(new Vector2(getWidth(400f),getHeight(290f)));
 		pathListTwo.add(new Vector2(getWidth(560f),getHeight(400f)));
 		pathListTwo.add(new Vector2(getWidth(600f),getHeight(430f)));
-		
+		pathListTwo.add(new Vector2(getWidth(610f),getHeight(440f)));
+	
 		pathListThree.add(new Vector2(getWidth(530f),getHeight(30f)));
 		pathListThree.add(new Vector2(getWidth(560f),getHeight(70f)));
 		pathListThree.add(new Vector2(getWidth(620f),getHeight(100f)));
 		pathListThree.add(new Vector2(getWidth(620f),getHeight(430f)));
+		pathListThree.add(new Vector2(getWidth(610f),getHeight(440f)));
 		
 		for(int i = (pathListOne.size()-1); i >= 0; i--) 
 		{
