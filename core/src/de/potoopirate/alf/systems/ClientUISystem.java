@@ -69,9 +69,9 @@ public class ClientUISystem extends EntitySystem {
 		batch = new SpriteBatch();
 
 		blockImage = new Image(GRAY_BACKGROUND);
-		blockImage.setPosition(0, 155);
+		blockImage.setPosition(0, 0);
 		blockImage.setWidth(Gdx.graphics.getWidth());
-		blockImage.setHeight(Gdx.graphics.getHeight() - 155);
+		blockImage.setHeight(Gdx.graphics.getHeight());
 		
 		slot1 = new Image(TORTSEN_ICON);
 		slot1.setPosition(ICON_X, Gdx.graphics.getHeight());
