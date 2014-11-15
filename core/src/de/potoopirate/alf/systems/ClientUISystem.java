@@ -26,6 +26,11 @@ public class ClientUISystem extends EntitySystem {
 	private static final Texture LEFT_ICON = new Texture(Gdx.files.internal("icons/left.png"));
 	private static final Texture UP_ICON = new Texture(Gdx.files.internal("icons/up.png"));
 	private static final Texture RIGHT_ICON = new Texture(Gdx.files.internal("icons/right.png"));
+	private static final Texture SELECTED_LEFT_ICON = new Texture(Gdx.files.internal("icons/selectedleft.png"));
+	private static final Texture SELECTED_UP_ICON = new Texture(Gdx.files.internal("icons/selectedup.png"));
+	private static final Texture SELECTED_RIGHT_ICON = new Texture(Gdx.files.internal("icons/selectedright.png"));
+
+	
 	private static final Texture GRAY_BACKGROUND = new Texture(Gdx.files.internal("icons/gray_background.png"));
 
 	private static final int SECTION = Gdx.graphics.getWidth() / 3;
@@ -171,9 +176,23 @@ public class ClientUISystem extends EntitySystem {
 			started = clientSystem.isStarted();
 		}
 
-		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
-		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
-		batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
+		if (activePath == 1) 
+			batch.draw(SELECTED_LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
+
+			else
+			batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
+			
+		if (activePath == 2) 
+			batch.draw(SELECTED_UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
+		else
+			batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
+			
+			
+		if (activePath == 3) 
+			batch.draw(SELECTED_RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
+		else
+			batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
+			
 
 		slot1.act(deltaTime);
 		slot2.act(deltaTime);
