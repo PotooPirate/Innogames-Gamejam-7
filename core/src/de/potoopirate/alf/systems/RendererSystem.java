@@ -68,15 +68,17 @@ public class RendererSystem extends EntitySystem {
 		batch.getProjectionMatrix().set(camera.combined);
 		debugRenderer.getShapeRenderer().setProjectionMatrix(camera.combined);
 		batch.begin();
-		for (Map.Entry<Float,IRenderer> entry : rendererList.entrySet()) {
-			IRenderer value = entry.getValue();
-			        
-			value.Render(deltaTime, batch);
-			if(value.getClass() == AnimationRendererComponent.class) {
-				AnimationRendererComponent temp = (AnimationRendererComponent) value;
-				skeltonRenderer.draw(batch, temp.getSkeleton()); 
-			}
-	    }
+		try {
+			for (Map.Entry<Float,IRenderer> entry : rendererList.entrySet()) {
+				IRenderer value = entry.getValue();
+				        
+				value.Render(deltaTime, batch);
+				if(value.getClass() == AnimationRendererComponent.class) {
+					AnimationRendererComponent temp = (AnimationRendererComponent) value;
+					skeltonRenderer.draw(batch, temp.getSkeleton()); 
+				}
+		    }
+		} catch(Exception e) { }
 		batch.end();
 
 	   //debugRenderer.draw(skeleton); // Draw debug lines.

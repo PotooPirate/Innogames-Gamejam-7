@@ -89,11 +89,13 @@ public class PathSystem extends EntitySystem {
 	}
 	
 	public void Update(float deltaTime) {
-		for (AnimalEntity entry : allAnimals) {
-			StartPath(entry, 
-					entry.getComponent(PathComponent.class).currentTargetIndex ,
-					entry.getComponent(PathComponent.class).pathNumber );
-		}
+		try {
+			for (AnimalEntity entry : allAnimals) {
+				StartPath(entry, 
+						entry.getComponent(PathComponent.class).currentTargetIndex ,
+						entry.getComponent(PathComponent.class).pathNumber );
+			}
+		} catch(Exception e) {}
 	}
 	
 	private void StartPath(AnimalEntity animal, int currentTarget, int pathID) {

@@ -17,7 +17,7 @@ public class LevelEntity extends Entity {
 		this.getComponent(TransformComponent.class).Init(new Vector2(0,0));
 		
 		this.getComponent(TransformComponent.class).setSize(new Vector2(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
-		Texture temp = new Texture("Outlines.png");
+		Texture temp = new Texture("Board.png");
 		this.getComponent(RendererComponent.class).Init(temp, this.getComponent(TransformComponent.class));
 		
 	}
