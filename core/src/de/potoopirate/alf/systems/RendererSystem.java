@@ -108,11 +108,10 @@ public class RendererSystem extends EntitySystem {
 				}
 		    }
 		} catch(Exception e) { }
-		PLAYERFONT.setScale(0.25f);
-		TextBounds bounds = PLAYERFONT.getBounds("0");
-
-		PLAYERFONT.draw(batch, "Player 1: " + PlayerManagerSystem.playerOneLife, 10,Gdx.graphics.getHeight() - 10);
-		PLAYERFONT.draw(batch, "Player 2: " + PlayerManagerSystem.playerTwoLife,Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/3),Gdx.graphics.getHeight() - 10);
+		PLAYERFONT.setScale(0.3f);
+		
+		PLAYERFONT.draw(batch, "Player 1: " + PlayerManagerSystem.playerOneLife, 10, Gdx.graphics.getHeight() - 10);
+		PLAYERFONT.draw(batch, "Player 2: " + PlayerManagerSystem.playerTwoLife,Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/3), Gdx.graphics.getHeight() - 10);
 		batch.end();
 	}
 }
