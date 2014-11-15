@@ -6,8 +6,9 @@ import de.potoopirate.alf.components.PathComponent;
 import de.potoopirate.alf.components.PlayerComponent;
 import de.potoopirate.alf.components.RaceComponent;
 
-public class Animal extends Entity {
-	public Animal(int playerId) {
+public class AnimalEntity extends Entity {
+	
+	public AnimalEntity(int playerId) {
 		add(new RaceComponent());
 		add(new PathComponent());
 		add(new PlayerComponent(playerId));
