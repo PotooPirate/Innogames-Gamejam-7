@@ -20,7 +20,7 @@ public class Fight extends EntitySystem {
 	//Animal-specific Mappers
 	private ComponentMapper<Race> 		RaceMapper;
 	private ComponentMapper<Path>		PathMapper;
-	private ComponentMapper<Colission>	CollisionMapper;
+	private ComponentMapper<Collision>	CollisionMapper;
 	
 	//MainBase-specific Mapper
 	private ComponentMapper<Life>		LifeMapper;	
