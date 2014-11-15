@@ -172,12 +172,12 @@ public class FightSystem extends EntitySystem  {
 						
 							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
-								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
+								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));;
 								kill(AnimalP1);
 							}
 							if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 							{
-								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
+								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
 								kill(AnimalP1);
 							}
 						
@@ -219,7 +219,7 @@ public class FightSystem extends EntitySystem  {
 				if(distance< 10) {
 					System.out.print("LifeLost");
 					LifeMapper.get(baseP2).looseLife();
-					PlayerManagerSystem.playerTwoLife++;
+					PlayerManagerSystem.playerTwoLife--;
 					kill(allAnimalsP1.get(e1));
 				}
 			}
@@ -235,7 +235,7 @@ public class FightSystem extends EntitySystem  {
 				if(distance < 10) {
 					System.out.print("LifeLost");
 					LifeMapper.get(baseP1).looseLife();
-					PlayerManagerSystem.playerOneLife++;
+					PlayerManagerSystem.playerOneLife--;
 					kill(allAnimalsP2.get(e2));
 				}
 			}
