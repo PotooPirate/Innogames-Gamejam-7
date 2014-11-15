@@ -15,10 +15,12 @@ import de.potoopirate.alf.components.LifeComponent;
 import de.potoopirate.alf.components.PathComponent;
 import de.potoopirate.alf.components.PlayerComponent;
 import de.potoopirate.alf.components.RaceComponent;
+import de.potoopirate.alf.entities.AnimalEntity;
+import de.potoopirate.alf.entities.MainBaseEntity;
 
 public class FightSystem extends EntitySystem {
 	
-	 /*
+	 
 	//Mapper for Animals and MainBases
 	private ComponentMapper<PlayerComponent> 		PlayerMapper;
 	private ComponentMapper<TransformComponent> 	TransformerMapper;
@@ -58,19 +60,19 @@ public class FightSystem extends EntitySystem {
 	private TransformComponent					animalP2Position;
 	
 	//Array of animals, that has died in this iteration
-	private Array<Animal>				deadAnimals;
+	private Array<AnimalEntity>				deadAnimals;
 	
 	//Engine on everything is build
 	private Engine engine;
 	
-	public Fight()
+	public FightSystem()
 	{
 		RaceMapper = ComponentMapper.getFor(RaceComponent.class);
 		PlayerMapper = ComponentMapper.getFor(PlayerComponent.class);
 		TransformerMapper = ComponentMapper.getFor(TransformComponent.class);
 		LifeMapper = ComponentMapper.getFor(LifeComponent.class);
 		PathMapper = ComponentMapper.getFor(PathComponent.class);
-		ColissionMapper = ComponentMapper.getFor(CollisionComponent.class);
+		CollisionMapper = ComponentMapper.getFor(CollisionComponent.class);
 	}
 	
 	@Override
@@ -91,8 +93,8 @@ public class FightSystem extends EntitySystem {
 			player = PlayerMapper.get(animals.get(e));
 			switch(player.id)
 			{
-				case 1: {allAnimalsP1.add(animals.get(e));}
-				case 2: {allAnimalsP2.add(animals.get(e));}
+				case 1: {allAnimalsP1.add(animals.get(e)); break;}
+				case 2: {allAnimalsP2.add(animals.get(e)); break;}
 			}
 		}
 		
@@ -124,20 +126,18 @@ public class FightSystem extends EntitySystem {
 						if(animalP1Race > animalP2Race)
 						{
 							CollisionMapper.get(AnimalP2).dead=true;
-							allAnimalsP2.remove(AnimalP2);
+							allAnimalsP2.removeIndex(e2);
 							deadAnimals.add(AnimalP2);
 							--e2;
 						}
 						if(animalP2Race > animalP1Race)
 						{
 							CollisionMapper.get(AnimalP1).dead=true;
-							allAnimalsP1.remove(AnimalP1);
+							allAnimalsP1.removeIndex(e1);
 							deadAnimals.add(AnimalP2);
 							--e1;
 							break;
 						}
-						
-						//TODO: Add Looser to deadAnimals-Array
 					}
 					
 				}
@@ -155,13 +155,13 @@ public class FightSystem extends EntitySystem {
 		}
 		
 		
-		for(Animal e : deadAnimals)
+		for(AnimalEntity e : deadAnimals)
 		{
 			engine.removeEntity(e);
 		}
 		
 	}
-	*/
+	
 }
 
 
