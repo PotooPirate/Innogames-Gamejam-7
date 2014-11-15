@@ -169,11 +169,13 @@ public class FightSystem extends EntitySystem  {
 							//0 wins over 1
 							//1 wins over 2
 							//2 wins over 0
-						
+							
+							
+							
 							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
 								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
-								kill(AnimalP1);
+								kill(AnimalP2);
 							}
 							if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 							{
@@ -231,7 +233,6 @@ public class FightSystem extends EntitySystem  {
 						   TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().y , 
 						   baseP1Transform.getPosition().x, 
 						   baseP1Transform.getPosition().y);
-				System.out.println(distance);
 				if(distance < 10) {
 					System.out.print("LifeLost");
 					LifeMapper.get(baseP1).looseLife();
