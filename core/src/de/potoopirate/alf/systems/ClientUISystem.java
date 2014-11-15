@@ -106,14 +106,12 @@ public class ClientUISystem extends EntitySystem {
 				x = Gdx.input.getX();
 				if (x < SECTION) {
 					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f),Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
-					clientSystem.throwSlot(2, activePath);
 					clientSystem.throwSlot(1, activePath);
 				} else if (x < SECTION * 2) {
 					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
 					clientSystem.throwSlot(2, activePath);
 				} else {
 					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f),Actions.moveTo(ICON_X + SECTION *2, ICON_Y, 1, Interpolation.bounceOut)));
-					clientSystem.throwSlot(2, activePath);
 					clientSystem.throwSlot(3, activePath);
 				}
 			}
