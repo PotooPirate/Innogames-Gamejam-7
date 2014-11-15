@@ -2,16 +2,13 @@ package de.potoopirate.alf.systems;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -22,12 +19,12 @@ public class ClientUISystem extends EntitySystem {
 
 	private static final int BLOCK_COUNTER_RELEASE = 10;
 	private static final Texture TORTSEN_ICON = new Texture(Gdx.files.internal("icons/tortsenicon.png"));
+	private static final Texture EMMA_ICON = new Texture(Gdx.files.internal("icons/emmaicon.png"));
+	private static final Texture GUNTER_ICON = new Texture(Gdx.files.internal("icons/guntericon.png"));
 	private static final Texture LEFT_ICON = new Texture(Gdx.files.internal("icons/left.png"));
 	private static final Texture UP_ICON = new Texture(Gdx.files.internal("icons/up.png"));
 	private static final Texture RIGHT_ICON = new Texture(Gdx.files.internal("icons/right.png"));
 
-	private static final int BUTTON_WIDTH = Gdx.graphics.getWidth() / 5;
-	private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight() / 4;
 	private static final int SECTION = Gdx.graphics.getWidth() / 3;
 	private static final int ICON_X = (SECTION - SECTION / 2) - TORTSEN_ICON.getWidth() / 2;
 	private static final int ICON_Y = Gdx.graphics.getHeight() / 3;
@@ -37,7 +34,6 @@ public class ClientUISystem extends EntitySystem {
 	private static final int RIGHT_PATH_ICON_X = UP_PATH_ICON_X + UP_ICON.getWidth();
 	private static final int SCREENHEIGHT = Gdx.graphics.getHeight();
 
-	private int start_y = 0;
 	private Stage stage;
 	private ClientListener clientSystem;
 	private int activePath;
@@ -50,6 +46,7 @@ public class ClientUISystem extends EntitySystem {
 	private Image slot1;
 	private Image slot2;
 	private Image slot3;
+	private Image blockImage;
 
 	private ShapeRenderer debugRenderer;
 
@@ -61,10 +58,11 @@ public class ClientUISystem extends EntitySystem {
 
 		slot1 = new Image(TORTSEN_ICON);
 		slot1.setPosition(ICON_X, Gdx.graphics.getHeight());
-		slot2 = new Image(TORTSEN_ICON);
+		slot2 = new Image(EMMA_ICON);
 		slot2.setPosition(ICON_X + SECTION, Gdx.graphics.getHeight());
-		slot3 = new Image(TORTSEN_ICON);
+		slot3 = new Image(GUNTER_ICON);
 		slot3.setPosition(ICON_X + SECTION * 2, Gdx.graphics.getHeight());
+
 	}
 
 	@Override
@@ -75,7 +73,7 @@ public class ClientUISystem extends EntitySystem {
 		slot2.addAction(Actions.sequence(Actions.delay(0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 2, Interpolation.bounceOut)));
 		slot3.addAction(Actions.sequence(Actions.delay(1f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 2, Interpolation.bounceOut)));
 
-		blockCounter = 0;
+		blockCounter = 10;
 		started = false;
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
@@ -105,16 +103,17 @@ public class ClientUISystem extends EntitySystem {
 			if (y <= -100) {
 				x = Gdx.input.getX();
 				if (x < SECTION) {
-					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f),Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
-					clientSystem.throwSlot(2, activePath);
+					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
 					clientSystem.throwSlot(1, activePath);
+					blockCounter = 0;
 				} else if (x < SECTION * 2) {
 					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
 					clientSystem.throwSlot(2, activePath);
+					blockCounter = 0;
 				} else {
-					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f),Actions.moveTo(ICON_X + SECTION *2, ICON_Y, 1, Interpolation.bounceOut)));
-					clientSystem.throwSlot(2, activePath);
+					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 1, Interpolation.bounceOut)));
 					clientSystem.throwSlot(3, activePath);
+					blockCounter = 0;
 				}
 			}
 			System.out.println("delta X: " + x + "/ delta Y:" + y);
@@ -147,13 +146,27 @@ public class ClientUISystem extends EntitySystem {
 		stage.act(deltaTime);
 		stage.draw();
 
-		debugRenderer.begin(ShapeType.Line);
-		debugRenderer.setColor(1f, 0, 0, 1);
-		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
-		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
-		debugRenderer.end();
+//		debugRenderer.begin(ShapeType.Line);
+//		debugRenderer.setColor(1f, 0, 0, 1);
+//		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
+//		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
+//		debugRenderer.end();
+//		batch.begin();
 
-		batch.begin();
+		// if (blockCounter <= BLOCK_COUNTER_RELEASE && started) {
+		if (blockCounter >= BLOCK_COUNTER_RELEASE) {
+			throwSlot();
+			changePath();
+			slot1.setColor(300,300,300,1);
+			slot2.setColor(300,300,300,1);
+			slot3.setColor(300,300,300,1);
+		} else if (blockCounter < BLOCK_COUNTER_RELEASE) {
+			slot1.setColor(100,100,100,0.2f);
+			slot2.setColor(100,100,100,0.2f);
+			slot3.setColor(100,100,100,0.2f);
+		} else if (!started) {
+			started = clientSystem.isStarted();
+		}
 
 		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
 		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
@@ -166,14 +179,7 @@ public class ClientUISystem extends EntitySystem {
 		slot1.draw(batch, 1f);
 		slot2.draw(batch, 1f);
 		slot3.draw(batch, 1f);
-		
-		batch.end();
 
-		// if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
-		throwSlot();
-		changePath();
-		// } else if (!started) {
-		// started = clientSystem.isStarted();
-		// }
+		batch.end();
 	}
 }
