@@ -4,6 +4,7 @@ import com.esotericsoftware.spine.SkeletonRenderer;
 import com.esotericsoftware.spine.SkeletonRendererDebug;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -13,8 +14,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-
-import de.potoopirate.alf.components.Renderer;
+import de.potoopirate.alf.components.AnimationRendererComponent;
+import de.potoopirate.alf.components.IRenderer;
 
 public class RendererSystem extends EntitySystem {
 
@@ -23,12 +24,13 @@ public class RendererSystem extends EntitySystem {
 	private SkeletonRenderer skeltonRenderer;
 	private SkeletonRendererDebug debugRenderer;
 	
-	private SortedMap<Float, Renderer> rendererList;
+	private SortedMap<Float, IRenderer> rendererList;
 	private static RendererSystem instance;
 	
 	private RendererSystem() {
-		rendererList = new TreeMap<Float,Renderer>();
+		rendererList = new TreeMap<Float, IRenderer>();
 		camera = new OrthographicCamera();
+		
 		batch = new SpriteBatch();
 		skeltonRenderer = new SkeletonRenderer();
 		skeltonRenderer.setPremultipliedAlpha(true); 
@@ -49,11 +51,12 @@ public class RendererSystem extends EntitySystem {
 	}
 
 	
-	public void RegisterRenderer(Renderer renderer) {
-		rendererList.put(renderer.getDepth(),renderer);
+	public void RegisterRenderer(IRenderer renderer) {
+		Random rand = new Random();
+		rendererList.put(renderer.getDepth() + rand.nextFloat(),renderer);
 	}
 	
-	public void DeregisterRenderer(Renderer renderer) {
+	public void DeregisterRenderer(IRenderer renderer) {
 		rendererList.remove(renderer);
 	}
 	
@@ -64,13 +67,15 @@ public class RendererSystem extends EntitySystem {
 		camera.update();
 		batch.getProjectionMatrix().set(camera.combined);
 		debugRenderer.getShapeRenderer().setProjectionMatrix(camera.combined);
-
 		batch.begin();
-		for (Map.Entry<Float,Renderer> entry : rendererList.entrySet()) {
-			Renderer value = entry.getValue();
+		for (Map.Entry<Float,IRenderer> entry : rendererList.entrySet()) {
+			IRenderer value = entry.getValue();
 			        
-			value.Render(deltaTime);
-			skeltonRenderer.draw(batch, value.getSkeleton()); 
+			value.Render(deltaTime, batch);
+			if(value.getClass() == AnimationRendererComponent.class) {
+				AnimationRendererComponent temp = (AnimationRendererComponent) value;
+				skeltonRenderer.draw(batch, temp.getSkeleton()); 
+			}
 	    }
 		batch.end();
 

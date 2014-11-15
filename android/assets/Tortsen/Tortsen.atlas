@@ -1,0 +1,97 @@
+
+Tortsen.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BackLegBack
+  rotate: false
+  xy: 2, 34
+  size: 72, 97
+  orig: 72, 97
+  offset: 0, 0
+  index: -1
+BackLegFront
+  rotate: false
+  xy: 76, 39
+  size: 72, 92
+  orig: 72, 92
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 2, 133
+  size: 187, 121
+  orig: 187, 121
+  offset: 0, 0
+  index: -1
+EarLeft
+  rotate: true
+  xy: 2, 2
+  size: 30, 36
+  orig: 30, 36
+  offset: 0, 0
+  index: -1
+EarRight
+  rotate: false
+  xy: 247, 82
+  size: 27, 35
+  orig: 27, 35
+  offset: 0, 0
+  index: -1
+EyeLeft
+  rotate: false
+  xy: 40, 9
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: -1
+EyeRight
+  rotate: false
+  xy: 448, 194
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+FrontLegBack
+  rotate: true
+  xy: 150, 57
+  size: 60, 95
+  orig: 60, 95
+  offset: 0, 0
+  index: -1
+FrontLegFront
+  rotate: true
+  xy: 350, 118
+  size: 65, 94
+  orig: 65, 94
+  offset: 0, 0
+  index: -1
+Head
+  rotate: false
+  xy: 191, 119
+  size: 157, 135
+  orig: 157, 135
+  offset: 0, 0
+  index: -1
+Tail
+  rotate: false
+  xy: 448, 220
+  size: 51, 34
+  orig: 51, 34
+  offset: 0, 0
+  index: -1
+WingLeft
+  rotate: true
+  xy: 446, 91
+  size: 92, 64
+  orig: 92, 64
+  offset: 0, 0
+  index: -1
+WingRight
+  rotate: false
+  xy: 350, 185
+  size: 96, 69
+  orig: 96, 69
+  offset: 0, 0
+  index: -1

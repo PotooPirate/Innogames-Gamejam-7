@@ -1,6 +1,7 @@
 package de.potoopirate.alf.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.Skeleton;
@@ -8,7 +9,7 @@ import com.esotericsoftware.spine.SkeletonData;
 
 import de.potoopirate.alf.systems.RendererSystem;
 
-public class Renderer extends Component {
+public class AnimationRendererComponent extends Component implements IRenderer {
 	
 	private SkeletonData skeletonData;
 	private Skeleton skeleton;
@@ -17,7 +18,7 @@ public class Renderer extends Component {
 	private TransformComponent transform;
 	private float depth;
 	
-	public Renderer() {
+	public AnimationRendererComponent() {
 		
 	}
 	
@@ -34,6 +35,7 @@ public class Renderer extends Component {
 		this.stateData = new AnimationStateData(skeletonData); 
 
 		this.state = new AnimationState(this.stateData); 
+		this.depth = 1;
 		this.state.setTimeScale(0.5f); 
 		
 		RendererSystem.getInstance().RegisterRenderer(this);
@@ -52,7 +54,10 @@ public class Renderer extends Component {
 		RendererSystem.getInstance().DeregisterRenderer(this);
 	}
 	
-	public void Render(float deltaTime) {
+	@Override
+	public void Render(float deltaTime, SpriteBatch batch) {
+		skeleton.getRootBone().setScaleX(this.transform.getSize().x);
+		skeleton.getRootBone().setScaleY(this.transform.getSize().y);
 		this.skeleton.setPosition(this.transform.getPosition().x, this.transform.getPosition().y);
 		this.state.update(deltaTime);
 		this.state.apply(skeleton); 

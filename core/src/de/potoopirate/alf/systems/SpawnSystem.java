@@ -21,13 +21,13 @@ public class SpawnSystem extends EntitySystem implements SpawnListener {
 	public void spawnAnimal(int player, int lane, int animalType) {
 		switch(animalType) {
 			case Network.ANIMAL_HIPPO:
-				engine.addEntity(AnimalEntity.createHippo(player));
+				engine.addEntity(AnimalEntity.createHippo(player,lane));
 				break;
 			case Network.ANIMAL_OCTO:
-				engine.addEntity(AnimalEntity.createOcto(player));
+				engine.addEntity(AnimalEntity.createOcto(player,lane));
 				break;
 			case Network.ANIMAL_SNAIL:
-				engine.addEntity(AnimalEntity.createSnail(player));
+				engine.addEntity(AnimalEntity.createSnail(player,lane));
 				break;
 		}
 	}
