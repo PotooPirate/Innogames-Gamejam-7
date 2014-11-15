@@ -29,7 +29,7 @@ import de.potoopirate.alf.entities.MainBaseEntity;
 public class FightSystem extends EntitySystem  {
 	
 	
-	public static final float SQUARED_MAXIMUM_COLLISION_RANGE = 100f;
+	public static final float SQUARED_MAXIMUM_COLLISION_RANGE = 400f;
 	public static final float SQUARED_INVADE_HQ_RANGE = 50f;
 	public static final int FIRST_PLAYER = 0;
 	public static final int SECOND_PLAYER = 1;
@@ -76,9 +76,11 @@ public class FightSystem extends EntitySystem  {
 	//Transform (Position) of the two animals, that are currently checked
 	private TransformComponent					animalP1Position;
 	private TransformComponent					animalP2Position;
-	
+
+	/*
 	//Array of animals, that has died in this iteration
 	private Array<AnimalEntity>					deadAnimals;
+	*/
 	
 	//Engine on everything is build
 	private Engine engine;
@@ -128,7 +130,7 @@ public class FightSystem extends EntitySystem  {
 		
 		allAnimalsP1 = new Array<AnimalEntity>();
 		allAnimalsP2 = new Array<AnimalEntity>();
-		deadAnimals = new Array<AnimalEntity>();
+//		deadAnimals = new Array<AnimalEntity>();
 		
 		//separate animals per player. This omits of a lot of collisions between befriended animals
 		for(int e=0;e<animals.size();++e)
@@ -156,71 +158,91 @@ public class FightSystem extends EntitySystem  {
 			AnimalP1 = allAnimalsP1.get(e1);
 			animal1Path = PathMapper.get(AnimalP1);
 			animalP1Position = TransformerMapper.get(AnimalP1);
-			
 			for(int e2 = 0;e2<allAnimalsP2.size;e2++)
 			{
-				AnimalP2 = allAnimalsP2.get(e2);
-				if(animal1Path.getPathNumber() == PathMapper.get(AnimalP2).getPathNumber())
+				if(!CollisionMapper.get(AnimalP1).dead)
 				{
-					animalP2Position = TransformerMapper.get(AnimalP2);
-					
-					float xDiff = animalP1Position.getPosition().x - animalP2Position.getPosition().x;
-					float yDiff = animalP1Position.getPosition().y - animalP2Position.getPosition().y;
-					
-					if(xDiff*xDiff + yDiff*yDiff < SQUARED_MAXIMUM_COLLISION_RANGE)
-
+					AnimalP2 = allAnimalsP2.get(e2);
+					if(!CollisionMapper.get(AnimalP2).dead && animal1Path.getPathNumber() == PathMapper.get(AnimalP2).getPathNumber())
 					{
-						animalP1Race= RaceMapper.get(AnimalP1);
-						animalP2Race = RaceMapper.get(AnimalP2);
-						
-						//Check which animal wins the fight
-						//0 wins over 1
-						//1 wins over 2
-						//2 wins over 0
-						
-						if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
+						animalP2Position = TransformerMapper.get(AnimalP2);
+				
+						float xDiff = animalP1Position.getPosition().x - animalP2Position.getPosition().x;
+						float yDiff = animalP1Position.getPosition().y - animalP2Position.getPosition().y;
+				
+						if(xDiff*xDiff + yDiff*yDiff < SQUARED_MAXIMUM_COLLISION_RANGE)
 						{
-							AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
-							AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
-							CollisionMapper.get(AnimalP2).dead=true;
-							allAnimalsP2.removeIndex(e2);
-							deadAnimals.add(AnimalP2);
-							PathSystem.getInstance().RemoveAnimal(AnimalP2);
-
-							//playSound of loosing animal
-							--e2;
-						}
-						if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
-						{
-							AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0,0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
-							AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
-							CollisionMapper.get(AnimalP1).dead=true;
-							allAnimalsP1.removeIndex(e1);
-							deadAnimals.add(AnimalP1);
-							PathSystem.getInstance().RemoveAnimal(AnimalP1);
-
-							//playSound of loosing animal
-							--e1;
-							break;
-						}
-						
-						if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
-						{
-							AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
-							AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
-							allAnimalsP1.removeIndex(e1);
-							allAnimalsP2.removeIndex(e2);
-							deadAnimals.add(AnimalP2);
-							deadAnimals.add(AnimalP1);
-							PathSystem.getInstance().RemoveAnimal(AnimalP1);
-							PathSystem.getInstance().RemoveAnimal(AnimalP2);
-						}
-						
-					}
+							animalP1Race= RaceMapper.get(AnimalP1);
+							animalP2Race = RaceMapper.get(AnimalP2);
 					
+							//Check which animal wins the fight
+							//0 wins over 1
+							//1 wins over 2
+							//2 wins over 0
+						
+							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
+							{
+								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
+								kill(AnimalP1);
+//								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
+//								CollisionMapper.get(AnimalP2).dead=true;
+//								allAnimalsP2.removeIndex(e2);
+//								deadAnimals.add(AnimalP2);
+//								PathSystem.getInstance().RemoveAnimal(AnimalP2);
+
+								//playSound of loosing animal
+//								--e2;
+							}
+							if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
+							{
+								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
+								kill(AnimalP1);
+//								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0,0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
+//								CollisionMapper.get(AnimalP1).dead=true;
+//								allAnimalsP1.removeIndex(e1);
+//								deadAnimals.add(AnimalP1);
+//								PathSystem.getInstance().RemoveAnimal(AnimalP1);
+								
+								//playSound of loosing animal
+//								--e1;
+//								break;
+							}
+						
+							if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
+							{
+								kill(AnimalP1);
+								kill(AnimalP2);
+//								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
+//								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
+//								allAnimalsP1.removeIndex(e1);
+//								allAnimalsP2.removeIndex(e2);
+//								deadAnimals.add(AnimalP2);
+//								deadAnimals.add(AnimalP1);
+//								PathSystem.getInstance().RemoveAnimal(AnimalP1);
+//								PathSystem.getInstance().RemoveAnimal(AnimalP2);
+								break;
+							}
+						
+						}
+					}
 				}
 			}
-		}		
+		}
+		
+		for(AnimalEntity e:allAnimalsP1)
+		{
+			if(CollisionMapper.get(e).dead)
+			{
+				PathSystem.getInstance().RemoveAnimal(e);
+			}
+		}
+		for(AnimalEntity e:allAnimalsP2)
+		{
+			if(CollisionMapper.get(e).dead)
+			{
+				PathSystem.getInstance().RemoveAnimal(e);
+			}
+		}
 		
 		/*
 		for(int e1 = 0; e1<allAnimalsP1.size;++e1)
@@ -244,5 +266,11 @@ public class FightSystem extends EntitySystem  {
 		}
 		*/
 	
+	}
+	
+	private void kill(AnimalEntity animal)
+	{
+		animal.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
+		CollisionMapper.get(animal).dead=true;		
 	}
 }
