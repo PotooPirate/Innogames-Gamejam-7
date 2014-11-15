@@ -2,6 +2,7 @@ package de.potoopirate.alf.systems;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,22 +10,25 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import de.potoopirate.alf.interfaces.IClientSystem;
+import de.potoopirate.alf.interfaces.ClientListener;
 
 public class ClientUISystem extends EntitySystem {
 	
 	private static final int BUTTON_WIDTH = Gdx.graphics.getWidth()/5;
 	private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight()/4;
+	private static final int BLOCK_COUNTER_RELEASE = 10;
 	
 	private Stage stage;
-	private IClientSystem clientSystem;
+	private ClientListener clientSystem;
 	private int activePath;
 	private int x, y;
-	private boolean touched;
+	private boolean touched;		
+	private boolean started;		//Holding the client in a block state
+	private float blockCounter;
 	
 	private ShapeRenderer debugRenderer;
 	
-	public ClientUISystem(IClientSystem clientSystem) {
+	public ClientUISystem(ClientListener clientSystem) {
 		this.clientSystem = clientSystem;
 		debugRenderer = new ShapeRenderer();
 		activePath = 2;
@@ -34,6 +38,8 @@ public class ClientUISystem extends EntitySystem {
 	public void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
 		
+		blockCounter = 0;
+		started = false;
 		stage = new Stage();
 	    Gdx.input.setInputProcessor(stage);
 	}
@@ -80,6 +86,7 @@ public class ClientUISystem extends EntitySystem {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.update(deltaTime);
+		blockCounter += deltaTime;
 		stage.act(deltaTime);
 	    stage.draw();
 	    
@@ -98,7 +105,11 @@ public class ClientUISystem extends EntitySystem {
 	    debugRenderer.rect(BUTTON_WIDTH*3, BUTTON_HEIGHT*3, BUTTON_WIDTH, BUTTON_HEIGHT);
 	    debugRenderer.end();
 	    
-	    throwSlot();
-	    changePath();
+	    if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
+		    throwSlot();
+		    changePath();
+	    } else if (!started) {
+	    	started = clientSystem.isStarted();
+	    }
 	}
 }

@@ -4,26 +4,26 @@ import java.io.IOException;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Server;
 
 import de.potoopirate.alf.Network;
 import de.potoopirate.alf.Network.NetworkMessage;
 import de.potoopirate.alf.Network.NetworkReady;
-import de.potoopirate.alf.interfaces.IClientSystem;
+import de.potoopirate.alf.interfaces.ClientListener;
 
-public class ClientSystem extends EntitySystem implements IClientSystem {
+public class ClientSystem extends EntitySystem implements ClientListener {
 
 	private Client client;
+	private boolean started;
 
 	@Override
 	public void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
 
+		started = false;
+		
 		try {
 			// Start Client
 			client = new Client();
@@ -44,12 +44,20 @@ public class ClientSystem extends EntitySystem implements IClientSystem {
 		client.sendTCP(new NetworkMessage(slotNumber, activePath));
 	}
 
+	@Override
+	public boolean isStarted() {
+		return started;
+	}
+
+
+
 	class ClientListener extends Listener {
 
 		@Override
 		public void received(Connection connection, Object object) {
 			if (object instanceof NetworkReady) {
 				System.out.println("Starte das Spiel!");
+				started = true;
 			}
 		}
 
