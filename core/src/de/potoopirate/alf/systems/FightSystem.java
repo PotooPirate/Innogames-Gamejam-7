@@ -20,8 +20,8 @@ import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.MainBaseEntity;
 
 public class FightSystem extends EntitySystem {
-	/*
-	 
+	
+	 /*
 	//Mapper for Animals and MainBases
 	private ComponentMapper<PlayerComponent> 		PlayerMapper;
 	private ComponentMapper<TransformComponent> 	TransformerMapper;
@@ -161,7 +161,7 @@ public class FightSystem extends EntitySystem {
 		}
 		
 	}
-*/	
+	*/
 }
 
 

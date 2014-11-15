@@ -8,11 +8,11 @@ import com.esotericsoftware.spine.SkeletonData;
 import com.esotericsoftware.spine.SkeletonJson;
 
 import de.potoopirate.alf.components.Renderer;
-import de.potoopirate.alf.components.Transform;
+import de.potoopirate.alf.components.TransformComponent;
 
 public class TestEntity extends Entity {
 
-	private Transform transform;
+	private TransformComponent transform;
 	private Renderer renderer;
 	
 	public TestEntity() 
@@ -26,7 +26,7 @@ public class TestEntity extends Entity {
 		SkeletonJson json = new SkeletonJson(atlas); 
 		json.setScale(0.6f); 
 		SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal("spineboy/spineboy.json"));
-		this.transform = new Transform();
+		this.transform = new TransformComponent();
 		this.transform.Init(new Vector2(120,60));
 		this.add(this.transform);
 		

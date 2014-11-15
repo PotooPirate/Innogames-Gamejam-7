@@ -14,7 +14,7 @@ public class Renderer extends Component {
 	private Skeleton skeleton;
 	private AnimationState state;	
 	private AnimationStateData stateData;
-	private Transform transform;
+	private TransformComponent transform;
 	private float depth;
 	
 	public Renderer() {
@@ -26,7 +26,7 @@ public class Renderer extends Component {
 		return this.skeleton;
 	}
 	
-	public void Init(SkeletonData data, Transform transform) {
+	public void Init(SkeletonData data, TransformComponent transform) {
 		this.skeletonData = data;
 		this.skeleton = new Skeleton(skeletonData); 
 		this.transform = transform;
