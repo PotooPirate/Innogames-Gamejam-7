@@ -94,6 +94,8 @@ public class FightSystem extends EntitySystem {
 	{
 		this.engine = engine;
 		
+		NaturalSelection.assignNewStatus();
+		
 		animals = engine.getEntitiesFor(Family.getFor(RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
 		bases = engine.getEntitiesFor(Family.getFor(LifeComponent.class, PlayerComponent.class, TransformComponent.class));
 		for(int hq = 0;hq<bases.size();++hq)
