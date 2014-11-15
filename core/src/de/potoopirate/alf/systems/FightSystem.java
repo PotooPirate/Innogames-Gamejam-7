@@ -34,7 +34,7 @@ public class FightSystem extends EntitySystem {
 	//MainBase-specific Mapper
 	private ComponentMapper<LifeComponent>		LifeMapper;	
 	
-	//Array of all Animals that are currenty alive
+	//Array of all Animals that are currently alive
 	private ImmutableArray<Entity> 				animals;
 	//Array of all MainBases
 	private ImmutableArray<Entity>				bases;
@@ -162,6 +162,7 @@ public class FightSystem extends EntitySystem {
 							CollisionMapper.get(AnimalP1).dead=true;
 							allAnimalsP1.removeIndex(e1);
 							deadAnimals.add(AnimalP2);
+							//playSound of loosing animal
 							--e1;
 							break;
 						}
