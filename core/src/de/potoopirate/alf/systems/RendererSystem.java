@@ -75,10 +75,11 @@ public class RendererSystem extends EntitySystem {
 	
 	private void UpdateList() {
 		this.rendererList.clear();
-		
-		for (Map.Entry<Float,IRenderer> entry : rendererListTemp.entrySet()) {
-			rendererList.put(entry.getKey(), entry.getValue());
-		}
+		try {
+			for (Map.Entry<Float,IRenderer> entry : rendererListTemp.entrySet()) {
+				rendererList.put(entry.getKey(), entry.getValue());
+			}
+		} catch (Exception e) {}
 	}
 	
 	public void Render(float deltaTime) {
