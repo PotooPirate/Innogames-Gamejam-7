@@ -65,7 +65,6 @@ public class ServerSystem extends EntitySystem {
 			System.out.println("== get PathType: " + networkMessage.pathType);
 			System.out.println("== get AnimalType: " + networkMessage.animalType);
 			System.out.println("===============================================================");
-			spawnListener.spawnAnimal(connection.getID(), networkMessage.pathType, networkMessage.animalType);
 		}
 		
 	}
