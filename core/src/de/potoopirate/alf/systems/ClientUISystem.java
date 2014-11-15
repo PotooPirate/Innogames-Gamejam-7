@@ -154,7 +154,8 @@ public class ClientUISystem extends EntitySystem {
 		// debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
 		// debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
 		// debugRenderer.end();
-		// batch.begin();
+		
+		batch.begin();
 
 		// if (blockCounter <= BLOCK_COUNTER_RELEASE && started) {
 		if (blockCounter >= BLOCK_COUNTER_RELEASE) {
