@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Music;
 
 public class MusicPlayer {
 
-	private Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("alfBackground.mp3"));
+	private Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("alfBackground.wav"));
 	
 	public MusicPlayer() {
 		
