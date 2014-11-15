@@ -6,81 +6,138 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import de.potoopirate.alf.interfaces.ClientListener;
 
 public class ClientUISystem extends EntitySystem {
-	
-	private static final int BUTTON_WIDTH = Gdx.graphics.getWidth()/5;
-	private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight()/4;
+
 	private static final int BLOCK_COUNTER_RELEASE = 10;
-	
+	private static final Texture TORTSEN_ICON = new Texture(Gdx.files.internal("icons/tortsenicon.png"));
+	private static final Texture LEFT_ICON = new Texture(Gdx.files.internal("icons/left.png"));
+	private static final Texture UP_ICON = new Texture(Gdx.files.internal("icons/up.png"));
+	private static final Texture RIGHT_ICON = new Texture(Gdx.files.internal("icons/right.png"));
+
+	private static final int BUTTON_WIDTH = Gdx.graphics.getWidth() / 5;
+	private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight() / 4;
+	private static final int SECTION = Gdx.graphics.getWidth() / 3;
+	private static final int ICON_X = (SECTION - SECTION / 2) - TORTSEN_ICON.getWidth() / 2;
+	private static final int ICON_Y = Gdx.graphics.getHeight() / 3;
+	private static final int PATH_ICON_Y = 0;
+	private static final int UP_PATH_ICON_X = (Gdx.graphics.getWidth() / 2) - UP_ICON.getWidth() / 2;
+	private static final int LEFT_PATH_ICON_X = UP_PATH_ICON_X - LEFT_ICON.getWidth();
+	private static final int RIGHT_PATH_ICON_X = UP_PATH_ICON_X + UP_ICON.getWidth();
+	private static final int SCREENHEIGHT = Gdx.graphics.getHeight();
+
+	private int start_y = 0;
 	private Stage stage;
 	private ClientListener clientSystem;
 	private int activePath;
 	private int x, y;
-	private boolean touched;		
-	private boolean started;		//Holding the client in a block state
+	private boolean touched;
+	private boolean started; // Holding the client in a block state
 	private float blockCounter;
-	
+	private SpriteBatch batch;
+
+	private Image slot1;
+	private Image slot2;
+	private Image slot3;
+
 	private ShapeRenderer debugRenderer;
-	
+
 	public ClientUISystem(ClientListener clientSystem) {
 		this.clientSystem = clientSystem;
 		debugRenderer = new ShapeRenderer();
 		activePath = 2;
+		batch = new SpriteBatch();
+
+		slot1 = new Image(TORTSEN_ICON);
+		slot1.setPosition(ICON_X, Gdx.graphics.getHeight());
+		slot2 = new Image(TORTSEN_ICON);
+		slot2.setPosition(ICON_X + SECTION, Gdx.graphics.getHeight());
+		slot3 = new Image(TORTSEN_ICON);
+		slot3.setPosition(ICON_X + SECTION * 2, Gdx.graphics.getHeight());
 	}
-	
+
 	@Override
 	public void addedToEngine(Engine engine) {
 		super.addedToEngine(engine);
-		
+
+		slot1.addAction(Actions.moveTo(ICON_X, ICON_Y, 2, Interpolation.bounceOut));
+		slot2.addAction(Actions.sequence(Actions.delay(0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 2, Interpolation.bounceOut)));
+		slot3.addAction(Actions.sequence(Actions.delay(1f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 2, Interpolation.bounceOut)));
+
 		blockCounter = 0;
 		started = false;
 		stage = new Stage();
-	    Gdx.input.setInputProcessor(stage);
+		Gdx.input.setInputProcessor(stage);
+
 	}
 
-	
 	private void throwSlot() {
-		if(Gdx.input.isTouched() && !touched) {
-	    	y = 0;
-	    	touched = true;
-	    } else if (Gdx.input.isTouched() && touched) {
-	    	y += Gdx.input.getDeltaY();
-	    } else if (!Gdx.input.isTouched() && touched) {
-	    	touched = false;
-	    	if(y <= -200) {
-	    		x = Gdx.input.getX();
-	    		if (x < Gdx.graphics.getWidth()/3) {
-	    			clientSystem.throwSlot(1, activePath);
-	    		} else if (x < (Gdx.graphics.getWidth()/3)*2) { 
-	    			clientSystem.throwSlot(2, activePath);
-	    		} else {
-	    			clientSystem.throwSlot(3, activePath);
-	    		}
-	    	}
-	    	System.out.println("delta X: " + x + "/ delta Y:" + y);
-	    }
+		if (Gdx.input.isTouched() && !touched) {
+			y = 0;
+			touched = true;
+		} else if (Gdx.input.isTouched() && touched) {
+			y += Gdx.input.getDeltaY();
+			// check selected Section
+			x = Gdx.input.getX();
+			if (x < SECTION) {
+				slot1.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
+
+			} else if (x < SECTION * 2) {
+				slot2.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
+
+			} else {
+				slot3.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
+
+			}
+		} else if (!Gdx.input.isTouched() && touched) {
+			touched = false;
+			if (y <= -100) {
+				x = Gdx.input.getX();
+				if (x < SECTION) {
+					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f),Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
+					clientSystem.throwSlot(2, activePath);
+					clientSystem.throwSlot(1, activePath);
+				} else if (x < SECTION * 2) {
+					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
+					clientSystem.throwSlot(2, activePath);
+				} else {
+					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f),Actions.moveTo(ICON_X + SECTION *2, ICON_Y, 1, Interpolation.bounceOut)));
+					clientSystem.throwSlot(2, activePath);
+					clientSystem.throwSlot(3, activePath);
+				}
+			}
+			System.out.println("delta X: " + x + "/ delta Y:" + y);
+		}
 	}
-	
+
 	private void changePath() {
-		if(Gdx.input.isTouched()) {
+		if (Gdx.input.isTouched()) {
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
-			if (x > BUTTON_WIDTH && x < BUTTON_WIDTH*2 && y < BUTTON_HEIGHT*3) {
+			if (x > LEFT_PATH_ICON_X && x < LEFT_PATH_ICON_X + LEFT_ICON.getWidth() && y > SCREENHEIGHT - LEFT_ICON.getHeight()) {
 				activePath = 1;
-			} else if (x > BUTTON_WIDTH*2 && x < BUTTON_WIDTH*3 && y < BUTTON_HEIGHT*3 ) {
+				System.out.println("left path");
+			} else if (x > UP_PATH_ICON_X && x < UP_PATH_ICON_X + UP_ICON.getWidth() && y > SCREENHEIGHT - UP_ICON.getHeight()) {
 				activePath = 2;
-			} else if (x > BUTTON_WIDTH*3 && x < BUTTON_WIDTH*4 && y < BUTTON_HEIGHT*3) {
+				System.out.println("up path");
+			} else if (x > RIGHT_PATH_ICON_X && x < (RIGHT_PATH_ICON_X + RIGHT_ICON.getWidth()) && y > SCREENHEIGHT - RIGHT_ICON.getHeight()) {
 				activePath = 3;
+				System.out.println("right path");
 			}
 		}
 	}
-	
+
 	@Override
 	public void update(float deltaTime) {
 		Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
@@ -88,28 +145,35 @@ public class ClientUISystem extends EntitySystem {
 		super.update(deltaTime);
 		blockCounter += deltaTime;
 		stage.act(deltaTime);
-	    stage.draw();
-	    
-	    debugRenderer.begin(ShapeType.Line);
-	    debugRenderer.setColor(1f, 0, 0, 1);
-	    debugRenderer.line(Gdx.graphics.getWidth()/3, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
-	    debugRenderer.line((Gdx.graphics.getWidth()/3)*2, 0, (Gdx.graphics.getWidth()/3)*2, Gdx.graphics.getHeight());
-	    debugRenderer.end();
+		stage.draw();
 
-	    debugRenderer.begin(ShapeType.Filled);
-	    debugRenderer.setColor(activePath == 1 ? Color.GREEN : Color.GRAY);
-	    debugRenderer.rect(BUTTON_WIDTH, BUTTON_HEIGHT*3, BUTTON_WIDTH, BUTTON_HEIGHT);
-	    debugRenderer.setColor(activePath == 2 ? Color.GREEN : Color.GRAY);
-	    debugRenderer.rect(BUTTON_WIDTH*2, BUTTON_HEIGHT*3, BUTTON_WIDTH, BUTTON_HEIGHT);
-	    debugRenderer.setColor(activePath == 3 ? Color.GREEN : Color.GRAY);
-	    debugRenderer.rect(BUTTON_WIDTH*3, BUTTON_HEIGHT*3, BUTTON_WIDTH, BUTTON_HEIGHT);
-	    debugRenderer.end();
-	    
-	    if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
-		    throwSlot();
-		    changePath();
-	    } else if (!started) {
-	    	started = clientSystem.isStarted();
-	    }
+		debugRenderer.begin(ShapeType.Line);
+		debugRenderer.setColor(1f, 0, 0, 1);
+		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
+		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
+		debugRenderer.end();
+
+		batch.begin();
+
+		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
+		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
+		batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
+
+		slot1.act(deltaTime);
+		slot2.act(deltaTime);
+		slot3.act(deltaTime);
+
+		slot1.draw(batch, 1f);
+		slot2.draw(batch, 1f);
+		slot3.draw(batch, 1f);
+		
+		batch.end();
+
+		// if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
+		throwSlot();
+		changePath();
+		// } else if (!started) {
+		// started = clientSystem.isStarted();
+		// }
 	}
 }
