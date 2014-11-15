@@ -26,12 +26,14 @@ public class ClientUISystem extends EntitySystem {
 	private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight() / 4;
 	private static final int SECTION = Gdx.graphics.getWidth() / 3;
 	private static final int ICON_X = (SECTION - SECTION / 2) - TORTSEN_ICON.getWidth() / 2;
-	private static final int ICON_Y = Gdx.graphics.getHeight() / 4;
-	private static final int PATH_ICON_Y = Gdx.graphics.getHeight()- UP_ICON.getHeight();
+	private static final int ICON_Y = Gdx.graphics.getHeight() /3 ;
+	private static final int PATH_ICON_Y = 0;
 	private static final int UP_PATH_ICON_X = (Gdx.graphics.getWidth() / 2) - UP_ICON.getWidth() / 2;
 	private static final int LEFT_PATH_ICON_X = UP_PATH_ICON_X - LEFT_ICON.getWidth();
-	private static final int RIGHT_PATH_ICON_X = UP_PATH_ICON_X  + UP_ICON.getWidth();
-
+	private static final int RIGHT_PATH_ICON_X = UP_PATH_ICON_X + UP_ICON.getWidth();
+	private static final int SCREENHEIGHT = Gdx.graphics.getHeight();
+	
+	private int start_y = 0;
 	private Stage stage;
 	private ClientListener clientSystem;
 	private int activePath;
@@ -87,12 +89,15 @@ public class ClientUISystem extends EntitySystem {
 		if (Gdx.input.isTouched()) {
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
-			if (x > BUTTON_WIDTH && x < BUTTON_WIDTH * 2 && y < BUTTON_HEIGHT * 3) {
+			if (x > LEFT_PATH_ICON_X && x < LEFT_PATH_ICON_X + LEFT_ICON.getWidth() && y > SCREENHEIGHT -LEFT_ICON.getHeight() ) {
 				activePath = 1;
-			} else if (x > BUTTON_WIDTH * 2 && x < BUTTON_WIDTH * 3 && y < BUTTON_HEIGHT * 3) {
+				System.out.println("left path");
+			} else if (x > UP_PATH_ICON_X && x < UP_PATH_ICON_X + UP_ICON.getWidth() && y > SCREENHEIGHT - UP_ICON.getHeight()) {
 				activePath = 2;
-			} else if (x > BUTTON_WIDTH * 3 && x < BUTTON_WIDTH * 4 && y < BUTTON_HEIGHT * 3) {
+				System.out.println("up path");
+			} else if (x > RIGHT_PATH_ICON_X && x < (RIGHT_PATH_ICON_X + RIGHT_ICON.getWidth()) &&  y > SCREENHEIGHT -RIGHT_ICON.getHeight()) {
 				activePath = 3;
+				System.out.println("right path");
 			}
 		}
 	}
@@ -112,16 +117,20 @@ public class ClientUISystem extends EntitySystem {
 		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
 		debugRenderer.end();
 
-			 
-
-		batch.begin();
+		batch.begin(); 
 		// Draw Path Icons
-		 batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
+		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
 		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
-		 batch.draw(RIGHT_ICON,RIGHT_PATH_ICON_X , PATH_ICON_Y);
+		batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
 
 		// Draw Animal Icons
-		batch.draw(TORTSEN_ICON, ICON_X, ICON_Y);
+		
+		if (start_y < ICON_Y ){
+			batch.draw(TORTSEN_ICON, ICON_X, start_y);
+			start_y++;
+		}else if (start_y == ICON_Y){
+			batch.draw(TORTSEN_ICON, ICON_X, ICON_Y);
+		}
 		batch.draw(TORTSEN_ICON, ICON_X + SECTION, ICON_Y);
 		batch.draw(TORTSEN_ICON, ICON_X + (SECTION * 2), ICON_Y);
 		batch.end();
