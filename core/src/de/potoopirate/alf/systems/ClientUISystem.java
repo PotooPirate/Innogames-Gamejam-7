@@ -30,13 +30,13 @@ public class ClientUISystem extends EntitySystem {
 	private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight() / 4;
 	private static final int SECTION = Gdx.graphics.getWidth() / 3;
 	private static final int ICON_X = (SECTION - SECTION / 2) - TORTSEN_ICON.getWidth() / 2;
-	private static final int ICON_Y = Gdx.graphics.getHeight() /3 ;
+	private static final int ICON_Y = Gdx.graphics.getHeight() / 3;
 	private static final int PATH_ICON_Y = 0;
 	private static final int UP_PATH_ICON_X = (Gdx.graphics.getWidth() / 2) - UP_ICON.getWidth() / 2;
 	private static final int LEFT_PATH_ICON_X = UP_PATH_ICON_X - LEFT_ICON.getWidth();
 	private static final int RIGHT_PATH_ICON_X = UP_PATH_ICON_X + UP_ICON.getWidth();
 	private static final int SCREENHEIGHT = Gdx.graphics.getHeight();
-	
+
 	private int start_y = 0;
 	private Stage stage;
 	private ClientListener clientSystem;
@@ -46,7 +46,7 @@ public class ClientUISystem extends EntitySystem {
 	private boolean started; // Holding the client in a block state
 	private float blockCounter;
 	private SpriteBatch batch;
-	
+
 	private Image slot1;
 	private Image slot2;
 	private Image slot3;
@@ -58,13 +58,13 @@ public class ClientUISystem extends EntitySystem {
 		debugRenderer = new ShapeRenderer();
 		activePath = 2;
 		batch = new SpriteBatch();
-		
+
 		slot1 = new Image(TORTSEN_ICON);
 		slot1.setPosition(ICON_X, Gdx.graphics.getHeight());
 		slot2 = new Image(TORTSEN_ICON);
-		slot2.setPosition(ICON_X+SECTION, Gdx.graphics.getHeight());
+		slot2.setPosition(ICON_X + SECTION, Gdx.graphics.getHeight());
 		slot3 = new Image(TORTSEN_ICON);
-		slot3.setPosition(ICON_X+SECTION*2, Gdx.graphics.getHeight());
+		slot3.setPosition(ICON_X + SECTION * 2, Gdx.graphics.getHeight());
 	}
 
 	@Override
@@ -72,9 +72,9 @@ public class ClientUISystem extends EntitySystem {
 		super.addedToEngine(engine);
 
 		slot1.addAction(Actions.moveTo(ICON_X, ICON_Y, 2, Interpolation.bounceOut));
-		slot2.addAction(Actions.sequence(Actions.delay(0.5f), Actions.moveTo(ICON_X+SECTION, ICON_Y, 2, Interpolation.bounceOut)));
-		slot3.addAction(Actions.sequence(Actions.delay(1f), Actions.moveTo(ICON_X+SECTION*2, ICON_Y, 2, Interpolation.bounceOut)));
-		
+		slot2.addAction(Actions.sequence(Actions.delay(0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 2, Interpolation.bounceOut)));
+		slot3.addAction(Actions.sequence(Actions.delay(1f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 2, Interpolation.bounceOut)));
+
 		blockCounter = 0;
 		started = false;
 		stage = new Stage();
@@ -88,16 +88,32 @@ public class ClientUISystem extends EntitySystem {
 			touched = true;
 		} else if (Gdx.input.isTouched() && touched) {
 			y += Gdx.input.getDeltaY();
-			
+			// check selected Section
+			x = Gdx.input.getX();
+			if (x < SECTION) {
+				slot1.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
+
+			} else if (x < SECTION * 2) {
+				slot2.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
+
+			} else {
+				slot3.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
+
+			}
 		} else if (!Gdx.input.isTouched() && touched) {
 			touched = false;
-			if (y <= -200) {
+			if (y <= -100) {
 				x = Gdx.input.getX();
-				if (x < Gdx.graphics.getWidth() / 3) {
+				if (x < SECTION) {
+					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f),Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
+					clientSystem.throwSlot(2, activePath);
 					clientSystem.throwSlot(1, activePath);
-				} else if (x < (Gdx.graphics.getWidth() / 3) * 2) {
+				} else if (x < SECTION * 2) {
+					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
 					clientSystem.throwSlot(2, activePath);
 				} else {
+					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f),Actions.moveTo(ICON_X + SECTION *2, ICON_Y, 1, Interpolation.bounceOut)));
+					clientSystem.throwSlot(2, activePath);
 					clientSystem.throwSlot(3, activePath);
 				}
 			}
@@ -109,13 +125,13 @@ public class ClientUISystem extends EntitySystem {
 		if (Gdx.input.isTouched()) {
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
-			if (x > LEFT_PATH_ICON_X && x < LEFT_PATH_ICON_X + LEFT_ICON.getWidth() && y > SCREENHEIGHT -LEFT_ICON.getHeight() ) {
+			if (x > LEFT_PATH_ICON_X && x < LEFT_PATH_ICON_X + LEFT_ICON.getWidth() && y > SCREENHEIGHT - LEFT_ICON.getHeight()) {
 				activePath = 1;
 				System.out.println("left path");
 			} else if (x > UP_PATH_ICON_X && x < UP_PATH_ICON_X + UP_ICON.getWidth() && y > SCREENHEIGHT - UP_ICON.getHeight()) {
 				activePath = 2;
 				System.out.println("up path");
-			} else if (x > RIGHT_PATH_ICON_X && x < (RIGHT_PATH_ICON_X + RIGHT_ICON.getWidth()) &&  y > SCREENHEIGHT -RIGHT_ICON.getHeight()) {
+			} else if (x > RIGHT_PATH_ICON_X && x < (RIGHT_PATH_ICON_X + RIGHT_ICON.getWidth()) && y > SCREENHEIGHT - RIGHT_ICON.getHeight()) {
 				activePath = 3;
 				System.out.println("right path");
 			}
@@ -136,9 +152,9 @@ public class ClientUISystem extends EntitySystem {
 		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
 		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
 		debugRenderer.end();
-		
-		batch.begin(); 
-		
+
+		batch.begin();
+
 		batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
 		batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
 		batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
@@ -146,13 +162,13 @@ public class ClientUISystem extends EntitySystem {
 		slot1.act(deltaTime);
 		slot2.act(deltaTime);
 		slot3.act(deltaTime);
-		
+
 		slot1.draw(batch, 1f);
 		slot2.draw(batch, 1f);
 		slot3.draw(batch, 1f);
 		
 		batch.end();
-		
+
 		// if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
 		throwSlot();
 		changePath();
