@@ -9,7 +9,7 @@ public class RaceComponent extends Component {
 		HIPPO
 	}
 	
-	private Race race;
+	public Race race;
 	
 	public RaceComponent (Race race) {
 		this.race = race;

@@ -9,19 +9,11 @@ import de.potoopirate.alf.components.RaceComponent.Race;
 
 public class NaturalSelection {
 	
-	private Array<Integer> availableStatus;
-	private static Map<Race, Integer> assignedStatus;
-	
-	public NaturalSelection () {
-		availableStatus = new Array<Integer>();
-		assignedStatus = new HashMap<Race, Integer>();
+	private static Array<Integer> availableStatus = new Array<Integer>();
+	private static Map<Race, Integer> assignedStatus = new HashMap<Race, Integer>();
 		
-		// assign status to race
-		assignNewStatus();
-	}
-	
 	// assign new status to all races -> has to be called before each round begins
-	public void assignNewStatus () {
+	public static void assignNewStatus () {
 		// create status number (0, 1, 2...) for each Race
 		for (int i = 0; i < Race.values().length; i++)
 		{
@@ -39,7 +31,7 @@ public class NaturalSelection {
 	}
 	
 	// get the status of a race
-	public int getStatusOfRace (Race race) {
+	public static int getStatusOfRace (Race race) {
 		return assignedStatus.get (race);
 	}
 	
