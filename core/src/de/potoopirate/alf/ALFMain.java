@@ -3,6 +3,7 @@ package de.potoopirate.alf;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 
 import de.potoopirate.alf.entities.TestEntity;
 import de.potoopirate.alf.systems.RendererSystem;

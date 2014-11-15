@@ -7,13 +7,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import de.potoopirate.alf.systems.ClientSystem;
 import de.potoopirate.alf.systems.ClientUISystem;
 
-public class Client extends ScreenAdapter{
+public class ClientScreen extends ScreenAdapter{
 	
 	private Engine engine;
 	
 	private ClientSystem clientSystem;
 	
-	public Client(Engine engine) {
+	public ClientScreen(Engine engine) {
 		this.engine = engine;
 		clientSystem = new ClientSystem();
 		engine.addSystem(clientSystem);
