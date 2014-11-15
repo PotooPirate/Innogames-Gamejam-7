@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.LevelEntity;
 import de.potoopirate.alf.systems.PathSystem;
+import com.badlogic.gdx.graphics.GL20;
 
 import de.potoopirate.alf.systems.RendererSystem;
 import de.potoopirate.alf.systems.ClientSystem;
@@ -34,7 +35,7 @@ public class ALFMain extends Game {
 
 	@Override
 	public void render() {
-
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.render();
 		RendererSystem.getInstance().Render(Gdx.graphics.getDeltaTime());
 		PathSystem.getInstance().Update(Gdx.graphics.getDeltaTime());
@@ -59,6 +60,7 @@ public class ALFMain extends Game {
 			setScreen(new Client(engine));
 		}*/
 
+		setScreen(new StartScreen(engine, this));
 	}
 
 }
