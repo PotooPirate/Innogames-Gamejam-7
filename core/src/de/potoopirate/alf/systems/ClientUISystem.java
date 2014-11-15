@@ -16,7 +16,7 @@ import de.potoopirate.alf.interfaces.ClientListener;
 
 public class ClientUISystem extends EntitySystem {
 
-	private static final int BLOCK_COUNTER_RELEASE = 10;
+	private static final int BLOCK_COUNTER_RELEASE = 1;
 	private static final Texture TORTSEN_ICON = new Texture(Gdx.files.internal("icons/tortsenicon.png"));
 	private static final Texture EMMA_ICON = new Texture(Gdx.files.internal("icons/emmaicon.png"));
 	private static final Texture GUNTER_ICON = new Texture(Gdx.files.internal("icons/guntericon.png"));
@@ -87,24 +87,28 @@ public class ClientUISystem extends EntitySystem {
 			y += Gdx.input.getDeltaY();
 			// check selected Section
 			x = Gdx.input.getX();
-			if (x < SECTION) {
+			if (y <= -100) {
+				if (x < SECTION) {
+					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
+				} else if (x < SECTION * 2) {
+					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
+				} else {
+					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 1, Interpolation.bounceOut)));
+				}
+			}
+			/*if (x < SECTION) {
 				slot1.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
-
 			} else if (x < SECTION * 2) {
 				slot2.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
-
 			} else {
 				slot3.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
-
-			}
+			}*/
 		} else if (!Gdx.input.isTouched() && touched) {
 			touched = false;
 			if (y <= -100) {
 				x = Gdx.input.getX();
 				if (x < SECTION) {
-
 					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
-
 					clientSystem.throwSlot(1, activePath);
 					blockCounter = 0;
 				} else if (x < SECTION * 2) {
@@ -112,9 +116,7 @@ public class ClientUISystem extends EntitySystem {
 					clientSystem.throwSlot(2, activePath);
 					blockCounter = 0;
 				} else {
-
 					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 1, Interpolation.bounceOut)));
-
 					clientSystem.throwSlot(3, activePath);
 					blockCounter = 0;
 				}
