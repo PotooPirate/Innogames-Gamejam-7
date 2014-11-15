@@ -41,7 +41,6 @@ import com.badlogic.gdx.utils.Array;
 public class MixTest extends ApplicationAdapter {
 	SpriteBatch batch;
 	float time;
-	Array<Event> events = new Array();
 
 	SkeletonRenderer renderer;
 	SkeletonRendererDebug debugRenderer;

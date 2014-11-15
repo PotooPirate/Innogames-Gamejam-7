@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -103,7 +102,9 @@ public class ClientUISystem extends EntitySystem {
 			if (y <= -100) {
 				x = Gdx.input.getX();
 				if (x < SECTION) {
+
 					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
+
 					clientSystem.throwSlot(1, activePath);
 					blockCounter = 0;
 				} else if (x < SECTION * 2) {
@@ -111,7 +112,9 @@ public class ClientUISystem extends EntitySystem {
 					clientSystem.throwSlot(2, activePath);
 					blockCounter = 0;
 				} else {
+
 					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 1, Interpolation.bounceOut)));
+
 					clientSystem.throwSlot(3, activePath);
 					blockCounter = 0;
 				}
@@ -146,24 +149,24 @@ public class ClientUISystem extends EntitySystem {
 		stage.act(deltaTime);
 		stage.draw();
 
-//		debugRenderer.begin(ShapeType.Line);
-//		debugRenderer.setColor(1f, 0, 0, 1);
-//		debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
-//		debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
-//		debugRenderer.end();
-//		batch.begin();
+		// debugRenderer.begin(ShapeType.Line);
+		// debugRenderer.setColor(1f, 0, 0, 1);
+		// debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
+		// debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
+		// debugRenderer.end();
+		// batch.begin();
 
 		// if (blockCounter <= BLOCK_COUNTER_RELEASE && started) {
 		if (blockCounter >= BLOCK_COUNTER_RELEASE) {
 			throwSlot();
 			changePath();
-			slot1.setColor(300,300,300,1);
-			slot2.setColor(300,300,300,1);
-			slot3.setColor(300,300,300,1);
+			slot1.setColor(300, 300, 300, 1);
+			slot2.setColor(300, 300, 300, 1);
+			slot3.setColor(300, 300, 300, 1);
 		} else if (blockCounter < BLOCK_COUNTER_RELEASE) {
-			slot1.setColor(100,100,100,0.2f);
-			slot2.setColor(100,100,100,0.2f);
-			slot3.setColor(100,100,100,0.2f);
+			slot1.setColor(100, 100, 100, 0.2f);
+			slot2.setColor(100, 100, 100, 0.2f);
+			slot3.setColor(100, 100, 100, 0.2f);
 		} else if (!started) {
 			started = clientSystem.isStarted();
 		}

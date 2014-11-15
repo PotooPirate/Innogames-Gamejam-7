@@ -33,6 +33,14 @@ public class PathSystem extends EntitySystem {
 	
 	private Engine engine;
 	
+	private float getWidth(float value) {
+		return (value/6.4f) * (((float)Gdx.graphics.getWidth())/100.0f);
+	}
+	
+	private float getHeight(float value) {
+		return (value/4.8f) * (((float)Gdx.graphics.getHeight())/100.0f);
+	}
+	
 	private PathSystem() {
 		allAnimals = new ArrayList<AnimalEntity>();
 		pathListOne = new ArrayList<Vector2>();
@@ -42,26 +50,24 @@ public class PathSystem extends EntitySystem {
 		pathListTwoReverted = new ArrayList<Vector2>();
 		pathListThreeReverted = new ArrayList<Vector2>();
 		
-		float screenWidth = Gdx.graphics.getWidth();
-		float screenHeight = Gdx.graphics.getHeight();
 		
-		pathListOne.add(new Vector2(35,390));
-		pathListOne.add(new Vector2(95,405));
-		pathListOne.add(new Vector2(120,425));
-		pathListOne.add(new Vector2(600,430));
+		pathListOne.add(new Vector2(getWidth(35f),getHeight(390f)));
+		pathListOne.add(new Vector2(getWidth(95f),getHeight(405f)));
+		pathListOne.add(new Vector2(getWidth(120f),getHeight(425f)));
+		pathListOne.add(new Vector2(getWidth(600f),getHeight(430f)));
 		
-		pathListTwo.add(new Vector2(90,75));
-		pathListTwo.add(new Vector2(140,95));
-		pathListTwo.add(new Vector2(190,125));
-		pathListTwo.add(new Vector2(260,170));
-		pathListTwo.add(new Vector2(400,290));
-		pathListTwo.add(new Vector2(560,400));
-		pathListTwo.add(new Vector2(600,430));
+		pathListTwo.add(new Vector2(getWidth(90f),getHeight(75f)));
+		pathListTwo.add(new Vector2(getWidth(140f),getHeight(95f)));
+		pathListTwo.add(new Vector2(getWidth(190f),getHeight(125f)));
+		pathListTwo.add(new Vector2(getWidth(260f),getHeight(170f)));
+		pathListTwo.add(new Vector2(getWidth(400f),getHeight(290f)));
+		pathListTwo.add(new Vector2(getWidth(560f),getHeight(400f)));
+		pathListTwo.add(new Vector2(getWidth(600f),getHeight(430f)));
 		
-		pathListThree.add(new Vector2(530,30));
-		pathListThree.add(new Vector2(560,70));
-		pathListThree.add(new Vector2(620,100));
-		pathListThree.add(new Vector2(620,430));
+		pathListThree.add(new Vector2(getWidth(530f),getHeight(30f)));
+		pathListThree.add(new Vector2(getWidth(560f),getHeight(70f)));
+		pathListThree.add(new Vector2(getWidth(620f),getHeight(100f)));
+		pathListThree.add(new Vector2(getWidth(620f),getHeight(430f)));
 		
 		for(int i = (pathListOne.size()-1); i >= 0; i--) 
 		{
@@ -89,11 +95,13 @@ public class PathSystem extends EntitySystem {
 	}
 	
 	public void Update(float deltaTime) {
-		for (AnimalEntity entry : allAnimals) {
-			StartPath(entry, 
-					entry.getComponent(PathComponent.class).currentTargetIndex ,
-					entry.getComponent(PathComponent.class).pathNumber );
-		}
+		try {
+			for (AnimalEntity entry : allAnimals) {
+				StartPath(entry, 
+						entry.getComponent(PathComponent.class).currentTargetIndex ,
+						entry.getComponent(PathComponent.class).pathNumber );
+			}
+		} catch(Exception e) {}
 	}
 	
 	private void StartPath(AnimalEntity animal, int currentTarget, int pathID) {
@@ -177,13 +185,9 @@ public class PathSystem extends EntitySystem {
 	}
 	
 	public void RemoveAnimal(AnimalEntity animal) {
-		/*for (Iterator<Map.Entry<Integer, AnimalEntity>> iter = allAnimals.entrySet().iterator(); iter.hasNext();) {
-			Map.Entry<Integer, AnimalEntity> entry = iter.next();
-			if (animal.equals(entry.getValue())) {
-				iter.remove();
-			    break; 
-			}
-		}*/
+		if(allAnimals.contains(animal)) {
+			allAnimals.remove(animal);
+		}
 	}
 	
 	public static PathSystem getInstance() {

@@ -9,7 +9,12 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.utils.Array;
+import com.esotericsoftware.spine.AnimationState;
+import com.esotericsoftware.spine.AnimationState.AnimationStateListener;
+import com.esotericsoftware.spine.Event;
+import com.esotericsoftware.spine.EventData;
 
+import de.potoopirate.alf.MyAnimationStateListener;
 import de.potoopirate.alf.NaturalSelection;
 import de.potoopirate.alf.components.AnimationRendererComponent;
 import de.potoopirate.alf.components.CollisionComponent;
@@ -21,11 +26,11 @@ import de.potoopirate.alf.components.TransformComponent;
 import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.MainBaseEntity;
 
-public class FightSystem extends EntitySystem {
+public class FightSystem extends EntitySystem  {
 	
 	
-	public static final float MAXIMUM_COLLISION_RANGE = 100f;
-	public static final float INVADE_HQ_RANGE = 50f;
+	public static final float SQUARED_MAXIMUM_COLLISION_RANGE = 100f;
+	public static final float SQUARED_INVADE_HQ_RANGE = 50f;
 	public static final int FIRST_PLAYER = 0;
 	public static final int SECOND_PLAYER = 1;
 	
@@ -119,7 +124,6 @@ public class FightSystem extends EntitySystem {
 	public void update(float deltaTime)
 	{
 		super.update(deltaTime);
-		
 		animals = engine.getEntitiesFor(Family.getFor(RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
 		
 		allAnimalsP1 = new Array<AnimalEntity>();
@@ -163,10 +167,8 @@ public class FightSystem extends EntitySystem {
 					float xDiff = animalP1Position.getPosition().x - animalP2Position.getPosition().x;
 					float yDiff = animalP1Position.getPosition().y - animalP2Position.getPosition().y;
 					
-					System.out.println(xDiff);
-					System.out.println(yDiff);
-					
-					if(xDiff*xDiff + yDiff*yDiff < MAXIMUM_COLLISION_RANGE)
+					if(xDiff*xDiff + yDiff*yDiff < SQUARED_MAXIMUM_COLLISION_RANGE)
+
 					{
 						animalP1Race= RaceMapper.get(AnimalP1);
 						animalP2Race = RaceMapper.get(AnimalP2);
@@ -178,25 +180,42 @@ public class FightSystem extends EntitySystem {
 						
 						if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 						{
+							AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
+							AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
 							CollisionMapper.get(AnimalP2).dead=true;
 							allAnimalsP2.removeIndex(e2);
 							deadAnimals.add(AnimalP2);
+							PathSystem.getInstance().RemoveAnimal(AnimalP2);
+
 							//playSound of loosing animal
 							--e2;
 						}
 						if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 						{
+							AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0,0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
+							AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
 							CollisionMapper.get(AnimalP1).dead=true;
 							allAnimalsP1.removeIndex(e1);
-							deadAnimals.add(AnimalP2);
+							deadAnimals.add(AnimalP1);
+							PathSystem.getInstance().RemoveAnimal(AnimalP1);
+
 							//playSound of loosing animal
 							--e1;
 							break;
 						}
+						
 						if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
 						{
-							System.out.println("Two Aniamls of same type are close to each other");
+							AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
+							AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
+							allAnimalsP1.removeIndex(e1);
+							allAnimalsP2.removeIndex(e2);
+							deadAnimals.add(AnimalP2);
+							deadAnimals.add(AnimalP1);
+							PathSystem.getInstance().RemoveAnimal(AnimalP1);
+							PathSystem.getInstance().RemoveAnimal(AnimalP2);
 						}
+						
 					}
 					
 				}
@@ -224,12 +243,6 @@ public class FightSystem extends EntitySystem {
 			}
 		}
 		*/
-		
-		for(AnimalEntity e : deadAnimals)
-		{
-			engine.removeEntity(e);
-		}
-		
-	}
 	
+	}
 }

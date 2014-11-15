@@ -1,0 +1,167 @@
+
+Emma.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Body
+  rotate: false
+  xy: 2, 60
+  size: 201, 194
+  orig: 201, 194
+  offset: 0, 0
+  index: -1
+FlyKnob
+  rotate: false
+  xy: 358, 195
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+LeftEye
+  rotate: false
+  xy: 205, 72
+  size: 38, 49
+  orig: 38, 49
+  offset: 0, 0
+  index: -1
+LeftFly
+  rotate: true
+  xy: 205, 123
+  size: 58, 53
+  orig: 58, 53
+  offset: 0, 0
+  index: -1
+LeftTentacle1
+  rotate: false
+  xy: 260, 214
+  size: 48, 40
+  orig: 48, 40
+  offset: 0, 0
+  index: -1
+LeftTentacle2
+  rotate: false
+  xy: 270, 62
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1
+LeftTentacle3
+  rotate: true
+  xy: 202, 16
+  size: 30, 33
+  orig: 30, 33
+  offset: 0, 0
+  index: -1
+LeftTentacle4
+  rotate: false
+  xy: 205, 48
+  size: 37, 22
+  orig: 37, 22
+  offset: 0, 0
+  index: -1
+MiddleTentacle1
+  rotate: true
+  xy: 2, 2
+  size: 56, 60
+  orig: 56, 60
+  offset: 0, 0
+  index: -1
+MiddleTentacle2
+  rotate: false
+  xy: 245, 83
+  size: 23, 38
+  orig: 23, 38
+  offset: 0, 0
+  index: -1
+MiddleTentacle3
+  rotate: false
+  xy: 356, 218
+  size: 43, 36
+  orig: 43, 36
+  offset: 0, 0
+  index: -1
+MouthLeft
+  rotate: false
+  xy: 330, 185
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: -1
+MouthRight
+  rotate: false
+  xy: 260, 134
+  size: 38, 31
+  orig: 38, 31
+  offset: 0, 0
+  index: -1
+RightEye
+  rotate: false
+  xy: 205, 183
+  size: 53, 71
+  orig: 53, 71
+  offset: 0, 0
+  index: -1
+RightFly
+  rotate: true
+  xy: 64, 2
+  size: 56, 50
+  orig: 56, 50
+  offset: 0, 0
+  index: -1
+RightTentacle1
+  rotate: false
+  xy: 116, 5
+  size: 60, 53
+  orig: 60, 53
+  offset: 0, 0
+  index: -1
+RightTentacle2
+  rotate: false
+  xy: 260, 167
+  size: 41, 45
+  orig: 41, 45
+  offset: 0, 0
+  index: -1
+RightTentacle3
+  rotate: true
+  xy: 310, 217
+  size: 37, 44
+  orig: 37, 44
+  offset: 0, 0
+  index: -1
+RightTentacle4
+  rotate: false
+  xy: 270, 96
+  size: 30, 36
+  orig: 30, 36
+  offset: 0, 0
+  index: -1
+RightTentacle5
+  rotate: false
+  xy: 303, 181
+  size: 25, 31
+  orig: 25, 31
+  offset: 0, 0
+  index: -1
+RightTentacle6
+  rotate: true
+  xy: 178, 16
+  size: 42, 22
+  orig: 42, 22
+  offset: 0, 0
+  index: -1
+SpotsLeft
+  rotate: false
+  xy: 401, 225
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+SpotsRight
+  rotate: false
+  xy: 452, 224
+  size: 47, 30
+  orig: 47, 30
+  offset: 0, 0
+  index: -1

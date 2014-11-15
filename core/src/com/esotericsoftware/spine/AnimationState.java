@@ -34,6 +34,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
+import de.potoopirate.alf.entities.AnimalEntity;
+
 /** Stores state for an animation and automatically mixes between animations. */
 public class AnimationState {
 	private final AnimationStateData data;
@@ -422,6 +424,8 @@ public class AnimationState {
 
 		/** Invoked just before the current animation is replaced. */
 		public void end (int trackIndex);
+		
+		public void OnDyAnimationEnd(AnimationState animationState) ;
 	}
 
 	static public abstract class AnimationStateAdapter implements AnimationStateListener {
@@ -435,6 +439,10 @@ public class AnimationState {
 		}
 
 		public void end (int trackIndex) {
+		}
+		
+		public void OnDyAnimationEnd(AnimalEntity animal) {
+			
 		}
 	}
 }
