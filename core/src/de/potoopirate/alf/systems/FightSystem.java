@@ -182,6 +182,7 @@ public class FightSystem extends EntitySystem  {
 						
 							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
+								System.out.println("Player 1 animal wins");
 								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
 								kill(AnimalP1);
 //								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
@@ -195,6 +196,7 @@ public class FightSystem extends EntitySystem  {
 							}
 							if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 							{
+								System.out.println("Player 2 animal wins");
 								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1);
 								kill(AnimalP1);
 //								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0,0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
@@ -210,8 +212,10 @@ public class FightSystem extends EntitySystem  {
 						
 							if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
+								System.out.println("two animals of same type kills");
 								kill(AnimalP1);
 								kill(AnimalP2);
+								System.out.println("finished killing");
 //								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
 //								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
 //								allAnimalsP1.removeIndex(e1);
@@ -220,7 +224,6 @@ public class FightSystem extends EntitySystem  {
 //								deadAnimals.add(AnimalP1);
 //								PathSystem.getInstance().RemoveAnimal(AnimalP1);
 //								PathSystem.getInstance().RemoveAnimal(AnimalP2);
-								break;
 							}
 						
 						}
@@ -233,14 +236,18 @@ public class FightSystem extends EntitySystem  {
 		{
 			if(CollisionMapper.get(e).dead)
 			{
+				System.out.println("animal of Player 1 is dead, removing now");
 				PathSystem.getInstance().RemoveAnimal(e);
+				engine.removeEntity(e);
 			}
 		}
 		for(AnimalEntity e:allAnimalsP2)
 		{
 			if(CollisionMapper.get(e).dead)
 			{
+				System.out.println("animal of Player 2 is dead, removing now");
 				PathSystem.getInstance().RemoveAnimal(e);
+				engine.removeEntity(e);
 			}
 		}
 		
@@ -249,9 +256,10 @@ public class FightSystem extends EntitySystem  {
 		{
 			float xDiff = TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().x - baseP2Transform.getPosition().x;
 			float yDiff = TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().y - baseP2Transform.getPosition().y;
-			if(xDiff*xDiff + yDiff*yDiff < INVADE_HQ_RANGE)
+			if(xDiff*xDiff + yDiff*yDiff < SQUARED_INVADE_HQ_RANGE)
 			{
 				LifeMapper.get(baseP2).looseLife();
+				kill(allAnimalsP1.get(e1));
 			}
 		}
 		
@@ -259,9 +267,10 @@ public class FightSystem extends EntitySystem  {
 		{
 			float xDiff = TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().x - baseP1Transform.getPosition().x;
 			float yDiff = TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().y - baseP1Transform.getPosition().y;
-			if(xDiff*xDiff + yDiff*yDiff < INVADE_HQ_RANGE)
+			if(xDiff*xDiff + yDiff*yDiff < SQUARED_INVADE_HQ_RANGE)
 			{
 				LifeMapper.get(baseP1).looseLife();
+				kill(allAnimalsP2.get(e2));
 			}
 		}
 		*/
@@ -270,6 +279,7 @@ public class FightSystem extends EntitySystem  {
 	
 	private void kill(AnimalEntity animal)
 	{
+		System.out.println("killing an animal");
 		animal.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));
 		CollisionMapper.get(animal).dead=true;		
 	}
