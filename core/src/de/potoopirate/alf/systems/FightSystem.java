@@ -15,11 +15,12 @@ import de.potoopirate.alf.components.LifeComponent;
 import de.potoopirate.alf.components.PathComponent;
 import de.potoopirate.alf.components.PlayerComponent;
 import de.potoopirate.alf.components.RaceComponent;
+import de.potoopirate.alf.components.TransformComponent;
 import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.MainBaseEntity;
 
 public class FightSystem extends EntitySystem {
-	
+	/*
 	 
 	//Mapper for Animals and MainBases
 	private ComponentMapper<PlayerComponent> 		PlayerMapper;
@@ -34,9 +35,9 @@ public class FightSystem extends EntitySystem {
 	private ComponentMapper<LifeComponent>		LifeMapper;	
 	
 	//Array of all Animals that are currenty alive
-	private ImmutableArray<AnimalEntity> 		animals;
+	private ImmutableArray<Entity> 		animals;
 	//Array of all MainBases
-	private ImmutableArray<MainBaseEntity>	bases;
+	private ImmutableArray<Entity>		bases;
 	//Arrays to sort Animals by players 
 	private Array<AnimalEntity>				allAnimalsP1;
 	private Array<AnimalEntity>				allAnimalsP2;
@@ -49,7 +50,6 @@ public class FightSystem extends EntitySystem {
 	
 	//Path of the two animals, that are currently checked
 	private PathComponent						animal1Path;
-	private PathComponent						animal2Path;
 	
 	//Race of the two animals, that are currently checked
 	private RaceComponent						animalP1Race;
@@ -93,8 +93,8 @@ public class FightSystem extends EntitySystem {
 			player = PlayerMapper.get(animals.get(e));
 			switch(player.id)
 			{
-				case 1: {allAnimalsP1.add(animals.get(e)); break;}
-				case 2: {allAnimalsP2.add(animals.get(e)); break;}
+				case 1: {allAnimalsP1.add((AnimalEntity) animals.get(e)); break;}
+				case 2: {allAnimalsP2.add((AnimalEntity) animals.get(e)); break;}
 			}
 		}
 		
@@ -103,7 +103,7 @@ public class FightSystem extends EntitySystem {
 		{
 			AnimalP1 = allAnimalsP1.get(e1);
 			animal1Path = PathMapper.get(AnimalP1);
-			animalP1Position = TranformerMapper.get(AnimalP1);
+			animalP1Position = TransformerMapper.get(AnimalP1);
 			
 			for(int e2 = 0;e2<allAnimalsP2.size;e2++)
 			{
@@ -111,10 +111,10 @@ public class FightSystem extends EntitySystem {
 				if(animal1Path == PathMapper.get(AnimalP2))
 				{
 					
-					animalP2Position = TranformerMapper.get(AnimalP2);
+					animalP2Position = TransformerMapper.get(AnimalP2);
 					
-					float xDiff = animalP1Position.getX() - animalP2Position.getX();
-					float yDiff = animalP1Position.getY() - animalP2Position.getY();
+					float xDiff = animalP1Position.getPosition().x - animalP2Position.getPosition().x;
+					float yDiff = animalP1Position.getPosition().y - animalP2Position.getPosition().y;
 					
 					float squareNorm = xDiff*xDiff + yDiff*yDiff;
 					
@@ -161,7 +161,7 @@ public class FightSystem extends EntitySystem {
 		}
 		
 	}
-	
+*/	
 }
 
 

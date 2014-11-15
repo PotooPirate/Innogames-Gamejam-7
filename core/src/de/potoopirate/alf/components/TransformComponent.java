@@ -3,13 +3,13 @@ package de.potoopirate.alf.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 
-public class Transform extends Component {
+public class TransformComponent extends Component {
 	
 	private Vector2 position;
 	private Vector2 size;
 	private Vector2 rotation;
 	
-	public Transform() {
+	public TransformComponent() {
 		
 	}
 
