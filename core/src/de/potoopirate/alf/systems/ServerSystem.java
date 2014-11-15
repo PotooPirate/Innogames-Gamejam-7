@@ -63,7 +63,7 @@ public class ServerSystem extends EntitySystem {
 			if (connection.getID() == 1){
 				if (networkMessage.pathType == 1)
 					networkMessage.pathType = 3;
-				if (networkMessage.pathType == 3)
+				else if (networkMessage.pathType == 3)
 					networkMessage.pathType = 1;
 			}
 			spawnListener.spawnAnimal(connection.getID()-1, networkMessage.pathType, networkMessage.animalType);
