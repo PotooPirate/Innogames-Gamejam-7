@@ -12,12 +12,18 @@ import de.potoopirate.alf.Network;
 import de.potoopirate.alf.Network.NetworkMessage;
 import de.potoopirate.alf.Network.NetworkReady;
 import de.potoopirate.alf.interfaces.ClientListener;
+import de.potoopirate.alf.interfaces.SpawnListener;
 
 public class ServerSystem extends EntitySystem {
 
 	public static final int MAX_PLAYERS = 2;
 	
 	private Server server;
+	private SpawnListener spawnListener;
+	
+	public ServerSystem(SpawnListener spawnListener) {
+		this.spawnListener = spawnListener;
+	}
 	
 	@Override
 	public void addedToEngine(Engine engine) {
@@ -54,6 +60,7 @@ public class ServerSystem extends EntitySystem {
 		}
 		
 		private void handleNetworkMessages(Connection connection, NetworkMessage networkMessage) {
+			spawnListener.spawnAnimal(connection.getID(), networkMessage.pathType, networkMessage.animalType);
 			System.out.println("===============================================================");
 			System.out.println("== get NetworkMessage from PlayerId: " + connection.getID());
 			System.out.println("== get PathType: " + networkMessage.pathType);

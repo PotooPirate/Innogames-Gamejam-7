@@ -13,17 +13,16 @@ public class Network {
 	}
 	
 	static public class NetworkMessage {
-		public String playerId;
-		public String animalType;
-		public String pathType;
+		public int animalType;
+		public int pathType;
 		
 		public NetworkMessage(){
 			
 		}
 		public NetworkMessage(int animalType, int pathType ){
 			
-			this.animalType = ""+animalType;
-			this.pathType = ""+pathType;
+			this.animalType = animalType;
+			this.pathType = pathType;
 		}
 	}
 	
