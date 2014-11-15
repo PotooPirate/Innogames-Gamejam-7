@@ -11,6 +11,7 @@ import com.esotericsoftware.kryonet.Server;
 import de.potoopirate.alf.Network;
 import de.potoopirate.alf.Network.NetworkMessage;
 import de.potoopirate.alf.Network.NetworkReady;
+import de.potoopirate.alf.interfaces.IClientSystem;
 
 public class ServerSystem extends EntitySystem {
 

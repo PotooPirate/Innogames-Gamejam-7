@@ -10,9 +10,12 @@ public class Client extends ScreenAdapter{
 	
 	private Engine engine;
 	
+	private ClientSystem clientSystem;
+	
 	public Client(Engine engine) {
 		this.engine = engine;
-		engine.addSystem(new ClientSystem());
-		engine.addSystem(new ClientUISystem());
+		clientSystem = new ClientSystem();
+		engine.addSystem(clientSystem);
+		engine.addSystem(new ClientUISystem(clientSystem));
 	}
 }

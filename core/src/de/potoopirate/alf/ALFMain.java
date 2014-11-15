@@ -24,6 +24,7 @@ public class ALFMain extends Game {
 
 	@Override
 	public void render () {
+		
 		super.render();
 		engine.update(Gdx.graphics.getDeltaTime());
 		

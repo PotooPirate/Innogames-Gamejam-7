@@ -14,8 +14,9 @@ import com.esotericsoftware.kryonet.Server;
 import de.potoopirate.alf.Network;
 import de.potoopirate.alf.Network.NetworkMessage;
 import de.potoopirate.alf.Network.NetworkReady;
+import de.potoopirate.alf.interfaces.IClientSystem;
 
-public class ClientSystem extends EntitySystem {
+public class ClientSystem extends EntitySystem implements IClientSystem {
 
 	private Client client;
 
@@ -37,6 +38,11 @@ public class ClientSystem extends EntitySystem {
 
 		}
 	}
+	
+	@Override
+	public void throwSlot(int slotNumber, int activePath) {
+		client.sendTCP(new NetworkMessage(slotNumber, activePath));
+	}
 
 	class ClientListener extends Listener {
 
@@ -48,25 +54,4 @@ public class ClientSystem extends EntitySystem {
 		}
 
 	}
-
-	@Override
-	public void update(float deltaTime) {
-		// TODO Auto-generated method stub
-		super.update(deltaTime);
-
-		// Action Listener
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			
-			System.out.println("Left Path");
-			NetworkMessage message = new NetworkMessage(1,1);
-			client.sendTCP(message);
-		} else if (Gdx.input.isKeyPressed(Keys.UP)) {
-			System.out.println("Upper Path");
-			client.sendTCP(new NetworkMessage(1, 2));
-		} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			System.out.println("Right Path");
-			client.sendTCP(new NetworkMessage(1, 3));
-		}
-	}
-
 }
