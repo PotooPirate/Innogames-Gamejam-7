@@ -10,44 +10,49 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.utils.Array;
 
-public class Fight extends EntitySystem {
-	/*
+import de.potoopirate.alf.components.LifeComponent;
+import de.potoopirate.alf.components.PathComponent;
+import de.potoopirate.alf.components.PlayerComponent;
+import de.potoopirate.alf.components.RaceComponent;
+
+public class FightSystem extends EntitySystem {
+/*	
 	 
 	//Mapper for Animals and MainBases
-	private ComponentMapper<Player> 	PlayerMapper;
-	private ComponentMapper<Transform> 	TransformerMapper;
+	private ComponentMapper<PlayerComponent> 	PlayerMapper;
+	private ComponentMapper<TransformComponent> 	TransformerMapper;
 	
 	//Animal-specific Mappers
-	private ComponentMapper<Race> 		RaceMapper;
-	private ComponentMapper<Path>		PathMapper;
-	private ComponentMapper<Collision>	CollisionMapper;
+	private ComponentMapper<RaceComponent> 		RaceMapper;
+	private ComponentMapper<PathComponent>		PathMapper;
+	private ComponentMapper<CollisionComponent>	CollisionMapper;
 	
 	//MainBase-specific Mapper
-	private ComponentMapper<Life>		LifeMapper;	
+	private ComponentMapper<LifeComponent>		LifeMapper;	
 	
 	//Array of all Animals that are currenty alive
-	private ImmutableArray<Animal> 		animals;
+	private ImmutableArray<AnimalEntity> 		animals;
 	//Array of all MainBases
-	private ImmutableArray<MainBase>	bases;
+	private ImmutableArray<MainBaseEntity>	bases;
 	//Arrays to sort Animals by players 
-	private Array<Animal>				allAnimalsP1;
-	private Array<Animal>				allAnimalsP2;
+	private Array<AnimalEntity>				allAnimalsP1;
+	private Array<AnimalEntity>				allAnimalsP2;
 	
 	//The Animal-Entities, that are currently checked
-	private Animal						AnimalP1;
-	private Animal						AnimalP2;
+	private AnimalEntity						AnimalP1;
+	private AnimalEntity						AnimalP2;
 	
 	//Path of the two animals, that are currently checked
-	private Path						Animal1Path;
-	private Path						Animal2Path;
+	private PathComponent						Animal1Path;
+	private PathComponent						Animal2Path;
 	
 	//Race of the two animals, that are currently checked
-	private Race						AnimalP1Race;
-	private Race						AnimalP2Race;
+	private RaceComponent						AnimalP1Race;
+	private RaceComponent						AnimalP2Race;
 	
-	//Transform (Position) of the two animals, that are currentyl checked
-	private Transform					animalP1Position;
-	private Transform					animalP2Position;
+	//Transform (Position) of the two animals, that are currently checked
+	private TransformComponent					animalP1Position;
+	private TransformComponent					animalP2Position;
 	
 	//Array of animals, that has died in this iteration
 	private Array<Animal>				deadAnimals;
@@ -57,12 +62,12 @@ public class Fight extends EntitySystem {
 	
 	public Fight()
 	{
-		RaceMapper = ComponentMapper.getFor(Race.class);
-		PlayerMapper = ComponentMapper.getFor(Player.class);
-		TransformerMapper = ComponentMapper.getFor(Transform.class);
-		LifeMapper = ComponentMapper.getFor(Life.class);
-		PathMapper = ComponentMapper.getFor(Path.class);
-		ColissionMapper = ComponentMapper.getFor(Collision.class);
+		RaceMapper = ComponentMapper.getFor(RaceComponent.class);
+		PlayerMapper = ComponentMapper.getFor(PlayerComponent.class);
+		TransformerMapper = ComponentMapper.getFor(TransformComponent.class);
+		LifeMapper = ComponentMapper.getFor(LifeComponent.class);
+		PathMapper = ComponentMapper.getFor(PathComponent.class);
+		ColissionMapper = ComponentMapper.getFor(CollisionComponent.class);
 	}
 	
 	@Override
@@ -70,8 +75,8 @@ public class Fight extends EntitySystem {
 	{
 		this.engine = engine;
 		
-		animals = engine.getEntitiesFor(Family.getFor(Race.class, Player.class, Transform.class, Path.class, Colission.class));
-		bases = engine.getEntitiesFor(Family.getFor(Life.class, Player.class, Transform.class));
+		animals = engine.getEntitiesFor(Family.getFor(RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
+		bases = engine.getEntitiesFor(Family.getFor(LifeComponent.class, PlayerComponent.class, TransformComponent.class));
 	}
 	
 	@Override
