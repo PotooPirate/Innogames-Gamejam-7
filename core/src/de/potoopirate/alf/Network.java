@@ -1,6 +1,5 @@
 package de.potoopirate.alf;
 
-import com.badlogic.gdx.graphics.Color;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
