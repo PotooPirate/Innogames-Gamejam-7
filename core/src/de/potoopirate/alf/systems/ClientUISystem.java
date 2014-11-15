@@ -1,10 +1,13 @@
 package de.potoopirate.alf.systems;
 
+import java.awt.Font;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
@@ -32,7 +35,8 @@ public class ClientUISystem extends EntitySystem {
 	private static final int LEFT_PATH_ICON_X = UP_PATH_ICON_X - LEFT_ICON.getWidth();
 	private static final int RIGHT_PATH_ICON_X = UP_PATH_ICON_X + UP_ICON.getWidth();
 	private static final int SCREENHEIGHT = Gdx.graphics.getHeight();
-
+	BitmapFont font;
+	
 	private Stage stage;
 	private ClientListener clientSystem;
 	private int activePath;
@@ -45,7 +49,6 @@ public class ClientUISystem extends EntitySystem {
 	private Image slot1;
 	private Image slot2;
 	private Image slot3;
-	private Image blockImage;
 
 	private ShapeRenderer debugRenderer;
 
@@ -61,7 +64,9 @@ public class ClientUISystem extends EntitySystem {
 		slot2.setPosition(ICON_X + SECTION, Gdx.graphics.getHeight());
 		slot3 = new Image(GUNTER_ICON);
 		slot3.setPosition(ICON_X + SECTION * 2, Gdx.graphics.getHeight());
-
+		font = new BitmapFont();
+		font.setColor(1f, 0f, 0f, 1f);
+		
 	}
 
 	@Override
@@ -158,11 +163,12 @@ public class ClientUISystem extends EntitySystem {
 		// debugRenderer.end();
 		
 		batch.begin();
-
+		//font.draw(batch, "This is some text", 10, 10);
 		// if (blockCounter <= BLOCK_COUNTER_RELEASE && started) {
 		if (blockCounter >= BLOCK_COUNTER_RELEASE) {
 			throwSlot();
 			changePath();
+			
 			slot1.setColor(300, 300, 300, 1);
 			slot2.setColor(300, 300, 300, 1);
 			slot3.setColor(300, 300, 300, 1);
