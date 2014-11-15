@@ -32,6 +32,8 @@ public class ServerScreen extends ScreenAdapter{
 		engine.addEntity(AnimalEntity.createHippo(1,2));
 		engine.addEntity(AnimalEntity.createHippo(0,2));
 		
+		MusicPlayer.playBackgroundMusic();
+		
 		//RendererSystem.getInstance();
 		//TestEntity t = new TestEntity();
 		//engine.addEntity(t);

@@ -5,17 +5,18 @@ import com.badlogic.gdx.audio.Music;
 
 public class MusicPlayer {
 
-	private Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("alfBackground.mp3"));
+	private static Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/alfBackground.mp3"));
 	
 	public MusicPlayer() {
 		
 	}
 	
-	public void playBackgroundMusic () {
-		this.backgroundMusic.play();
+	public static void playBackgroundMusic () {
+		backgroundMusic.setLooping(true);
+		backgroundMusic.play();
 	}
 	
-	public void stopBackgroundMusic () {
-		this.backgroundMusic.stop();
+	public static void stopBackgroundMusic () {
+		backgroundMusic.stop();
 	}
 }
