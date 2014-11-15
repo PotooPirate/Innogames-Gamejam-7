@@ -16,12 +16,15 @@ import de.potoopirate.alf.interfaces.ClientListener;
 
 public class ClientUISystem extends EntitySystem {
 	
+	private static final int BLOCK_COUNTER_RELEASE = 10;
+	private static final Texture TORTSEN_ICON = new Texture(Gdx.files.internal("icons/tortsenicon.png"));
+	
 	private static final int BUTTON_WIDTH = Gdx.graphics.getWidth()/5;
 	private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight()/4;
 	private static final int SECTION = Gdx.graphics.getWidth()/3;
+	private static final int ICON_X = (SECTION - SECTION/2) - TORTSEN_ICON.getWidth()/2;
+	private static final int ICON_Y = Gdx.graphics.getHeight()/4;
 	
-	private static final int BLOCK_COUNTER_RELEASE = 10;
-	private static final Texture TORTSEN_ICON = new Texture(Gdx.files.internal("icons/tortsenicon.png"));
 	private Stage stage;
 	private ClientListener clientSystem;
 	private int activePath;
@@ -113,18 +116,19 @@ public class ClientUISystem extends EntitySystem {
 	    debugRenderer.rect(BUTTON_WIDTH*3, BUTTON_HEIGHT*3, BUTTON_WIDTH, BUTTON_HEIGHT);
 	    debugRenderer.end();
 	    
-	    int trotsenIconXLocation = (SECTION - SECTION/2) - TORTSEN_ICON.getWidth()/2 ;
-	    int trotsenIconYLocation = BUTTON_HEIGHT;
+	    
 	    batch.begin();
-	    batch.draw(TORTSEN_ICON,trotsenIconXLocation, trotsenIconYLocation );
+	    batch.draw(TORTSEN_ICON,ICON_X, ICON_Y);
+	    batch.draw(TORTSEN_ICON,ICON_X+SECTION, ICON_Y);
+	    batch.draw(TORTSEN_ICON,ICON_X+(SECTION*2), ICON_Y);
 	    batch.end();
 	    
 	    
-	    if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
+	    //if(blockCounter >= BLOCK_COUNTER_RELEASE && started) {
 		    throwSlot();
 		    changePath();
-	    } else if (!started) {
-	    	started = clientSystem.isStarted();
-	    }
+	    //} else if (!started) {
+	    //	started = clientSystem.isStarted();
+	    //}
 	}
 }

@@ -9,12 +9,9 @@ import de.potoopirate.alf.systems.ClientUISystem;
 
 public class ClientScreen extends ScreenAdapter{
 	
-	private Engine engine;
-	
 	private ClientSystem clientSystem;
 	
 	public ClientScreen(Engine engine) {
-		this.engine = engine;
 		clientSystem = new ClientSystem();
 		engine.addSystem(clientSystem);
 		engine.addSystem(new ClientUISystem(clientSystem));

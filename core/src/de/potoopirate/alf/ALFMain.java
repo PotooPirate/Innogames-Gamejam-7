@@ -4,12 +4,13 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-
 import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.LevelEntity;
 import de.potoopirate.alf.systems.PathSystem;
 
 import de.potoopirate.alf.systems.RendererSystem;
+import de.potoopirate.alf.systems.ClientSystem;
+import de.potoopirate.alf.systems.ServerSystem;
 
 public class ALFMain extends Game {
 
@@ -44,10 +45,6 @@ public class ALFMain extends Game {
 		else if(Gdx.input.isKeyPressed(Keys.C)) {
 			AnimalEntity.createHippo(0,2);
 		}
-
-		// if(Gdx.input.isKeyPressed(Keys.S) && engine.getSystem(Server.class)
-		// == null) {
-		// RendererSystem.getInstance().Render(Gdx.graphics.getDeltaTime());
 
 		engine.update(Gdx.graphics.getDeltaTime());
 
