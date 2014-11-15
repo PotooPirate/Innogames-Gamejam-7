@@ -221,7 +221,6 @@ public class FightSystem extends EntitySystem  {
 				if(distance< 10) {
 					System.out.print("LifeLost");
 					LifeMapper.get(baseP2).looseLife();
-					PlayerManagerSystem.playerTwoLife--;
 					kill(allAnimalsP1.get(e1));
 				}
 			}
@@ -236,7 +235,6 @@ public class FightSystem extends EntitySystem  {
 				if(distance < 10) {
 					System.out.print("LifeLost");
 					LifeMapper.get(baseP1).looseLife();
-					PlayerManagerSystem.playerOneLife--;
 					kill(allAnimalsP2.get(e2));
 				}
 			}

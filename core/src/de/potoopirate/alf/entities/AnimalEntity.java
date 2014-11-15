@@ -49,7 +49,7 @@ public class AnimalEntity extends Entity {
 		SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(pathJson));
 
 		this.getComponent(TransformComponent.class).setSize(new Vector2(0.3f,0.3f));
-		this.getComponent(AnimationRendererComponent.class).Init(skeletonData, this.getComponent(TransformComponent.class));
+		this.getComponent(AnimationRendererComponent.class).Init(skeletonData, this.getComponent(TransformComponent.class), this.getComponent(PlayerComponent.class));
 		this.getComponent(AnimationRendererComponent.class).state.setAnimation(0, "walking", true);
 		if(playerId == 0 && !race.equals(Race.HIPPO)) 
 		{

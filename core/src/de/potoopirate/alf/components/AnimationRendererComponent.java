@@ -10,6 +10,7 @@ import com.esotericsoftware.spine.Event;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonData;
 
+import de.potoopirate.alf.systems.PlayerManagerSystem;
 import de.potoopirate.alf.systems.RendererSystem;
 
 public class AnimationRendererComponent extends Component implements IRenderer, AnimationStateListener {
@@ -19,6 +20,7 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	public AnimationState state;	
 	private AnimationStateData stateData;
 	private TransformComponent transform;
+	private PlayerComponent pc;
 	private float depth;
 	
 	public AnimationRendererComponent() {
@@ -30,7 +32,8 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 		return this.skeleton;
 	}
 	
-	public void Init(SkeletonData data, TransformComponent transform) {
+	public void Init(SkeletonData data, TransformComponent transform, PlayerComponent pc) {
+		this.pc = pc;
 		this.skeletonData = data;
 		this.skeleton = new Skeleton(skeletonData); 
 		this.transform = transform;
@@ -103,6 +106,13 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	@Override
 	public void end(int trackIndex) {
 		if(this.state.getCurrent(trackIndex).getAnimation().toString().equals("dying")) {
+			if(this.pc.id == 0) {
+				PlayerManagerSystem.playerOneLife--;
+			}
+			else {
+				PlayerManagerSystem.playerTwoLife--;
+			}
+
 			this.Destroy();
 		}
 		else {
