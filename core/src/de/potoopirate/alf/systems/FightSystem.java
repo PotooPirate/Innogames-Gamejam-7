@@ -24,8 +24,8 @@ import de.potoopirate.alf.entities.MainBaseEntity;
 public class FightSystem extends EntitySystem {
 	
 	
-	public static final float MAXIMUM_COLLISION_RANGE = 100f;
-	public static final float INVADE_HQ_RANGE = 50f;
+	public static final float SQUARED_MAXIMUM_COLLISION_RANGE = 100f;
+	public static final float SQUARED_INVADE_HQ_RANGE = 50f;
 	public static final int FIRST_PLAYER = 0;
 	public static final int SECOND_PLAYER = 1;
 	
@@ -165,7 +165,7 @@ public class FightSystem extends EntitySystem {
 					
 //					System.out.println(xDiff*xDiff + yDiff*yDiff);
 					
-					if(xDiff*xDiff + yDiff*yDiff < MAXIMUM_COLLISION_RANGE)
+					if(xDiff*xDiff + yDiff*yDiff < SQUARED_MAXIMUM_COLLISION_RANGE)
 					{
 						animalP1Race= RaceMapper.get(AnimalP1);
 						animalP2Race = RaceMapper.get(AnimalP2);
@@ -192,10 +192,12 @@ public class FightSystem extends EntitySystem {
 							--e1;
 							break;
 						}
+						/*
 						if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
 						{
-							System.out.println("Two Aniamls of same type are close to each other");
+							System.out.println("Two same Race Animals are close to each other");
 						}
+						*/
 					}
 					
 				}
@@ -226,6 +228,7 @@ public class FightSystem extends EntitySystem {
 		
 		for(AnimalEntity e : deadAnimals)
 		{
+			System.out.println("Removing an Animal from Entity");
 			engine.removeEntity(e);
 		}
 		
