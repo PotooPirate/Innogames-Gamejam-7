@@ -31,6 +31,7 @@ public class ClientUISystem extends EntitySystem {
 	private static final Texture SELECTED_LEFT_ICON = new Texture(Gdx.files.internal("icons/selectedleft.png"));
 	private static final Texture SELECTED_UP_ICON = new Texture(Gdx.files.internal("icons/selectedup.png"));
 	private static final Texture SELECTED_RIGHT_ICON = new Texture(Gdx.files.internal("icons/selectedright.png"));
+	private static final Texture CLIENTBACKGROUND = new Texture(Gdx.files.internal("clientbackground.png"));
 
 	
 	public static final Texture GRAY_BACKGROUND = new Texture(Gdx.files.internal("icons/gray_background.png"));
@@ -111,13 +112,13 @@ public class ClientUISystem extends EntitySystem {
 			if (y <= -100) {
 				if (x < SECTION) {
 					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
-				//	HIPPO_SPAWN_SOUND.play();
+					//SoundComponent.HIPPO_SPAWN_SOUND.play();
 				} else if (x < SECTION * 2) {
 					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
-				//	OCTO_SPAWN_SOUND.play();
+					//SoundComponent.OCTO_SPAWN_SOUND.play();
 				} else {
 					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 1, Interpolation.bounceOut)));
-				//	SNAIL_SPAWN_SOUND.play();
+					//SoundComponent.SNAIL_SPAWN_SOUND.play();
 				}
 			}
 		} else if (!Gdx.input.isTouched() && touched) {
@@ -170,6 +171,7 @@ public class ClientUISystem extends EntitySystem {
 		// debugRenderer.end();
 		
 		batch.begin();
+		batch.draw(CLIENTBACKGROUND,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		//font.draw(batch, "This is some text", 10, 10);
 		// if (blockCounter <= BLOCK_COUNTER_RELEASE && started) {
 

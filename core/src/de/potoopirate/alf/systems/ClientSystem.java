@@ -8,9 +8,11 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
+import de.potoopirate.alf.MusicPlayer;
 import de.potoopirate.alf.Network;
 import de.potoopirate.alf.Network.NetworkMessage;
 import de.potoopirate.alf.Network.NetworkReady;
+import de.potoopirate.alf.components.SoundComponent;
 import de.potoopirate.alf.interfaces.ClientListener;
 
 public class ClientSystem extends EntitySystem implements ClientListener {
