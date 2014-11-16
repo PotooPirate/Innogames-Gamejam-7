@@ -202,7 +202,7 @@ public class ClientUISystem extends EntitySystem {
 		slot3.draw(batch, 1f);
 
 		blockImage.act(deltaTime);
-		if (blockCounter >= BLOCK_COUNTER_RELEASE && started) {
+		if (blockCounter >= BLOCK_COUNTER_RELEASE) {
 			throwSlot();
 			changePath();
 		} else if (blockCounter < BLOCK_COUNTER_RELEASE) {

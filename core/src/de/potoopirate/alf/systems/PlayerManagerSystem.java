@@ -38,8 +38,6 @@ public class PlayerManagerSystem extends EntitySystem {
 		batch = new SpriteBatch();
 		showDialog = false;
 		engine.addSystem(this);
-		playerOneLife = 20;
-		playerTwoLife = 20;
 	}
 	
 	@Override
