@@ -31,13 +31,13 @@ public class AnimalEntity extends Entity {
 	}
 	
 	
-	public AnimalEntity(int playerId, int path, Race race,String sound,TextureAtlas atlas ,String pathJson) {
+	public AnimalEntity(int playerId, int path, Race race,TextureAtlas atlas ,String pathJson) {
 		add(new RaceComponent(race));
 		add(new PathComponent());
 		add(new PlayerComponent(playerId));
 		add(new TransformComponent());
 		add(new CollisionComponent());
-	//	add(new SoundComponent(sound));
+		add(new SoundComponent(race));
 		add(new AnimationRendererComponent());
 		this.getComponent(TransformComponent.class).Init(playerId == 0 ? new Vector2(getWidth(30f),getHeight(30f)): new Vector2(getWidth(610f),getHeight(440f)));
 		
@@ -63,14 +63,14 @@ public class AnimalEntity extends Entity {
 	}
 	
 	public static AnimalEntity createSnail(int playerId, int path) {
-		return new AnimalEntity(playerId,path, Race.SNAIL, SoundComponent.SNAIL_SOUND, ATLAS_GUNTER, "Gunter/Gunter.json");
+		return new AnimalEntity(playerId,path, Race.SNAIL, ATLAS_GUNTER, "Gunter/Gunter.json");
 	}
 
 	public static AnimalEntity createHippo(int playerId, int path) {
-		return new AnimalEntity(playerId,path, Race.HIPPO, SoundComponent.HIPPO_SOUND, ATLAS_TORTSEN, "Tortsen/Tortsen.json");
+		return new AnimalEntity(playerId,path, Race.HIPPO, ATLAS_TORTSEN, "Tortsen/Tortsen.json");
 	}
 
 	public static AnimalEntity createOcto(int playerId, int path) {
-		return new AnimalEntity(playerId,path, Race.OCTO, SoundComponent.OCTO_SOUND, ATLAS_EMMA, "Emma/Emma.json");
+		return new AnimalEntity(playerId,path, Race.OCTO, ATLAS_EMMA, "Emma/Emma.json");
 	}
 }

@@ -3,6 +3,7 @@ package de.potoopirate.alf;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.ScreenAdapter;
 
 import de.potoopirate.alf.entities.AnimalEntity;
@@ -18,6 +19,7 @@ public class ServerScreen extends ScreenAdapter{
 	
 	private SpawnSystem spawnSystem;
 	private Engine engine;
+	public static double gameTimer = 0;
 
 	public ServerScreen(Engine engine) {
 		this.engine = engine;
@@ -32,13 +34,15 @@ public class ServerScreen extends ScreenAdapter{
 		LevelEntity level = new LevelEntity();
 		engine.addEntity(level);
 		
+		gameTimer = 0;
+		
 		MusicPlayer.playBackgroundMusic();
 	}
 
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		
+		gameTimer += 0.1f / 60f;
 		RendererSystem.getInstance().Render(Gdx.graphics.getDeltaTime());
 		PathSystem.getInstance().Update(Gdx.graphics.getDeltaTime());
 		

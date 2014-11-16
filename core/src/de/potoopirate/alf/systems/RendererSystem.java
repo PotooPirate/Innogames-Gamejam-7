@@ -31,7 +31,7 @@ public class RendererSystem extends EntitySystem {
 	private SortedMap<Float, IRenderer> rendererList;
 	private SortedMap<Float, IRenderer> rendererListTemp;
 	
-	static final BitmapFont PLAYERFONT = new BitmapFont(Gdx.files.internal("CandyFont.fnt"));
+	static final BitmapFont PLAYERFONT = new BitmapFont(Gdx.files.internal("arial16.fnt"));
 
 	private static RendererSystem instance;
 	
@@ -112,10 +112,11 @@ public class RendererSystem extends EntitySystem {
 				}
 		    }
 		} catch(Exception e) { }
-		PLAYERFONT.setScale(0.3f);
+		PLAYERFONT.setScale(1f);
+		PLAYERFONT.setColor(new Color(0,0,0,1));
 		
-		PLAYERFONT.draw(batch, "Player 1: " + PlayerManagerSystem.playerOneLife, 10, Gdx.graphics.getHeight() - 10);
-		PLAYERFONT.draw(batch, "Player 2: " + PlayerManagerSystem.playerTwoLife,Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/3), Gdx.graphics.getHeight() - 10);
+		PLAYERFONT.draw(batch, "Player 1: " + PlayerManagerSystem.playerOneLife, Gdx.graphics.getWidth() /2 - (Gdx.graphics.getWidth() /4), Gdx.graphics.getHeight() - 10);
+		PLAYERFONT.draw(batch, "Player 2: " + PlayerManagerSystem.playerTwoLife,Gdx.graphics.getWidth() /2 + (Gdx.graphics.getWidth() /5), Gdx.graphics.getHeight() - 10);
 		batch.end();
 	}
 }
