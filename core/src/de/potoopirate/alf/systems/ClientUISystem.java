@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+import de.potoopirate.alf.components.SoundComponent;
 import de.potoopirate.alf.interfaces.ClientListener;
 
 public class ClientUISystem extends EntitySystem {
@@ -110,13 +111,13 @@ public class ClientUISystem extends EntitySystem {
 			if (y <= -100) {
 				if (x < SECTION) {
 					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
-					//play sound for Tortsen
+				//	HIPPO_SPAWN_SOUND.play();
 				} else if (x < SECTION * 2) {
 					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
-					//play sound for Emma
+				//	OCTO_SPAWN_SOUND.play();
 				} else {
 					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 1, Interpolation.bounceOut)));
-					//play sound for Gunter
+				//	SNAIL_SPAWN_SOUND.play();
 				}
 			}
 		} else if (!Gdx.input.isTouched() && touched) {
