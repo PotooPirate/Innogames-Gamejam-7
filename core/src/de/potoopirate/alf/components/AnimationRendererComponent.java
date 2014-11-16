@@ -70,7 +70,13 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	
 	@Override
 	public void Render(float deltaTime, SpriteBatch batch) {
-		this.skeleton.getRootBone().setRotation((this.transform.getRotation().x > 0) ? -this.transform.getRotation().x + 90 : Math.abs(this.transform.getRotation().x) - 90 );
+		this.skeleton.getRootBone().setRotation((this.transform.getRotation().x > 0) 
+				? (this.transform.getRotation().x >170) 
+				? this.transform.getRotation().x - 180
+				: -this.transform.getRotation().x + 90 
+				: (this.transform.getRotation().x > -45) 
+				? Math.abs(this.transform.getRotation().x) - 90  
+				:  Math.abs(this.transform.getRotation().x) );
 		this.skeleton.setPosition(this.transform.getPosition().x, this.transform.getPosition().y);
 		this.state.update(deltaTime);
 		this.state.apply(skeleton); 
@@ -106,13 +112,6 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	@Override
 	public void end(int trackIndex) {
 		if(this.state.getCurrent(trackIndex).getAnimation().toString().equals("dying")) {
-			if(this.pc.id == 0) {
-				PlayerManagerSystem.playerOneLife--;
-			}
-			else {
-				PlayerManagerSystem.playerTwoLife--;
-			}
-
 			this.Destroy();
 		}
 		else {

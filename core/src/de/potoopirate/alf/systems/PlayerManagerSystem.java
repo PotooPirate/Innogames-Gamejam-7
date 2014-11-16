@@ -4,16 +4,16 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
 
 public class PlayerManagerSystem extends EntitySystem {
-	public static int playerOneLife = 10;
-	public static int playerTwoLife = 10;
+	public static int playerOneLife = 20;
+	public static int playerTwoLife = 20;
 	
 	@Override
 	public void addedToEngine(Engine engine)
 	{
 		super.addedToEngine(engine);
 		engine.addSystem(this);
-		playerOneLife = 10;
-		playerTwoLife = 10;
+		playerOneLife = 20;
+		playerTwoLife = 20;
 	}
 	
 	@Override

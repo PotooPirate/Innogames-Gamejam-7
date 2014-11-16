@@ -10,6 +10,7 @@ import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.LevelEntity;
 import de.potoopirate.alf.systems.FightSystem;
 import de.potoopirate.alf.systems.PathSystem;
+import de.potoopirate.alf.systems.PlayerManagerSystem;
 import de.potoopirate.alf.systems.RendererSystem;
 import de.potoopirate.alf.systems.ServerSystem;
 import de.potoopirate.alf.systems.SpawnSystem;
@@ -28,7 +29,7 @@ public class ServerScreen extends ScreenAdapter{
 		
 		engine.addSystem(RendererSystem.getInstance());
 		engine.addSystem(new FightSystem());
-		
+		engine.addSystem(new PlayerManagerSystem());
 		LevelEntity level = new LevelEntity();
 		engine.addEntity(level);
 		
@@ -45,10 +46,10 @@ public class ServerScreen extends ScreenAdapter{
 		PathSystem.getInstance().Update(Gdx.graphics.getDeltaTime());
 		
 		if(Gdx.input.isKeyPressed(Keys.S)) {
-			AnimalEntity.createOcto(1, 3);
+			AnimalEntity.createHippo(0, 1);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.C)) {
-			AnimalEntity.createSnail(0,1);
+			AnimalEntity.createSnail(1,2);
 		}
 	}
 
