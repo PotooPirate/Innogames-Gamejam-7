@@ -46,6 +46,7 @@ public class ClientSystem extends EntitySystem implements ClientListener {
 			//client.connect(5000, "127.0.0.1", 54555);
 			// Adding the main Listener to the Client
 			client.sendTCP("Initiate");
+			
 			client.addListener(new ClientListener());
 		} catch (IOException e) {
 

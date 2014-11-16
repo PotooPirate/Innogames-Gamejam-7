@@ -87,9 +87,9 @@ public class PathSystem extends EntitySystem {
 			pathListThreeReverted.add(pathListThree.get(i));
 		}
 		
-		pathListOneReverted.add(new Vector2(35,35));
-		pathListTwoReverted.add(new Vector2(35,35));
-		pathListThreeReverted.add(new Vector2(35,35));
+		pathListOneReverted.add(new Vector2(30,30));
+		pathListTwoReverted.add(new Vector2(30,30));
+		pathListThreeReverted.add(new Vector2(30,30));
 	}
 	
 	@Override
