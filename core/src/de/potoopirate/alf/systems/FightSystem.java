@@ -16,6 +16,7 @@ import de.potoopirate.alf.components.LifeComponent;
 import de.potoopirate.alf.components.PathComponent;
 import de.potoopirate.alf.components.PlayerComponent;
 import de.potoopirate.alf.components.RaceComponent;
+import de.potoopirate.alf.components.SoundComponent;
 import de.potoopirate.alf.components.TransformComponent;
 import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.MainBaseEntity;
@@ -33,6 +34,7 @@ public class FightSystem extends EntitySystem  {
 	private ComponentMapper<TransformComponent> 	TransformerMapper;
 	
 	//Animal-specific Mappers
+	private ComponentMapper<SoundComponent>		SoundMapper;
 	private ComponentMapper<RaceComponent> 		RaceMapper;
 	private ComponentMapper<PathComponent>		PathMapper;
 	private ComponentMapper<CollisionComponent>	CollisionMapper;
@@ -84,6 +86,7 @@ public class FightSystem extends EntitySystem  {
 		PlayerMapper = ComponentMapper.getFor(PlayerComponent.class);
 		TransformerMapper = ComponentMapper.getFor(TransformComponent.class);
 		
+		SoundMapper = ComponentMapper.getFor(SoundComponent.class);
 		RaceMapper = ComponentMapper.getFor(RaceComponent.class);
 		PathMapper = ComponentMapper.getFor(PathComponent.class);
 		CollisionMapper = ComponentMapper.getFor(CollisionComponent.class);
@@ -120,7 +123,7 @@ public class FightSystem extends EntitySystem  {
 	public void update(float deltaTime)
 	{
 		super.update(deltaTime);
-		animals = engine.getEntitiesFor(Family.getFor(RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
+		animals = engine.getEntitiesFor(Family.getFor(SoundComponent.class, RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
 		
 		allAnimalsP1 = new Array<AnimalEntity>();
 		allAnimalsP2 = new Array<AnimalEntity>();
@@ -173,11 +176,13 @@ public class FightSystem extends EntitySystem  {
 							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
 								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));;
+								SoundMapper.get(AnimalP1).hitSound.play();
 								kill(AnimalP2);
 							}
 							if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 							{
 								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
+								SoundMapper.get(AnimalP2).hitSound.play();								
 								kill(AnimalP1);
 							}
 						
@@ -244,6 +249,7 @@ public class FightSystem extends EntitySystem  {
 	
 	private void kill(AnimalEntity animal) {
 		animal.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(animal.getComponent(AnimationRendererComponent.class));
-		CollisionMapper.get(animal).dead=true;		
+		CollisionMapper.get(animal).dead=true;
+		SoundMapper.get(animal).deathSound.play();
 	}
 }
