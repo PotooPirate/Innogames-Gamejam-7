@@ -87,9 +87,9 @@ public class PathSystem extends EntitySystem {
 			pathListThreeReverted.add(pathListThree.get(i));
 		}
 		
-		pathListOneReverted.add(new Vector2(30,30));
-		pathListTwoReverted.add(new Vector2(30,30));
-		pathListThreeReverted.add(new Vector2(30,30));
+		pathListOneReverted.add(new Vector2(35,35));
+		pathListTwoReverted.add(new Vector2(35,35));
+		pathListThreeReverted.add(new Vector2(35,35));
 	}
 	
 	@Override
@@ -164,10 +164,6 @@ public class PathSystem extends EntitySystem {
 	}
 	
 	private void MoveTo(AnimalEntity animal, Vector2 currentTarget) {
-		TransformComponent currentTransform = animal.getComponent(TransformComponent.class);
-		float angleDegree = (float) ((Math.atan2(currentTarget.x - currentTransform.getPosition().x, -(currentTarget.y - currentTransform.getPosition().y)) * 180.0d / Math.PI));
-		System.out.println(angleDegree);
-		currentTransform.setRotation(new Vector2(angleDegree,0));
 		Vector2 temp = new Vector2(currentTarget.x, currentTarget.y);
 		Vector2 direction = temp.sub(animal.getComponent(TransformComponent.class).getPosition());
 		Vector2 normDir = direction.nor();

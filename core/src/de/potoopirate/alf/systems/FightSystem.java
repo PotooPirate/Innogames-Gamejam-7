@@ -24,8 +24,8 @@ import de.potoopirate.alf.entities.MainBaseEntity;
 public class FightSystem extends EntitySystem  {
 	
 	
-	public static final float SQUARED_MAXIMUM_COLLISION_RANGE = 400f;
-	public static final float INVADE_HQ_RANGE = 10f;
+	public static final float SQUARED_MAXIMUM_COLLISION_RANGE = 450f;
+	public static final float INVADE_HQ_RANGE = 15f;
 	public static final int FIRST_PLAYER = 0;
 	public static final int SECOND_PLAYER = 1;
 	
