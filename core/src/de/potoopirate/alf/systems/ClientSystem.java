@@ -20,6 +20,7 @@ public class ClientSystem extends EntitySystem implements ClientListener {
 	private Client client;
 	private boolean started;
 	private String ip;
+	public static Integer PLAYERID;
 	
 	public ClientSystem(String ip) {
 		this.ip = ip;
@@ -44,6 +45,7 @@ public class ClientSystem extends EntitySystem implements ClientListener {
 			//client.connect(5000, "172.18.11.197", 54555);
 			//client.connect(5000, "127.0.0.1", 54555);
 			// Adding the main Listener to the Client
+			client.sendTCP("Initiate");
 			client.addListener(new ClientListener());
 		} catch (IOException e) {
 
@@ -72,6 +74,7 @@ public class ClientSystem extends EntitySystem implements ClientListener {
 			}
 			else if (object instanceof Integer){
 				System.out.println("I am player " + object);
+				ClientSystem.PLAYERID = (Integer)object;
 			}
 		}
 

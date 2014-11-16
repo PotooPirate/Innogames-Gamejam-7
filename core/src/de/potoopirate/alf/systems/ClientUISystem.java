@@ -36,6 +36,7 @@ public class ClientUISystem extends EntitySystem {
 	public static final Texture GRAY_BACKGROUND = new Texture(Gdx.files.internal("icons/gray_background.png"));
 
 	static final BitmapFont FONT = new BitmapFont(Gdx.files.internal("CandyFont.fnt"));
+	static final BitmapFont ID_FONT = new BitmapFont(Gdx.files.internal("arial16.fnt"));
 
 	private static final int SECTION = Gdx.graphics.getWidth() / 3;
 	private static final int ICON_X = (SECTION - SECTION / 2) - TORTSEN_ICON.getWidth() / 2;
@@ -172,6 +173,8 @@ public class ClientUISystem extends EntitySystem {
 
 		batch.begin();
 		batch.draw(CLIENTBACKGROUND, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		ID_FONT.setScale(1f);
+		ID_FONT.draw(batch,"Player "+ClientSystem.PLAYERID,5, SCREENHEIGHT - 10);
 
 		if (activePath == 1)
 			batch.draw(SELECTED_LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);

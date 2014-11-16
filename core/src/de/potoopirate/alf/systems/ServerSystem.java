@@ -50,6 +50,10 @@ public class ServerSystem extends EntitySystem {
 				handleNetworkMessages(connection, (NetworkMessage) object);
 			}
 
+			else if (object instanceof String){
+				object.equals("Initiate");
+				connection.sendTCP(connection.getID());
+			}
 		}
 
 		@Override
