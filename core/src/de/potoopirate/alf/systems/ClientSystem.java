@@ -17,6 +17,11 @@ public class ClientSystem extends EntitySystem implements ClientListener {
 
 	private Client client;
 	private boolean started;
+	private String ip;
+	
+	public ClientSystem(String ip) {
+		this.ip = ip;
+	}
 
 	@Override
 	public void addedToEngine(Engine engine) {
@@ -30,7 +35,9 @@ public class ClientSystem extends EntitySystem implements ClientListener {
 			client.start();
 			Network.register(client);
 
-			client.connect(5000, "172.18.11.197", 54555);
+//			client.connect(5000, "172.18.11.197", 54555); // Tablet
+//			client.connect(5000, "172.18.11.85", 54555); // Nidals PC
+			client.connect(5000, ip, 54555); // WLAN Hotspot Android
 
 			//client.connect(5000, "172.18.11.197", 54555);
 			//client.connect(5000, "127.0.0.1", 54555);

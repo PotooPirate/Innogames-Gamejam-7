@@ -11,8 +11,8 @@ public class ClientScreen extends ScreenAdapter{
 	
 	private ClientSystem clientSystem;
 	
-	public ClientScreen(Engine engine) {
-		clientSystem = new ClientSystem();
+	public ClientScreen(Engine engine, String ip) {
+		clientSystem = new ClientSystem(ip);
 		engine.addSystem(clientSystem);
 		engine.addSystem(new ClientUISystem(clientSystem));
 	}

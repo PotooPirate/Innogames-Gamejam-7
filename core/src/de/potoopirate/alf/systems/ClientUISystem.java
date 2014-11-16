@@ -197,7 +197,7 @@ public class ClientUISystem extends EntitySystem {
 		
 		
 		blockImage.act(deltaTime);
-		if (blockCounter >= BLOCK_COUNTER_RELEASE) {
+		if (blockCounter >= BLOCK_COUNTER_RELEASE && started) {
 			throwSlot();
 			changePath();
 		} else if (blockCounter < BLOCK_COUNTER_RELEASE) {
