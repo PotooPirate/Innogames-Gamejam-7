@@ -168,9 +168,7 @@ public class FightSystem extends EntitySystem  {
 							//Check which animal wins the fight
 							//0 wins over 1
 							//1 wins over 2
-							//2 wins over 0
-							
-							
+							//2 wins over 0	
 							
 							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
@@ -185,6 +183,9 @@ public class FightSystem extends EntitySystem  {
 						
 							if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
+								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));;
+								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
+								
 								kill(AnimalP1);
 								kill(AnimalP2);
 							}
