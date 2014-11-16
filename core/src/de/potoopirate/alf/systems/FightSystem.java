@@ -226,9 +226,7 @@ public class FightSystem extends EntitySystem  {
 						   baseP2Transform.getPosition().x, 
 						   baseP2Transform.getPosition().y) ;
 				if(distance< INVADE_HQ_RANGE) {
-					System.out.print("LifeLost");
-					PlayerManagerSystem.playerTwoLife--;
-					LifeMapper.get(baseP2).looseLife();
+					SoundComponent.HQ_INVADE_SOUND.play(); 
 					kill(allAnimalsP1.get(e1));
 				}
 			}
@@ -241,9 +239,7 @@ public class FightSystem extends EntitySystem  {
 						   baseP1Transform.getPosition().x, 
 						   baseP1Transform.getPosition().y);
 				if(distance < INVADE_HQ_RANGE) {
-					System.out.print("LifeLost");
-					PlayerManagerSystem.playerOneLife--;
-					LifeMapper.get(baseP1).looseLife();
+					SoundComponent.HQ_INVADE_SOUND.play(); 
 					kill(allAnimalsP2.get(e2));
 				}
 			}

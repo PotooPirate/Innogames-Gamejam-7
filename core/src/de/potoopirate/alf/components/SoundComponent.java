@@ -18,6 +18,8 @@ public class SoundComponent extends Component {
 	public static Sound HIPPO_SPAWN_SOUND;
 	public static Sound HIPPO_HIT_SOUND;
 	public static Sound HIPPO_DEATH_SOUND;
+	
+	public static Sound HQ_INVADE_SOUND;
 
 	public Sound spawnSound;
 	public Sound hitSound;

@@ -33,6 +33,8 @@ public class ALFMain extends Game {
 		SoundComponent.HIPPO_SPAWN_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Hippo_Spawn.mp3"));
 		SoundComponent.HIPPO_HIT_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Hippo_Hit.mp3"));
 		SoundComponent.HIPPO_DEATH_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Hippo_Death.mp3"));
+		
+		SoundComponent.HQ_INVADE_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/HQ_Invade.mp3"));
 
 		
 		engine = new Engine();	
