@@ -174,7 +174,8 @@ public class ClientUISystem extends EntitySystem {
 		batch.begin();
 		batch.draw(CLIENTBACKGROUND, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		ID_FONT.setScale(1f);
-		ID_FONT.draw(batch,"Player "+ClientSystem.PLAYERID,5, SCREENHEIGHT - 10);
+		ID_FONT.setColor(0, 0, 0, 1);
+		ID_FONT.draw(batch,"Player "+ClientSystem.PLAYERID,10, SCREENHEIGHT - 25);
 
 		if (activePath == 1)
 			batch.draw(SELECTED_LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
