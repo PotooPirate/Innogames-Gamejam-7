@@ -166,6 +166,7 @@ public class PathSystem extends EntitySystem {
 	private void MoveTo(AnimalEntity animal, Vector2 currentTarget) {
 		TransformComponent currentTransform = animal.getComponent(TransformComponent.class);
 		float angleDegree = (float) ((Math.atan2(currentTarget.x - currentTransform.getPosition().x, -(currentTarget.y - currentTransform.getPosition().y)) * 180.0d / Math.PI));
+	
 		currentTransform.setRotation(new Vector2(angleDegree,0));
 		Vector2 temp = new Vector2(currentTarget.x, currentTarget.y);
 		Vector2 direction = temp.sub(animal.getComponent(TransformComponent.class).getPosition());
