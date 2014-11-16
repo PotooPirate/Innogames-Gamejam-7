@@ -48,8 +48,8 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 		CreateAnimationMix("walking", "attacking", 0.5f);
 		CreateAnimationMix("attacking", "walking", 0.5f);
 		
-		skeleton.getRootBone().setScaleX(this.transform.getSize().x);
-		skeleton.getRootBone().setScaleY(this.transform.getSize().y);
+		this.skeleton.getRootBone().setScaleX(this.transform.getSize().x);
+		this.skeleton.getRootBone().setScaleY(this.transform.getSize().y);
 		
 		RendererSystem.getInstance().RegisterRenderer(this);
 	}
@@ -70,11 +70,11 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	
 	@Override
 	public void Render(float deltaTime, SpriteBatch batch) {
-		
+		this.skeleton.getRootBone().setRotation(this.transform.getRotation().x);
 		this.skeleton.setPosition(this.transform.getPosition().x, this.transform.getPosition().y);
 		this.state.update(deltaTime);
 		this.state.apply(skeleton); 
-		this.skeleton.updateWorldTransform();
+		this.skeleton.updateWorldTransform();	
 	}
 
 	public float getDepth() {

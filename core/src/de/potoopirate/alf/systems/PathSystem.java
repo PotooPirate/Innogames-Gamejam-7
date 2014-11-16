@@ -10,7 +10,9 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 
+import de.potoopirate.alf.ServerScreen;
 import de.potoopirate.alf.components.PathComponent;
 import de.potoopirate.alf.components.PlayerComponent;
 import de.potoopirate.alf.components.TransformComponent;
@@ -29,7 +31,7 @@ public class PathSystem extends EntitySystem {
 	private List<AnimalEntity> allAnimals;
 	private static PathSystem instance;
 	
-	public static final float speedFactor = 0.5f;
+	public static double speedFactor = 0.34f;
 		
 	private float getWidth(float value) {
 		return (value/6.4f) * (((float)Gdx.graphics.getWidth())/100.0f);
@@ -95,6 +97,7 @@ public class PathSystem extends EntitySystem {
 	}
 	
 	public void Update(float deltaTime) {
+		speedFactor = speedFactor < 0.9f ? 0.34d + (ServerScreen.gameTimer / 90f) : 0.9;
 		try {
 			for (AnimalEntity entry : allAnimals) {
 				StartPath(entry, 
@@ -161,10 +164,13 @@ public class PathSystem extends EntitySystem {
 	}
 	
 	private void MoveTo(AnimalEntity animal, Vector2 currentTarget) {
+		TransformComponent currentTransform = animal.getComponent(TransformComponent.class);
+		float angleDegree = (float) ((Math.atan2(currentTarget.x - currentTransform.getPosition().x, -(currentTarget.y - currentTransform.getPosition().y)) * 180.0d / Math.PI));
+		currentTransform.setRotation(new Vector2(angleDegree,0));
 		Vector2 temp = new Vector2(currentTarget.x, currentTarget.y);
 		Vector2 direction = temp.sub(animal.getComponent(TransformComponent.class).getPosition());
 		Vector2 normDir = direction.nor();
-		animal.getComponent(TransformComponent.class).setPosition(animal.getComponent(TransformComponent.class).getPosition().add(normDir.scl(speedFactor)));
+		animal.getComponent(TransformComponent.class).setPosition(animal.getComponent(TransformComponent.class).getPosition().add(normDir.scl((float)speedFactor)));
 	}
 	
 	public void AddAnimal(AnimalEntity animal) {
