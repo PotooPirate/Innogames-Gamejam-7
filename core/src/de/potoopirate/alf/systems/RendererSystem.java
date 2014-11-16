@@ -60,6 +60,7 @@ public class RendererSystem extends EntitySystem {
 		rendererList.clear();
 		rendererListTemp.clear();
 	}
+	
 	public void resize (int width, int height) {
 		camera.setToOrtho(false); 
 	}
