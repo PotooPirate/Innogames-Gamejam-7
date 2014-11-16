@@ -8,17 +8,17 @@ import de.potoopirate.alf.components.RaceComponent.Race;
 
 public class SoundComponent extends Component {
 
-	public static final String SNAIL_SPAWN_SOUND = "Snail_Spawn.wav";
-	public static final String SNAIL_HIT_SOUND = "Snail_Hit.wav";
-	public static final String SNAIL_DEATH_SOUND = "Snail_Death.wav";
+	public static final String SNAIL_SPAWN_SOUND = "soundeffects/Snail_Spawn.wav";
+	public static final String SNAIL_HIT_SOUND = "soundeffects/Snail_Hit.wav";
+	public static final String SNAIL_DEATH_SOUND = "soundeffects/Snail_Death.wav";
 
-	public static final String OCTO_SPAWN_SOUND = "Octo_Spawn.wav";
-	public static final String OCTO_HIT_SOUND = "Octo_Hit.wav";
-	public static final String OCTO_DEATH_SOUND = "Octo_Death.wav";
+	public static final String OCTO_SPAWN_SOUND = "soundeffects/Octo_Spawn.wav";
+	public static final String OCTO_HIT_SOUND = "soundeffects/Octo_Hit.wav";
+	public static final String OCTO_DEATH_SOUND = "soundeffects/Octo_Death.wav";
 
-	public static final String HIPPO_SPAWN_SOUND = "Hippo_Spawn.wav";
-	public static final String HIPPO_HIT_SOUND = "Hippo_Hit.wav";
-	public static final String HIPPO_DEATH_SOUND = "Hippo_Death.wav";
+	public static final String HIPPO_SPAWN_SOUND = "soundeffects/Hippo_Spawn.wav";
+	public static final String HIPPO_HIT_SOUND = "soundeffects/Hippo_Hit.wav";
+	public static final String HIPPO_DEATH_SOUND = "soundeffects/Hippo_Death.wav";
 	
 	public Sound spawnSound;
 	public Sound hitSound;
