@@ -37,7 +37,7 @@ public class AnimalEntity extends Entity {
 		add(new PlayerComponent(playerId));
 		add(new TransformComponent());
 		add(new CollisionComponent());
-//		add(new SoundComponent(race));
+		add(new SoundComponent(race));
 		add(new AnimationRendererComponent());
 		this.getComponent(TransformComponent.class).Init(playerId == 0 ? new Vector2(getWidth(30f),getHeight(30f)): new Vector2(getWidth(610f),getHeight(440f)));
 		
