@@ -24,7 +24,7 @@ public class FightSystem extends EntitySystem  {
 	
 	
 	public static final float SQUARED_MAXIMUM_COLLISION_RANGE = 400f;
-	public static final float SQUARED_INVADE_HQ_RANGE = 50f;
+	public static final float INVADE_HQ_RANGE = 10f;
 	public static final int FIRST_PLAYER = 0;
 	public static final int SECOND_PLAYER = 1;
 	
@@ -219,7 +219,7 @@ public class FightSystem extends EntitySystem  {
 						   TransformerMapper.get(allAnimalsP1.get(e1)).getPosition().y , 
 						   baseP2Transform.getPosition().x, 
 						   baseP2Transform.getPosition().y) ;
-				if(distance< 10) {
+				if(distance< INVADE_HQ_RANGE) {
 					System.out.print("LifeLost");
 					LifeMapper.get(baseP2).looseLife();
 					kill(allAnimalsP1.get(e1));
@@ -233,7 +233,7 @@ public class FightSystem extends EntitySystem  {
 						   TransformerMapper.get(allAnimalsP2.get(e2)).getPosition().y , 
 						   baseP1Transform.getPosition().x, 
 						   baseP1Transform.getPosition().y);
-				if(distance < 10) {
+				if(distance < INVADE_HQ_RANGE) {
 					System.out.print("LifeLost");
 					LifeMapper.get(baseP1).looseLife();
 					kill(allAnimalsP2.get(e2));
