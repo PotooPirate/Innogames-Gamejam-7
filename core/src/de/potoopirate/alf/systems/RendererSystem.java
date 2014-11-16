@@ -116,8 +116,8 @@ public class RendererSystem extends EntitySystem {
 		PLAYERFONT.setScale(1f);
 		PLAYERFONT.setColor(new Color(0,0,0,1));
 		
-		PLAYERFONT.draw(batch, "Player 1: " + PlayerManagerSystem.playerOneLife, Gdx.graphics.getWidth() /2 - (Gdx.graphics.getWidth() /4), Gdx.graphics.getHeight() - 10);
-		PLAYERFONT.draw(batch, "Player 2: " + PlayerManagerSystem.playerTwoLife,Gdx.graphics.getWidth() /2 + (Gdx.graphics.getWidth() /5), Gdx.graphics.getHeight() - 10);
+		PLAYERFONT.draw(batch, "Player 1: " + ((PlayerManagerSystem.playerOneLife == 20) ? "10" : PlayerManagerSystem.playerOneLife % 10), Gdx.graphics.getWidth() /2 - (Gdx.graphics.getWidth() /4), Gdx.graphics.getHeight() - 10);
+		PLAYERFONT.draw(batch, "Player 2: " +((PlayerManagerSystem.playerTwoLife == 20) ? "10" : PlayerManagerSystem.playerTwoLife % 10),Gdx.graphics.getWidth() /2 + (Gdx.graphics.getWidth() /5), Gdx.graphics.getHeight() - 10);
 		batch.end();
 	}
 }

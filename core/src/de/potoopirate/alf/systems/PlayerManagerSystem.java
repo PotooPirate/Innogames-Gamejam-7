@@ -19,14 +19,14 @@ import de.potoopirate.alf.entities.WinEntity;
 
 public class PlayerManagerSystem extends EntitySystem {
 	private static final Texture player1Win = new Texture(Gdx.files.internal("Winning.png"));
-	
-	public static int playerOneLife = 1;
-	public static int playerTwoLife = 1;
 
 	private Engine engine;
 	
 	private SpriteBatch batch;
 	private boolean showDialog;
+	
+	public static int playerOneLife = 20;
+	public static int playerTwoLife = 20;
 	
 	@Override
 	public void addedToEngine(Engine engine)
@@ -36,6 +36,8 @@ public class PlayerManagerSystem extends EntitySystem {
 		batch = new SpriteBatch();
 		showDialog = false;
 		engine.addSystem(this);
+		playerOneLife = 20;
+		playerTwoLife = 20;
 	}
 	
 	@Override

@@ -30,7 +30,7 @@ public class ServerScreen extends ScreenAdapter{
 		engine.addSystem(RendererSystem.getInstance());
 		engine.addSystem(new FightSystem());
 		engine.addSystem(new PlayerManagerSystem());
-		
+
 		LevelEntity level = new LevelEntity();
 		engine.addEntity(level);
 		
@@ -47,10 +47,10 @@ public class ServerScreen extends ScreenAdapter{
 		PathSystem.getInstance().Update(Gdx.graphics.getDeltaTime());
 		
 		if(Gdx.input.isKeyPressed(Keys.S)) {
-			AnimalEntity.createHippo(1, 1);
+			AnimalEntity.createHippo(0, 1);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.C)) {
-			AnimalEntity.createSnail(0,3);
+			AnimalEntity.createSnail(1,2);
 		}
 	}
 

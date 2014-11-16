@@ -70,6 +70,9 @@ public class ClientSystem extends EntitySystem implements ClientListener {
 				System.out.println("Starte das Spiel!");
 				started = true;
 			}
+			else if (object instanceof Integer){
+				System.out.println("I am player " + object);
+			}
 		}
 
 	}

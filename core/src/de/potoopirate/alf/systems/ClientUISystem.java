@@ -33,9 +33,8 @@ public class ClientUISystem extends EntitySystem {
 	private static final Texture SELECTED_RIGHT_ICON = new Texture(Gdx.files.internal("icons/selectedright.png"));
 	private static final Texture CLIENTBACKGROUND = new Texture(Gdx.files.internal("clientbackground.png"));
 
-	
 	public static final Texture GRAY_BACKGROUND = new Texture(Gdx.files.internal("icons/gray_background.png"));
-	
+
 	static final BitmapFont FONT = new BitmapFont(Gdx.files.internal("CandyFont.fnt"));
 
 	private static final int SECTION = Gdx.graphics.getWidth() / 3;
@@ -46,8 +45,9 @@ public class ClientUISystem extends EntitySystem {
 	private static final int LEFT_PATH_ICON_X = UP_PATH_ICON_X - LEFT_ICON.getWidth();
 	private static final int RIGHT_PATH_ICON_X = UP_PATH_ICON_X + UP_ICON.getWidth();
 	private static final int SCREENHEIGHT = Gdx.graphics.getHeight();
+	private static final int SCREENWIDTH = Gdx.graphics.getHeight();
 	BitmapFont font;
-	
+
 	private Stage stage;
 	private ClientListener clientSystem;
 	private int activePath;
@@ -74,7 +74,7 @@ public class ClientUISystem extends EntitySystem {
 		blockImage.setPosition(0, 0);
 		blockImage.setWidth(Gdx.graphics.getWidth());
 		blockImage.setHeight(Gdx.graphics.getHeight());
-		
+
 		slot1 = new Image(TORTSEN_ICON);
 		slot1.setPosition(ICON_X, Gdx.graphics.getHeight());
 		slot2 = new Image(EMMA_ICON);
@@ -83,7 +83,7 @@ public class ClientUISystem extends EntitySystem {
 		slot3.setPosition(ICON_X + SECTION * 2, Gdx.graphics.getHeight());
 		font = new BitmapFont();
 		font.setColor(1f, 0f, 0f, 1f);
-		
+
 	}
 
 	@Override
@@ -112,13 +112,10 @@ public class ClientUISystem extends EntitySystem {
 			if (y <= -100) {
 				if (x < SECTION) {
 					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
-					//SoundComponent.HIPPO_SPAWN_SOUND.play();
 				} else if (x < SECTION * 2) {
 					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
-					//SoundComponent.OCTO_SPAWN_SOUND.play();
 				} else {
 					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 1, Interpolation.bounceOut)));
-					//SoundComponent.SNAIL_SPAWN_SOUND.play();
 				}
 			}
 		} else if (!Gdx.input.isTouched() && touched) {
@@ -128,10 +125,13 @@ public class ClientUISystem extends EntitySystem {
 				blockCounter = 0;
 				if (x < SECTION) {
 					clientSystem.throwSlot(1, activePath);
+					SoundComponent.HIPPO_SPAWN_SOUND.play();
 				} else if (x < SECTION * 2) {
 					clientSystem.throwSlot(2, activePath);
+					SoundComponent.OCTO_SPAWN_SOUND.play();
 				} else {
 					clientSystem.throwSlot(3, activePath);
+					SoundComponent.SNAIL_SPAWN_SOUND.play();
 				}
 			}
 			System.out.println("delta X: " + x + "/ delta Y:" + y);
@@ -169,29 +169,25 @@ public class ClientUISystem extends EntitySystem {
 		// debugRenderer.line(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight());
 		// debugRenderer.line((Gdx.graphics.getWidth() / 3) * 2, 0, (Gdx.graphics.getWidth() / 3) * 2, Gdx.graphics.getHeight());
 		// debugRenderer.end();
-		
-		batch.begin();
-		batch.draw(CLIENTBACKGROUND,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		//font.draw(batch, "This is some text", 10, 10);
-		// if (blockCounter <= BLOCK_COUNTER_RELEASE && started) {
 
-		if (activePath == 1) 
+		batch.begin();
+		batch.draw(CLIENTBACKGROUND, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		if (activePath == 1)
 			batch.draw(SELECTED_LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
 
-			else
+		else
 			batch.draw(LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
-			
-		if (activePath == 2) 
+
+		if (activePath == 2)
 			batch.draw(SELECTED_UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
 		else
 			batch.draw(UP_ICON, UP_PATH_ICON_X, PATH_ICON_Y);
-			
-			
-		if (activePath == 3) 
+
+		if (activePath == 3)
 			batch.draw(SELECTED_RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
 		else
 			batch.draw(RIGHT_ICON, RIGHT_PATH_ICON_X, PATH_ICON_Y);
-			
 
 		slot1.act(deltaTime);
 		slot2.act(deltaTime);
@@ -200,8 +196,7 @@ public class ClientUISystem extends EntitySystem {
 		slot1.draw(batch, 1f);
 		slot2.draw(batch, 1f);
 		slot3.draw(batch, 1f);
-		
-		
+
 		blockImage.act(deltaTime);
 		if (blockCounter >= BLOCK_COUNTER_RELEASE && started) {
 			throwSlot();
@@ -210,11 +205,11 @@ public class ClientUISystem extends EntitySystem {
 			blockImage.draw(batch, 1f);
 			FONT.setScale(3f);
 			TextBounds bounds = FONT.getBounds("0");
-			FONT.draw(batch, ""+(int)(3-blockCounter), Gdx.graphics.getWidth()/2 - bounds.width/2 , Gdx.graphics.getHeight()/2 + bounds.height/2);
+			FONT.draw(batch, "" + (int) (3 - blockCounter), Gdx.graphics.getWidth() / 2 - bounds.width / 2, Gdx.graphics.getHeight() / 2 + bounds.height / 2);
 		} else if (!started) {
 			started = clientSystem.isStarted();
 		}
-		
+
 		batch.end();
 	}
 }

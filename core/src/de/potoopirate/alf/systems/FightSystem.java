@@ -123,7 +123,7 @@ public class FightSystem extends EntitySystem  {
 	public void update(float deltaTime)
 	{
 		super.update(deltaTime);
-		animals = engine.getEntitiesFor(Family.getFor(/*SoundComponent.class, */RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
+		animals = engine.getEntitiesFor(Family.getFor(SoundComponent.class, RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
 		
 		allAnimalsP1 = new Array<AnimalEntity>();
 		allAnimalsP2 = new Array<AnimalEntity>();
@@ -227,6 +227,7 @@ public class FightSystem extends EntitySystem  {
 						   baseP2Transform.getPosition().y) ;
 				if(distance< INVADE_HQ_RANGE) {
 					System.out.print("LifeLost");
+					PlayerManagerSystem.playerTwoLife--;
 					LifeMapper.get(baseP2).looseLife();
 					kill(allAnimalsP1.get(e1));
 				}
@@ -241,6 +242,7 @@ public class FightSystem extends EntitySystem  {
 						   baseP1Transform.getPosition().y);
 				if(distance < INVADE_HQ_RANGE) {
 					System.out.print("LifeLost");
+					PlayerManagerSystem.playerOneLife--;
 					LifeMapper.get(baseP1).looseLife();
 					kill(allAnimalsP2.get(e2));
 				}
