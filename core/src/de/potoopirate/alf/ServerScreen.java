@@ -9,6 +9,7 @@ import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.LevelEntity;
 import de.potoopirate.alf.systems.FightSystem;
 import de.potoopirate.alf.systems.PathSystem;
+import de.potoopirate.alf.systems.PlayerManagerSystem;
 import de.potoopirate.alf.systems.RendererSystem;
 import de.potoopirate.alf.systems.ServerSystem;
 import de.potoopirate.alf.systems.SpawnSystem;
@@ -26,6 +27,7 @@ public class ServerScreen extends ScreenAdapter{
 		
 		engine.addSystem(RendererSystem.getInstance());
 		engine.addSystem(new FightSystem());
+		engine.addSystem(new PlayerManagerSystem());
 		
 		LevelEntity level = new LevelEntity();
 		engine.addEntity(level);

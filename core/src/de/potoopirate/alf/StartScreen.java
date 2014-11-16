@@ -43,7 +43,6 @@ public class StartScreen extends ScreenAdapter {
 		super.render(delta);
 		
 		batch.begin();
-		
 		batch.draw(SERVER, 0f, 0f, 0f, 0f, 100f, 100f, 1.0f, 1.0f, 0f);
 		batch.draw(CLIENT, Gdx.graphics.getWidth()-100f, 0f, 0f, 0f, 100f, 100f, 1.0f, 1.0f, 0f);
 		batch.end();
