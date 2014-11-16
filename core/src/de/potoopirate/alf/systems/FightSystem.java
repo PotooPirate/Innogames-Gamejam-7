@@ -123,11 +123,10 @@ public class FightSystem extends EntitySystem  {
 	public void update(float deltaTime)
 	{
 		super.update(deltaTime);
-		animals = engine.getEntitiesFor(Family.getFor(SoundComponent.class, RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
+		animals = engine.getEntitiesFor(Family.getFor(/*SoundComponent.class, */RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
 		
 		allAnimalsP1 = new Array<AnimalEntity>();
 		allAnimalsP2 = new Array<AnimalEntity>();
-//		deadAnimals = new Array<AnimalEntity>();
 		
 		//separate animals per player. This omits of a lot of collisions between befriended animals
 		for(int e=0;e<animals.size();++e) {
@@ -176,13 +175,13 @@ public class FightSystem extends EntitySystem  {
 							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
 							{
 								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));;
-								SoundMapper.get(AnimalP1).hitSound.play();
+//								SoundMapper.get(AnimalP1).hitSound.play();
 								kill(AnimalP2);
 							}
 							if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
 							{
 								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
-								SoundMapper.get(AnimalP2).hitSound.play();								
+//								SoundMapper.get(AnimalP2).hitSound.play();								
 								kill(AnimalP1);
 							}
 						
@@ -190,6 +189,8 @@ public class FightSystem extends EntitySystem  {
 							{
 								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));;
 								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
+								
+//								SoundMapper.get(AnimalP1).hitSound.play();
 								
 								kill(AnimalP1);
 								kill(AnimalP2);
@@ -250,6 +251,6 @@ public class FightSystem extends EntitySystem  {
 	private void kill(AnimalEntity animal) {
 		animal.getComponent(AnimationRendererComponent.class).SetAnimationState("dying", false, 0, 0).setListener(animal.getComponent(AnimationRendererComponent.class));
 		CollisionMapper.get(animal).dead=true;
-		SoundMapper.get(animal).deathSound.play();
+//		SoundMapper.get(animal).deathSound.play();
 	}
 }

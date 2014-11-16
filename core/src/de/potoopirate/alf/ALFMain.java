@@ -20,7 +20,8 @@ public class ALFMain extends Game {
 		AnimalEntity.ATLAS_TORTSEN = new TextureAtlas(Gdx.files.internal("Tortsen/Tortsen.atlas"));
 		AnimalEntity.ATLAS_EMMA = new TextureAtlas(Gdx.files.internal("Emma/Emma.atlas"));
 		AnimalEntity.ATLAS_GUNTER = new TextureAtlas(Gdx.files.internal("Gunter/Gunter.atlas"));
-		
+	
+		/*
 		SoundComponent.SNAIL_SPAWN_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Snail_Spawn.wav"));
 		SoundComponent.SNAIL_HIT_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Snail_Hit.wav"));
 		SoundComponent.SNAIL_DEATH_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Snail_Death.wav"));
@@ -32,7 +33,7 @@ public class ALFMain extends Game {
 		SoundComponent.HIPPO_SPAWN_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Hippo_Spawn.wav"));
 		SoundComponent.HIPPO_HIT_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Hippo_Hit.wav"));
 		SoundComponent.HIPPO_DEATH_SOUND = Gdx.audio.newSound(Gdx.files.internal("soundeffects/Hippo_Death.wav"));
-
+*/
 		
 		engine = new Engine();	
 		setScreen(new StartScreen(engine, this));
