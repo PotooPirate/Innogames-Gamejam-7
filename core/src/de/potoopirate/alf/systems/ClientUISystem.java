@@ -110,10 +110,13 @@ public class ClientUISystem extends EntitySystem {
 			if (y <= -100) {
 				if (x < SECTION) {
 					slot1.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X, ICON_Y, 1, Interpolation.bounceOut)));
+					//play sound for Tortsen
 				} else if (x < SECTION * 2) {
 					slot2.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION, ICON_Y, 1, Interpolation.bounceOut)));
+					//play sound for Emma
 				} else {
 					slot3.addAction(Actions.sequence(Actions.moveBy(0, Gdx.graphics.getHeight(), 0.5f), Actions.moveTo(ICON_X + SECTION * 2, ICON_Y, 1, Interpolation.bounceOut)));
+					//play sound for Gunter
 				}
 			}
 		} else if (!Gdx.input.isTouched() && touched) {
