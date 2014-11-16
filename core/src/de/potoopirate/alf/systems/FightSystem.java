@@ -123,7 +123,7 @@ public class FightSystem extends EntitySystem  {
 	public void update(float deltaTime)
 	{
 		super.update(deltaTime);
-		animals = engine.getEntitiesFor(Family.getFor(/*SoundComponent.class, */RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
+		animals = engine.getEntitiesFor(Family.getFor(SoundComponent.class, RaceComponent.class, PlayerComponent.class, TransformComponent.class, PathComponent.class, CollisionComponent.class));
 		
 		allAnimalsP1 = new Array<AnimalEntity>();
 		allAnimalsP2 = new Array<AnimalEntity>();
