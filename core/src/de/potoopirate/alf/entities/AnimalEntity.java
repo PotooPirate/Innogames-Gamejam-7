@@ -34,7 +34,7 @@ public class AnimalEntity extends Entity {
 	public AnimalEntity(int playerId, int path, Race race,TextureAtlas atlas ,String pathJson) {
 		add(new RaceComponent(race));
 		add(new PathComponent());
-		add(new PlayerComponent(playerId));
+		add(new PlayerComponent(playerId, race));
 		add(new TransformComponent());
 		add(new CollisionComponent());
 		add(new SoundComponent(race));

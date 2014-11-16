@@ -10,6 +10,7 @@ import com.esotericsoftware.spine.Event;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonData;
 
+import de.potoopirate.alf.components.RaceComponent.Race;
 import de.potoopirate.alf.systems.PlayerManagerSystem;
 import de.potoopirate.alf.systems.RendererSystem;
 
@@ -70,13 +71,7 @@ public class AnimationRendererComponent extends Component implements IRenderer, 
 	
 	@Override
 	public void Render(float deltaTime, SpriteBatch batch) {
-		this.skeleton.getRootBone().setRotation((this.transform.getRotation().x > 0) 
-				? (this.transform.getRotation().x >170) 
-				? this.transform.getRotation().x - 180
-				: -this.transform.getRotation().x + 90 
-				: (this.transform.getRotation().x > -45) 
-				? Math.abs(this.transform.getRotation().x) - 90  
-				:  Math.abs(this.transform.getRotation().x) );
+
 		this.skeleton.setPosition(this.transform.getPosition().x, this.transform.getPosition().y);
 		this.state.update(deltaTime);
 		this.state.apply(skeleton); 
