@@ -19,4 +19,5 @@ public class MusicPlayer {
 	public static void stopBackgroundMusic () {
 		backgroundMusic.stop();
 	}
+	
 }
