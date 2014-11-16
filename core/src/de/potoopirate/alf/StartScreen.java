@@ -18,8 +18,8 @@ import de.potoopirate.alf.systems.ServerSystem;
 
 public class StartScreen extends ScreenAdapter {
 
-	private static final TextureRegion SERVER = new TextureRegion(new Texture(Gdx.files.internal("icons/server.png")));
-	private static final TextureRegion CLIENT = new TextureRegion(new Texture(Gdx.files.internal("icons/client.png")));
+//	private static final TextureRegion SERVER = new TextureRegion(new Texture(Gdx.files.internal("icons/server.png")));
+//	private static final TextureRegion CLIENT = new TextureRegion(new Texture(Gdx.files.internal("icons/client.png")));
 	private static final TextureRegion STARTSCREEN = new TextureRegion(new Texture(Gdx.files.internal("startscreen.png")));
 	private static final BitmapFont FONT = new BitmapFont(Gdx.files.internal("CandyFont.fnt"));
 	
@@ -44,8 +44,8 @@ public class StartScreen extends ScreenAdapter {
 		super.render(delta);
 		
 		batch.begin();
-		batch.draw(SERVER, 0f, 0f, 0f, 0f, 100f, 100f, 1.0f, 1.0f, 0f);
-		batch.draw(CLIENT, Gdx.graphics.getWidth()-100f, 0f, 0f, 0f, 100f, 100f, 1.0f, 1.0f, 0f);
+	//	batch.draw(SERVER, 0f, 0f, 0f, 0f, 100f, 100f, 1.0f, 1.0f, 0f);
+		//batch.draw(CLIENT, Gdx.graphics.getWidth()-100f, 0f, 0f, 0f, 100f, 100f, 1.0f, 1.0f, 0f);
 		batch.draw(STARTSCREEN, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.end();
 		
