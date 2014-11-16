@@ -49,11 +49,14 @@ public class ServerSystem extends EntitySystem {
 			if (object instanceof NetworkMessage) {
 				handleNetworkMessages(connection, (NetworkMessage) object);
 			}
+
 		}
 
 		@Override
 		public void connected(Connection connection) {
+			
 			if(server.getConnections().length == MAX_PLAYERS) {
+				
 				server.sendToAllTCP(new NetworkReady());
 			}
 			super.connected(connection);

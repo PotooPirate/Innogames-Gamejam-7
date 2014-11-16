@@ -46,6 +46,7 @@ public class ClientUISystem extends EntitySystem {
 	private static final int LEFT_PATH_ICON_X = UP_PATH_ICON_X - LEFT_ICON.getWidth();
 	private static final int RIGHT_PATH_ICON_X = UP_PATH_ICON_X + UP_ICON.getWidth();
 	private static final int SCREENHEIGHT = Gdx.graphics.getHeight();
+	private static final int SCREENWIDTH = Gdx.graphics.getHeight();
 	BitmapFont font;
 	
 	private Stage stage;
@@ -171,9 +172,7 @@ public class ClientUISystem extends EntitySystem {
 		// debugRenderer.end();
 		
 		batch.begin();
-		batch.draw(CLIENTBACKGROUND,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		//font.draw(batch, "This is some text", 10, 10);
-		// if (blockCounter <= BLOCK_COUNTER_RELEASE && started) {
+		batch.draw(CLIENTBACKGROUND,0,0,SCREENWIDTH, SCREENHEIGHT);
 
 		if (activePath == 1) 
 			batch.draw(SELECTED_LEFT_ICON, LEFT_PATH_ICON_X, PATH_ICON_Y);
