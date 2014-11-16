@@ -18,7 +18,8 @@ import de.potoopirate.alf.entities.AnimalEntity;
 import de.potoopirate.alf.entities.WinEntity;
 
 public class PlayerManagerSystem extends EntitySystem {
-	private static final Texture player1Win = new Texture(Gdx.files.internal("Winning.png"));
+	private static final Texture player1Win = new Texture(Gdx.files.internal("Winning1.png"));
+	private static final Texture player2Win = new Texture(Gdx.files.internal("Winning2.png"));
 
 	private Engine engine;
 	
@@ -27,6 +28,7 @@ public class PlayerManagerSystem extends EntitySystem {
 	
 	public static int playerOneLife = 20;
 	public static int playerTwoLife = 20;
+	private int whoWon;
 	
 	@Override
 	public void addedToEngine(Engine engine)
@@ -44,14 +46,16 @@ public class PlayerManagerSystem extends EntitySystem {
 	public void update(float deltaTime) {
 		if(playerOneLife == 0 && !showDialog) {
 			showDialog = true;
+			whoWon = 1;
 		}
 		if(playerTwoLife == 0 && !showDialog) {
 			showDialog = true;
+			whoWon = 2;
 		}
 		
 		if(showDialog) {
 			batch.begin();
-			batch.draw(player1Win, Gdx.graphics.getWidth()/2-player1Win.getWidth()/2, 
+			batch.draw((whoWon == 1 ? player1Win : player2Win), Gdx.graphics.getWidth()/2-player1Win.getWidth()/2, 
 					Gdx.graphics.getHeight()/2-player1Win.getHeight()/2, player1Win.getWidth(), player1Win.getHeight());
 			batch.end();
 		}
