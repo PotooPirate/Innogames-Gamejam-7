@@ -28,6 +28,7 @@ public class FightSystem extends EntitySystem  {
 	public static final float INVADE_HQ_RANGE = 15f;
 	public static final int FIRST_PLAYER = 0;
 	public static final int SECOND_PLAYER = 1;
+	public static final int NUMBER_OF_RACES = 3;
 	
 	//Mapper for Animals and MainBases
 	private ComponentMapper<PlayerComponent> 		PlayerMapper;
@@ -166,35 +167,36 @@ public class FightSystem extends EntitySystem  {
 						{
 							animalP1Race= RaceMapper.get(AnimalP1);
 							animalP2Race = RaceMapper.get(AnimalP2);
-					
-							//Check which animal wins the fight
-							//0 wins over 1
-							//1 wins over 2
-							//2 wins over 0	
 							
-							if((NaturalSelection.getStatusOfRace(animalP1Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP2Race.race))
+							int diff = (NaturalSelection.getStatusOfRace(animalP2Race.race) - NaturalSelection.getStatusOfRace(animalP1Race.race) + NUMBER_OF_RACES) % NUMBER_OF_RACES;
+							
+							if (diff == 0)
 							{
+								//tie
+								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));;
+								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
+								
+								SoundMapper.get(AnimalP1).hitSound.play();
+								
+								kill(AnimalP1);
+								kill(AnimalP2);
+							}
+							else if(diff <= NUMBER_OF_RACES/2)
+							{
+								//Animal 1 wins
 								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));;
 								SoundMapper.get(AnimalP1).hitSound.play();
 								kill(AnimalP2);
 							}
-							if((NaturalSelection.getStatusOfRace(animalP2Race.race) + 1) % 3 == NaturalSelection.getStatusOfRace(animalP1Race.race))
+							else if(diff > NUMBER_OF_RACES/2)
 							{
+								//Animal 2 wins
 								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
 								SoundMapper.get(AnimalP2).hitSound.play();								
 								kill(AnimalP1);
 							}
 						
-							if (NaturalSelection.getStatusOfRace(animalP1Race.race) == NaturalSelection.getStatusOfRace(animalP2Race.race))
-							{
-								AnimalP1.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP1.getComponent(AnimationRendererComponent.class));;
-								AnimalP2.getComponent(AnimationRendererComponent.class).SetAnimationState("attacking", false, 0, 1).setListener(AnimalP2.getComponent(AnimationRendererComponent.class));
-								
-								SoundMapper.get(AnimalP1).hitSound.play();
-								
-								kill(AnimalP1);
-								kill(AnimalP2);
-							}
+							
 						
 						}
 					}
